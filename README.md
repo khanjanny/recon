@@ -18,3 +18,4 @@ Testeado en Kali y ubuntu. Simplemente ejecuta:
 `recon.sh -d dominio.com`
 
 La herramienta creara un folder con el nombre del dominio pasado como parametro y dentro de este folder en la carpeta "reports" esta el resultado del escaneo. Los archivos .csv se pueden importar a MALTEGO.
+
