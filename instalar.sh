@@ -32,6 +32,7 @@ sudo apt-get install fierce
 echo -e "${RED}[+]${BLUE} Copiando ejecutables ${RESET}"
 
 sudo cp recon.sh /usr/bin/
+sudo cp get-geodata.sh /usr/bin/
 sudo cp spoofcheck.sh /usr/bin/
 sudo cp infoga.sh /usr/bin/
 sudo cp hosts.txt /usr/share/fierce/hosts.txt
@@ -39,6 +40,7 @@ sudo cp hosts.txt /usr/share/fierce/hosts.txt
 sudo chmod a+x /usr/bin/recon.sh
 sudo chmod a+x /usr/bin/spoofcheck.sh 
 sudo chmod a+x /usr/bin/infoga.sh 
+sudo chmod a+x /usr/bin/get-geodata.sh
 
 echo -e "${RED}[+]${BLUE} Instalando librerias de python ${RESET}"
 sudo pip install xlrd

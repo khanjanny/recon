@@ -59,6 +59,9 @@ mkdir dns
 mkdir mail
 mkdir report
 
+echo -e "$OKORANGE+ -- --=############ Usando servidor DNS  ... #########$RESET"
+grep nameserver /etc/resolv.conf
+echo ""
 ####################  DNS test ########################
 echo -e "$OKBLUE+ -- --=############ Reconocimiento DNS  ... #########$RESET"
 
