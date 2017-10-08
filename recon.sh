@@ -89,9 +89,6 @@ echo -e "\t\t[+] Buscando correos en google .."
 theharvester -d $DOMAIN -b google > mail/theharvester-google.txt 2>/dev/null
 echo -e "\t\t[+] Buscando correos en bing .."
 theharvester -d $DOMAIN -b bing > mail/theharvester-bing.txt 2>/dev/null
-echo -e "\t\t[+] Buscando personal en linkedin .."
-theharvester -d $DOMAIN -b linkedin > report/linkedin.txt 2>/dev/null
-
 
 echo -e "\t[+] Iniciando infoga .."
 
