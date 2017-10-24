@@ -90,6 +90,7 @@ theharvester -d $DOMAIN -b google > mail/theharvester-google.txt 2>/dev/null
 echo -e "\t\t[+] Buscando correos en bing .."
 theharvester -d $DOMAIN -b bing > mail/theharvester-bing.txt 2>/dev/null
 
+
 echo -e "\t[+] Iniciando infoga .."
 
 infoga.sh -t $DOMAIN -s all > mail/infoga2.txt 2>/dev/null
@@ -105,12 +106,13 @@ spoofcheck.sh $DOMAIN > report/dns-spoof.txt
 
 ############### check if the fierce is active
 while true; do
-		nmap_instances=`ps aux | grep perl | wc -l`
-			if [ "$nmap_instances" -gt 1 ]
+		perl_instances=`ps aux | grep perl | wc -l`
+			if [ "$perl_instances" -gt 1 ]
 		then
-			echo "Enemeracion DNS aun activa"  
+			echo "Enumeracion DNS aun activa ($perl_instances)"  
 			sleep 30
 		else
+			echo "fierce instance ($perl_instances)"  
 			break		  		 
 		fi				
 done
@@ -120,10 +122,21 @@ echo -e "$OKBLUE+ -- --=############ Recopilando informacion ... #########$RESET
 
 #dns
 cd dns
-grep $DOMAIN dnsenum.txt | awk '{print $5,$1}' | tr ' ' ',' >> subdomains.txt
+grep "IN    A" dnsenum.txt | awk '{print $5,$1}' | tr ' ' ',' >> subdomains.txt
 echo "Terminando Fierce .."
-sleep 50
-grep --color=never "\.$DOMAIN" fierce.txt | awk '{print $1,$2}' | tr ' ' ','  >> subdomains.txt
+sleep 30
+
+
+egrep -i "SOA" fierce.txt 
+greprc=$?
+if [[ $greprc -eq 0 ]] ; then # Si se hizo volcado de zona	
+	echo -e "$OKRED Volcado de zona !! $RESET"	
+	grep "IN A" fierce.txt | awk '{print $5,$1}' | tr ' ' ',' >> subdomains.txt
+else
+	grep --color=never "\.$DOMAIN" fierce.txt | awk '{print $1,$2}' | tr ' ' ','  >> subdomains.txt
+fi
+		
+
 cd ..
 
 #mails
