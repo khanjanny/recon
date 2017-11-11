@@ -35,7 +35,7 @@ sudo cp recon.sh /usr/bin/
 sudo cp get-geodata.sh /usr/bin/
 sudo cp spoofcheck.sh /usr/bin/
 sudo cp infoga.sh /usr/bin/
-sudo cp hosts.txt /usr/share/fierce/hosts.txt
+sudo rm /usr/share/fierce/hosts.txt
 
 sudo chmod a+x /usr/bin/recon.sh
 sudo chmod a+x /usr/bin/spoofcheck.sh 
@@ -62,6 +62,7 @@ sudo cp -R Infoga /usr/share/
 
 echo -e "${RED}[+]${BLUE} Instalando spoofcheck ${RESET}"
 sudo cp -R spoofcheck /usr/share/
+sudo cp hosts.txt /usr/share/wordlists/hosts.txt
 
 cd spoofcheck
 sudo pip install -r requirements.txt

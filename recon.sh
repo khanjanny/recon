@@ -67,13 +67,13 @@ echo -e "$OKBLUE+ -- --=############ Reconocimiento DNS  ... #########$RESET"
 
 cd dns
 echo -e "\t[+] Iniciando dnsrecon .."
-dnsrecon -d $DOMAIN --lifetime 60 > dnsrecon.txt &
+dnsrecon -d $DOMAIN --lifetime 60  > dnsrecon.txt &
 
 echo -e "\t[+] Iniciando fierce .."
 fierce -dns $DOMAIN -threads 3 > fierce.txt &
 
 echo -e "\t[+] Iniciando dnsenum .."
-dnsenum $DOMAIN --nocolor > dnsenum.txt &
+dnsenum $DOMAIN --nocolor -f /usr/share/fierce/hosts.txt > dnsenum.txt &
 cd ../
 
 
@@ -113,6 +113,7 @@ while true; do
 			sleep 30
 		else
 			echo "fierce instance ($perl_instances)"  
+			ps aux | egrep perl 
 			break		  		 
 		fi				
 done
