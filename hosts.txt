@@ -428,8 +428,6 @@ Asistir
 ask
 asl1
 asm
-ASN27714
-ASN28024
 asociado
 asocsrdns1
 asonada
