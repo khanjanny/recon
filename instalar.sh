@@ -35,9 +35,11 @@ sudo cp recon.sh /usr/bin/
 sudo cp get-geodata.sh /usr/bin/
 sudo cp spoofcheck.sh /usr/bin/
 sudo cp infoga.sh /usr/bin/
-sudo rm /usr/share/fierce/hosts.txt
+sudo cp ctfr.sh /usr/bin/
+sudo cp hosts.txt /usr/share/fierce/hosts.txt
 
 sudo chmod a+x /usr/bin/recon.sh
+sudo chmod a+x /usr/bin/ctfr.sh
 sudo chmod a+x /usr/bin/spoofcheck.sh 
 sudo chmod a+x /usr/bin/infoga.sh 
 sudo chmod a+x /usr/bin/get-geodata.sh
@@ -58,6 +60,12 @@ cd ../
 
 echo -e "${RED}[+]${BLUE} Instalando Infoga ${RESET}"
 sudo cp -R Infoga /usr/share/
+
+echo -e "${RED}[+]${BLUE} Instalando ctfr ${RESET}"
+sudo cp -R ctfr /usr/share/
+cd ctfr
+sudo pip install -r requirements.txt
+cd ..
 
 
 echo -e "${RED}[+]${BLUE} Instalando spoofcheck ${RESET}"

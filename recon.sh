@@ -66,14 +66,17 @@ echo ""
 echo -e "$OKBLUE+ -- --=############ Reconocimiento DNS  ... #########$RESET"
 
 cd dns
-echo -e "\t[+] Iniciando dnsrecon .."
+echo -e "\t[+] Iniciando dnsrecon (DNS info) .."
 dnsrecon -d $DOMAIN --lifetime 60  > dnsrecon.txt &
 
-echo -e "\t[+] Iniciando fierce .."
+echo -e "\t[+] Iniciando fierce (Volcado de zona) .."
 fierce -dns $DOMAIN -threads 3 > fierce.txt &
 
-echo -e "\t[+] Iniciando dnsenum .."
+echo -e "\t[+] Iniciando dnsenum (diccionario DNS ) .."
 dnsenum $DOMAIN --nocolor -f /usr/share/fierce/hosts.txt > dnsenum.txt &
+
+echo -e "\t[+] Iniciando CTFR ( Certificate Transparency logs) .."
+ctfr.sh -d $DOMAIN > ctfr.txt
 cd ../
 
 
@@ -96,6 +99,7 @@ echo -e "\t[+] Iniciando infoga .."
 infoga.sh -t $DOMAIN -s all > mail/infoga2.txt 2>/dev/null
 sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g" mail/infoga2.txt > mail/infoga.txt
 rm mail/infoga2.txt 
+
 
 #################
 
@@ -121,13 +125,14 @@ done
 
 echo -e "$OKBLUE+ -- --=############ Recopilando informacion ... #########$RESET"
 
-#dns
+######## DNS ###
 cd dns
+#dnsenum
 grep "IN    A" dnsenum.txt | awk '{print $5,$1}' | tr ' ' ',' >> subdomains.txt
 echo "Terminando Fierce .."
 sleep 30
 
-
+# fierce
 egrep -i "SOA" fierce.txt 
 greprc=$?
 if [[ $greprc -eq 0 ]] ; then # Si se hizo volcado de zona	
@@ -136,8 +141,10 @@ if [[ $greprc -eq 0 ]] ; then # Si se hizo volcado de zona
 else
 	grep --color=never "\.$DOMAIN" fierce.txt | awk '{print $1,$2}' | tr ' ' ','  >> subdomains.txt
 fi
-		
 
+# ctfr
+cat ctfr.txt >> subdomains.txt
+		
 cd ..
 
 #mails
@@ -182,8 +189,5 @@ rm subdomains3.txt
 
 #rm mail/theharvester-google.txt
 #rm mail/bing.txt
-
-#echo "Iniciando dmitry ... "
-#dmitry -wnspb $DOMAIN -o mail/resultado_dmitry
 
 ######################################################
