@@ -56,8 +56,8 @@ mkdir $DOMAIN
 cd $DOMAIN
 
 mkdir dns
-mkdir mail
-mkdir report
+mkdir correo
+mkdir reporte
 
 echo -e "$OKORANGE+ -- --=############ Usando servidor DNS  ... #########$RESET"
 grep nameserver /etc/resolv.conf
@@ -72,122 +72,108 @@ dnsrecon -d $DOMAIN --lifetime 60  > dnsrecon.txt &
 echo -e "\t[+] Iniciando fierce (Volcado de zona) .."
 fierce -dns $DOMAIN -threads 3 > fierce.txt &
 
-echo -e "\t[+] Iniciando dnsenum (diccionario DNS ) .."
-dnsenum $DOMAIN --nocolor -f /usr/share/fierce/hosts.txt > dnsenum.txt &
-
 echo -e "\t[+] Iniciando CTFR ( Certificate Transparency logs) .."
 ctfr.sh -d $DOMAIN > ctfr.txt
 cd ../
 
 
 
-##################### Emails, subdomains #################
+##################### Ecorreos, subdominios #################
 
 echo -e "$OKBLUE+ -- --=############ Obteniendo  correos,subdominios, etc ... #########$RESET"
 echo -e "\t[+] Iniciando whois .."
-whois $DOMAIN > report/whois.txt
+whois $DOMAIN > reporte/whois.txt
 
 echo -e "\t[+] Iniciando theharvester .."
 echo -e "\t\t[+] Buscando correos en google .."
-theharvester -d $DOMAIN -b google > mail/theharvester-google.txt 2>/dev/null
+theharvester -d $DOMAIN -b google > correo/theharvester-google.txt 2>/dev/null
 echo -e "\t\t[+] Buscando correos en bing .."
-theharvester -d $DOMAIN -b bing > mail/theharvester-bing.txt 2>/dev/null
+theharvester -d $DOMAIN -b bing > correo/theharvester-bing.txt 2>/dev/null
 
 
 echo -e "\t[+] Iniciando infoga .."
 
-infoga.sh -t $DOMAIN -s all > mail/infoga2.txt 2>/dev/null
-sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g" mail/infoga2.txt > mail/infoga.txt
-rm mail/infoga2.txt 
+infoga.sh -t $DOMAIN -s all > correo/infoga2.txt 2>/dev/null
+sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g" correo/infoga2.txt > correo/infoga.txt
+rm correo/infoga2.txt 
 
 
 #################
 
 echo -e "$OKBLUE+ -- --=############ Probando si se puede spoofear el dominio #########$RESET"
 
-spoofcheck.sh $DOMAIN > report/dns-spoof.txt
-
-
-############### check if the fierce is active
-while true; do
-		perl_instances=`ps aux | grep perl | wc -l`
-			if [ "$perl_instances" -gt 1 ]
-		then
-			echo "Enumeracion DNS aun activa ($perl_instances)"  
-			sleep 30
-		else
-			echo "fierce instance ($perl_instances)"  
-			ps aux | egrep perl 
-			break		  		 
-		fi				
-done
+spoofcheck.sh $DOMAIN > reporte/dns-spoof.txt
 
 
 echo -e "$OKBLUE+ -- --=############ Recopilando informacion ... #########$RESET"
 
 ######## DNS ###
 cd dns
-#dnsenum
-grep "IN    A" dnsenum.txt | awk '{print $5,$1}' | tr ' ' ',' >> subdomains.txt
-echo "Terminando Fierce .."
-sleep 30
 
 # fierce
 egrep -i "SOA" fierce.txt 
 greprc=$?
 if [[ $greprc -eq 0 ]] ; then # Si se hizo volcado de zona	
 	echo -e "$OKRED Volcado de zona !! $RESET"	
-	grep "IN A" fierce.txt | awk '{print $5,$1}' | tr ' ' ',' >> subdomains.txt
-else
-	grep --color=never "\.$DOMAIN" fierce.txt | awk '{print $1,$2}' | tr ' ' ','  >> subdomains.txt
+	grep "IN     A" fierce.txt | awk '{print $5,$1}' | tr ' ' ',' >> subdominios.txt
+	grep "CNAME" fierce.txt | awk '{print $5,$1}' | tr ' ' ',' >> subdominios.txt
+else	
+	echo -e "\t[+] Iniciando dnsenum (bruteforce DNS ) .."
+	#dnsenum
+	dnsenum $DOMAIN --nocolor -f /usr/share/wordlists/hosts.txt > dnsenum.txt 	
+	grep "IN    A" dnsenum.txt | awk '{print $5,$1}' | tr ' ' ',' >> subdominios.txt
+	grep "CNAME" dnsenum.txt | awk '{print $5,$1}' | tr ' ' ',' >> subdominios.txt
+	
+	
 fi
 
+
 # ctfr
-cat ctfr.txt >> subdomains.txt
+cat ctfr.txt >> subdominios.txt
 		
 cd ..
 
-#mails
-cat mail/theharvester-google.txt | grep --color=never @ | grep -v edge-security >>mail/all-mails.txt
-cat mail/theharvester-bing.txt | grep --color=never @ | grep -v edge-security >>mail/all-mails.txt
-cat mail/infoga.txt | grep --color=never "Email:" | cut -d " " -f3 >>mail/all-mails.txt
+#correos
+cat correo/theharvester-google.txt | grep --color=never @ | grep -v edge-security >>correo/all-correos.txt
+cat correo/theharvester-bing.txt | grep --color=never @ | grep -v edge-security >>correo/all-correos.txt
+cat correo/infoga.txt | grep --color=never "Ecorreo:" | cut -d " " -f3 >>correo/all-correos.txt
 
-lines=`wc -l mail/all-mails.txt | cut -d " " -f1`
-perl -E "say \"$DOMAIN\n\" x $lines" > mail/domain.txt # file with the domain (n times)
-sed -i '$ d' mail/domain.txt # delete last line
-paste -d ',' mail/domain.txt mail/all-mails.txt > report/mails1.csv 
+lines=`wc -l correo/all-correos.txt | cut -d " " -f1`
+perl -E "say \"$DOMAIN\n\" x $lines" > correo/domain.txt # file with the domain (n times)
+sed -i '$ d' correo/domain.txt # delete last line
+paste -d ',' correo/domain.txt correo/all-correos.txt > reporte/correos1.csv 
 
-cat report/mails1.csv | sort | uniq > report/mails.csv 
-rm report/mails1.csv
+cat reporte/correos1.csv | sort | uniq > reporte/correos.csv 
+rm reporte/correos1.csv
 
 
-#subdomains
-cat mail/theharvester-google.txt | grep --color=never $DOMAIN | grep -v @ >> dns/subdomains.txt
-cat mail/theharvester-bing.txt| grep --color=never $DOMAIN | grep -v @ >> dns/subdomains.txt
-cat dns/subdomains.txt | sort | uniq -i > dns/subdomains2.txt 
-cp dns/subdomains2.txt subdomains.txt
+#subdominios
+cat correo/theharvester-google.txt | grep --color=never $DOMAIN | grep -v @ >> dns/subdominios.txt
+cat correo/theharvester-bing.txt| grep --color=never $DOMAIN | grep -v @ >> dns/subdominios.txt
+cat dns/subdominios.txt | sort | uniq -i > dns/subdominios2.txt 
+cp dns/subdominios2.txt subdominios.txt
 
-sed -i "s/$DOMAIN./$DOMAIN/g" subdomains.txt
-sed -i "s/:/,/g" subdomains.txt
-sort subdomains.txt | uniq > subdomains2.txt
-cat subdomains2.txt  | egrep -v '\--|Testing|Trying|DNS' > subdomains3.txt
+sed -i "s/$DOMAIN./$DOMAIN/g" subdominios.txt
+sed -i "s/:/,/g" subdominios.txt
+sort subdominios.txt | uniq > subdominios2.txt
+cat subdominios2.txt  | egrep -v '\--|Testing|Trying|DNS' > subdominios3.txt
 
 
 echo -e "$OKBLUE+ -- --=############ Obteniendo GeoInformacion de las IPs #########$RESET"
 while read line           
 do           
-    subdomain=$(echo  $line | cut -d "," -f2)
-    echo "Obteniendo datos del subdominio: $subdomain"
-    geodata=$(geoip.pl $subdomain)
-    echo "$DOMAIN,$line,$geodata" >> report/subdomains.csv
-done <subdomains3.txt 
+    subdominio=$(echo  $line | cut -d "," -f2)
+    echo "Obteniendo datos del subdominio: $subdominio"
+    geodata=$(geoip.pl $subdominio)
+    echo "$DOMAIN,$line,$geodata" >> reporte/subdominios.csv
+done <subdominios3.txt 
 
 
-rm subdomains.txt
-rm subdomains2.txt
-rm subdomains3.txt	
+rm subdominios.txt
+rm subdominios2.txt
+rm subdominios3.txt	
 
-#rm mail/theharvester-google.txt
-#rm mail/bing.txt
+#rm correo/theharvester-google.txt
+#rm correo/bing.txt
 
 ######################################################
