@@ -7,6 +7,61 @@ OKGREEN='\033[92m'
 OKORANGE='\033[93m'
 RESET='\e[0m'
 
+#https://github.com/Ice3man543/subfinder
+#https://github.com/daudmalik06/ReconCat
+#https://github.com/mobrine-mob/M0B-tool-v2
+#https://github.com/m8r0wn/pymeta
+#https://github.com/GerbenJavado/LinkFinder
+#https://github.com/Ice3man543/SubOver
+#https://github.com/franccesco/getaltname
+#https://github.com/twelvesec/gasmask
+
+# Cloud
+#https://github.com/MindPointGroup/cloudfrunt
+#https://github.com/glen-mac/goGetBucket
+#https://github.com/yehgdotnet/S3Scanner
+
+#WEB
+#https://github.com/drego85/JoomlaScan
+#https://github.com/MrSqar-Ye/BadMod
+#https://www.kitploit.com/2018/04/jcs-joomla-vulnerability-component.html
+#https://github.com/steverobbins/magescan
+#https://github.com/fgeek/pyfiscan
+#https://github.com/vortexau/mooscan
+#https://github.com/vortexau/mooscan
+#https://github.com/retirejs/retire.js/
+#https://github.com/UltimateHackers/XSStrike
+#https://whatcms.org/Content-Management-Systems
+#https://github.com/m4ll0k/WPSeku
+#https://github.com/Jamalc0m/wphunter
+#https://github.com/rezasp/joomscan
+#https://github.com/m4ll0k/WAScan
+
+
+#https://www.kitploit.com/2018/04/pymeta-search-web-for-files-on-domain.html
+#https://github.com/peterpt/eternal_check
+#https://www.kitploit.com/2018/04/nix-auditor-nix-audit-made-easier-rhel.html
+
+# mobile app
+#https://github.com/UltimateHackers/Diggy
+#https://github.com/Security-Onion-Solutions/security-onion
+
+#Vuln app
+#https://github.com/vegabird/xvna  vuln site
+#https://github.com/logicalhacking/DVHMA
+
+#other
+#https://github.com/m4ll0k/iCloudBrutter
+#https://github.com/Moham3dRiahi/XBruteForcer
+#https://github.com/hc0d3r/sudohulk
+#https://github.com/floriankunushevci/aragog
+#https://github.com/mthbernardes/ipChecker
+#https://www.kitploit.com/2018/02/roxysploit-penetration-testing-suite.html
+#https://github.com/1N3/IntruderPayloads/tree/master/FuzzLists
+#https://www.kitploit.com/2018/02/meterpreter-paranoid-mode-meterpreter.html
+#https://www.kitploit.com/2018/02/grouper-powershell-script-for-helping.html
+#https://github.com/B16f00t/whapa
+
 function print_ascii_art {
 cat << "EOF"
  _______  _______  _______  _______  _       
