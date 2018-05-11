@@ -28,7 +28,6 @@ RESET='\e[0m'
 #https://github.com/steverobbins/magescan
 #https://github.com/fgeek/pyfiscan
 #https://github.com/vortexau/mooscan
-#https://github.com/vortexau/mooscan
 #https://github.com/retirejs/retire.js/
 #https://github.com/UltimateHackers/XSStrike
 #https://whatcms.org/Content-Management-Systems
@@ -57,7 +56,6 @@ RESET='\e[0m'
 #https://github.com/floriankunushevci/aragog
 #https://github.com/mthbernardes/ipChecker
 #https://www.kitploit.com/2018/02/roxysploit-penetration-testing-suite.html
-#https://github.com/1N3/IntruderPayloads/tree/master/FuzzLists
 #https://www.kitploit.com/2018/02/meterpreter-paranoid-mode-meterpreter.html
 #https://www.kitploit.com/2018/02/grouper-powershell-script-for-helping.html
 #https://github.com/B16f00t/whapa
