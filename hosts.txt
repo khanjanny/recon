@@ -1308,6 +1308,7 @@ clip
 clock
 clockingit
 cloud
+geoportal
 cloud1
 cloud2
 clsp
@@ -3571,6 +3572,7 @@ ida
 idaho
 idb
 idc
+ide
 idea
 ideal
 ideas
@@ -3953,6 +3955,15 @@ janus
 japan
 japanese
 Japon
+japo
+japosys
+serverintra
+serverintra0
+serverintra1
+serverintra2
+svrexterno0
+svrexterno1
+svrexterno2
 jason
 jasper
 Jauru
@@ -6698,6 +6709,7 @@ retorno
 Reumatologia
 reunio
 reuniones
+sirep
 rev
 reverse
 review

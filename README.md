@@ -13,6 +13,7 @@ Permite:
 
 Testeado en Kali y ubuntu. Simplemente ejecuta:
 
+    git clone https://github.com/DanielTorres1/recon
     bash instalar.sh
 
 ## ¿COMO USAR?
