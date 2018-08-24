@@ -36,6 +36,7 @@ sudo cp get-geodata.sh /usr/bin/
 sudo cp spoofcheck.sh /usr/bin/
 sudo cp infoga.sh /usr/bin/
 sudo cp ctfr.sh /usr/bin/
+sudo cp pymeta.sh /usr/bin/
 sudo cp hosts.txt /usr/share/wordlists/hosts.txt
 echo "xyz" > /usr/share/fierce/hosts.txt # erase host list
 
@@ -43,6 +44,7 @@ sudo chmod a+x /usr/bin/recon.sh
 sudo chmod a+x /usr/bin/ctfr.sh
 sudo chmod a+x /usr/bin/spoofcheck.sh 
 sudo chmod a+x /usr/bin/infoga.sh 
+sudo chmod a+x /usr/bin/pymeta.sh 
 sudo chmod a+x /usr/bin/get-geodata.sh
 
 echo -e "${RED}[+]${BLUE} Instalando librerias de python ${RESET}"
@@ -61,6 +63,20 @@ cd ../
 
 echo -e "${RED}[+]${BLUE} Instalando Infoga ${RESET}"
 sudo cp -R Infoga /usr/share/
+
+
+echo -e "${RED}[+]${BLUE} Instalando google search ${RESET}"
+git clone https://github.com/DanielTorres1/googlesearch
+cd googlesearch 
+bash instalar.sh
+cd ..
+
+
+echo -e "${RED}[+]${BLUE} Instalando pymeta ${RESET}"
+cd pymeta 
+bash setup.sh
+cd  ..
+sudo cp -R pymeta /usr/share/
 
 echo -e "${RED}[+]${BLUE} Instalando ctfr ${RESET}"
 sudo cp -R ctfr /usr/share/
