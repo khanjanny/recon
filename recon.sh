@@ -7,6 +7,8 @@ OKGREEN='\033[92m'
 OKORANGE='\033[93m'
 RESET='\e[0m'
 
+#https://ipinfo.io/186.121.242.109
+
 #https://github.com/Ice3man543/subfinder
 #https://github.com/daudmalik06/ReconCat
 #https://github.com/mobrine-mob/M0B-tool-v2
