@@ -5605,6 +5605,7 @@ open
 openbsd
 openerp
 openfire
+openf
 opengoo
 opengroup
 openid
@@ -8217,6 +8218,7 @@ turing
 turisbus
 turismo
 turkey
+sgm
 tutor
 tutorials
 tuvieras
