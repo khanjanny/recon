@@ -7,8 +7,6 @@ OKGREEN='\033[92m'
 OKORANGE='\033[93m'
 RESET='\e[0m'
 
-#https://ipinfo.io/186.121.242.109
-
 #https://github.com/Ice3man543/subfinder
 #https://github.com/daudmalik06/ReconCat
 #https://github.com/mobrine-mob/M0B-tool-v2
@@ -82,24 +80,26 @@ EOF
 print_ascii_art
 
 
-while getopts ":d:" OPTIONS
+while getopts ":d:p:a:" OPTIONS
 do
             case $OPTIONS in
             d)     DOMAIN=$OPTARG;;
-            #o)     OUTPUT=$OPTARG;;
+            p)     PORT=$OPTARG;;
+            a)     MYPATH=$OPTARG;;
             ?)     printf "Opcion Invalida: -$OPTARG\n" $0
                           exit 2;;
            esac
 done
 
-DOMAIN=${DOMAIN:=NULL}
+#DOMAIN=${DOMAIN:=NULL}
+#PORT=${PORT:=NULL}
+#MYPATH=${MYPATH:=NULL}
 
 ##################
 #  ~~~ Menu ~~~  #
 ##################
 
-if [ $DOMAIN = NULL ] ; then
-
+if [ -z "$DOMAIN" ] || [ -z "$PORT" ] || [ -z "$MYPATH" ]; then
 echo " USO: recon.sh -d [dominio]"
 echo ""
 exit
@@ -111,6 +111,7 @@ cd $DOMAIN
 
 mkdir dns
 mkdir correo
+mkdir web
 mkdir searchengine
 touch searchengine/googlehacking.txt
 mkdir archivos
@@ -168,6 +169,13 @@ rm correo/infoga2.txt
 
 
 ##################### search engines #################
+echo -e "$OKBLUE+ -- --=############ Recopilando URL indexadas ... #########$RESET" 
+
+google.pl -t "site:$DOMAIN" -o searchengine/google.txt
+
+sleep 60
+
+
 echo -e "$OKBLUE+ -- --=############ Google hacking ... #########$RESET"
 google.pl -t "site:github.com intext:$DOMAIN" -o searchengine/googlehacking.txt -p 1
 google.pl -t "site:$DOMAIN intitle:index.of" -o searchengine/googlehacking.txt -p 1
@@ -182,9 +190,6 @@ google.pl -t "site:$DOMAIN inurl:(_vti_bin|api|webservice)" -o searchengine/goog
 
 google.pl -t "site:trello.com passwords|contrasenas|login|contrasena intext:\"$DOMAIN\"" -o searchengine/googlehacking.txt -p 1
 google.pl -t "site:pastebin.com intext:"*@$DOMAIN"" -o searchengine/googlehacking.txt -p 1
-
-echo -e "$OKBLUE+ -- --=############ Recopilando URL indexadas ... #########$RESET" 
-google.pl -t "site:$DOMAIN" -o searchengine/google.txt
 
 echo -e "$OKBLUE+ -- --=############ Recopilando Metadatos ... #########$RESET" 
 pymeta.sh -d $DOMAIN -dir `pwd`"/archivos/" -csv -out `pwd`"/reporte/metada.csv"
@@ -216,14 +221,14 @@ echo -e "$OKBLUE+ -- --=############ Recopilando informacion ... #########$RESET
 	  
 cd dns
 # fierce
-egrep -i "SOA" fierce.txt 
+egrep -qi "SOA" fierce.txt 
 greprc=$?
 if [[ $greprc -eq 0 ]] ; then # Si se hizo volcado de zona	
 	#echo -e "$OKRED Volcado de zona !! $RESET"	
 	grep "IN     A" fierce.txt | awk '{print $5,$1}' | tr ' ' ',' >> subdominios.txt
 	grep "CNAME" fierce.txt | awk '{print $5,$1}' | tr ' ' ',' >> subdominios.txt
 else	
-	echo -e "\t[+] Iniciando dnsenum (bruteforce DNS ) .."
+#	echo -e "\t[+] Iniciando dnsenum (bruteforce DNS ) .."
 	#dnsenum	
 	grep "IN    A" dnsenum.txt | awk '{print $5,$1}' | tr ' ' ',' >> subdominios.txt
 	grep "CNAME" dnsenum.txt | awk '{print $5,$1}' | tr ' ' ',' >> subdominios.txt
@@ -306,5 +311,23 @@ done <dns/subdominios4.txt
 
 #rm correo/theharvester-google.txt
 #rm correo/bing.txt
+cd web
+echo -e "$OKBLUE [+] Clonando el sitio web... $RESET"  
+
+if [ $PORT = 80 ] ; then
+	wget -m -k -U "Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101 Firefox/45.0" -T 5 -K -E  http://www.$DOMAIN$MYPATH 
+else
+	wget -m -k -U "Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101 Firefox/45.0" -T 5 -K -E  https://www.$DOMAIN$MYPATH 
+fi
+echo ""
+cd www.$DOMAIN
+rm index.html.orig
+grep --color=never -irao "http://[^ ]*"  * | egrep -av "fontawesome|adobe|w3\.org|fontello|sil.org|campivisivi|isiaurbino|scriptype|tht|mit-license|HttpRequest|http-equiv|css|png|angularjs|example|openstreet|zkysky|angular-leaflet|angular-formly|yahoo|spotify|twitch|instagram|facebook|live.com|chieffancypants|angular-ui" | tr -d '>' | sort | uniq > ../../reporte/urls.txt
+grep --color=never -irao "https://[^ ]*"  * | egrep -av "fontawesome|adobe|w3\.org|fontello|sil.org|campivisivi|isiaurbino|scriptype|tht|mit-license|HttpRequest|http-equiv|css|png|angularjs|example|openstreet|zkysky|angular-leaflet|angular-formly|yahoo|spotify|twitch|instagram|facebook|live.com|chieffancypants|angular-ui" | tr -d '>' | sort | uniq >> ../../reporte/urls.txt
+
+cd ../../reporte/
+echo -e "$OKBLUE [+] Lanzando web-buster ... $RESET"  
+web-buster.pl -t www.$DOMAIN  -p $PORT -d $MYPATH  -h 15 -m completo | tee -a web-buster.txt
+echo ""
 
 ######################################################

@@ -34,6 +34,7 @@ echo -e "${RED}[+]${BLUE} Copiando ejecutables ${RESET}"
 sudo cp recon.sh /usr/bin/
 sudo cp get-geodata.sh /usr/bin/
 sudo cp spoofcheck.sh /usr/bin/
+sudo cp grep.sh /usr/bin/
 sudo cp infoga.sh /usr/bin/
 sudo cp ctfr.sh /usr/bin/
 sudo cp pymeta.sh /usr/bin/
@@ -41,6 +42,7 @@ sudo cp hosts.txt /usr/share/wordlists/hosts.txt
 echo "xyz" > /usr/share/fierce/hosts.txt # erase host list
 
 sudo chmod a+x /usr/bin/recon.sh
+sudo chmod a+x /usr/bin/grep.sh
 sudo chmod a+x /usr/bin/ctfr.sh
 sudo chmod a+x /usr/bin/spoofcheck.sh 
 sudo chmod a+x /usr/bin/infoga.sh 

@@ -325,6 +325,7 @@ aporte
 apoyo
 app
 app01
+app02
 app1
 app2
 app3
@@ -1078,6 +1079,7 @@ c.auth-ns
 cb
 cbacoch
 cbb
+controladormobile
 cbb-1-1
 cbb-1-2
 cbb-2-1
@@ -2757,8 +2759,8 @@ factible
 factory
 facturacion
 facturas
-Facturas
-facultaddemedic
+factura
+resap
 faculty
 fades1
 faith
@@ -7266,6 +7268,18 @@ sismail
 sisnet
 SISSY
 sistema
+sistema1
+sistema2
+sistema3
+sistema4
+sistema5
+sistema6
+sistema01
+sistema02
+sistema03
+sistema04
+sistema05
+sistema06
 sistemacolas
 sistemas
 sistemas1
