@@ -36,8 +36,7 @@ RESET='\e[0m'
 #https://github.com/m4ll0k/WAScan
 
 
-#https://www.kitploit.com/2018/04/pymeta-search-web-for-files-on-domain.html
-#https://github.com/peterpt/eternal_check
+##https://github.com/peterpt/eternal_check
 #https://www.kitploit.com/2018/04/nix-auditor-nix-audit-made-easier-rhel.html
 
 # mobile app
@@ -143,6 +142,9 @@ echo -e "$OKORANGE+ -- --=############ Usando servidor DNS  ... #########$RESET"
 grep nameserver /etc/resolv.conf
 echo -e "$OKORANGE+ -- --=############ ############## #########$RESET"
 echo ""
+
+
+
 ####################  DNS test ########################
 echo -e "$OKBLUE+ -- --=############ Reconocimiento DNS  ... #########$RESET"
 
@@ -159,7 +161,7 @@ if [[ $greprc -eq 0 ]] ; then # Si se hizo volcado de zona
 	echo -e "$OKRED \t  [!] Volcado de zona detectado !! $RESET"		
 else	
 	echo -e "\t[+] Iniciando dnsenum (bruteforce DNS ) .."
-	dnsenum $DOMAIN --nocolor -f /usr/share/wordlists/hosts.txt > logs/enumeracion/dnsenum.txt &
+	dnsenum $DOMAIN --nocolor -f /usr/share/wordlists/hosts.txt --noreverse --threads 3 > logs/enumeracion/dnsenum.txt &
 fi
 
 echo -e "\t[+] Iniciando CTFR ( Certificate Transparency logs) .."
@@ -202,10 +204,15 @@ insert_data
 ######## ###
 
 
+
 ##################### search engines #################
 
+#openvpn /etc/openvpn/ibvpn/ibVPN_UK_Gosport.ovpn > /dev/null &
+#sleep 10
+#echo "nameserver 8.8.8.8" > /etc/resolv.conf
+
 echo -e "$OKBLUE+ -- --=############ Google hacking ... #########$RESET"
-google.pl -t "site:github.com intext:$DOMAIN" -o logs/enumeracion/$DOMAIN-web-googlehacking.txt -p 1 -l logs/enumeracion/web-googlehacking.html
+google.pl -t "site:github.com intext:$DOMAIN" -o logs/enumeracion/$DOMAIN-web-googlehacking.txt -p 1 -l logs/enumeracion/web-googlehacking.html 
 egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/web-googlehacking.html
 greprc=$?
 if [[ $greprc -eq 1 ]] ; then # hay resultados
@@ -215,7 +222,7 @@ cat logs/enumeracion/$DOMAIN-web-googlehacking.txt >> .enumeracion/$DOMAIN-web-g
 echo "" >> .enumeracion/$DOMAIN-web-googlehacking.txt	
 fi
 
-google.pl -t "site:$DOMAIN intitle:index.of" -o logs/vulnerabilidades/$DOMAIN-web-googlehacking2.txt -p 1 -l logs/vulnerabilidades/web-googlehacking2.html
+google.pl -t "site:$DOMAIN intitle:index.of" -o logs/vulnerabilidades/$DOMAIN-web-googlehacking2.txt -p 1 -l logs/vulnerabilidades/web-googlehacking2.html 
 egrep -qi "No se han encontrado resultados|did not match any" logs/vulnerabilidades/web-googlehacking2.html
 greprc=$?
 if [[ $greprc -eq 1 ]] ; then # hay resultados
@@ -225,7 +232,7 @@ cat logs/vulnerabilidades/$DOMAIN-web-googlehacking2.txt >> .vulnerabilidades/$D
 echo "" >> .vulnerabilidades/$DOMAIN-web-googlehacking.txt	
 fi
 
-google.pl -t "site:$DOMAIN filetype:sql" -o logs/vulnerabilidades/$DOMAIN-web-googlehacking3.txt -p 1 -l logs/vulnerabilidades/web-googlehacking3.html
+google.pl -t "site:$DOMAIN filetype:sql" -o logs/vulnerabilidades/$DOMAIN-web-googlehacking3.txt -p 1 -l logs/vulnerabilidades/web-googlehacking3.html 
 egrep -qi "No se han encontrado resultados|did not match any" logs/vulnerabilidades/web-googlehacking3.html
 greprc=$?
 if [[ $greprc -eq 1 ]] ; then # hay resultados
@@ -235,7 +242,7 @@ cat logs/vulnerabilidades/$DOMAIN-web-googlehacking3.txt >> .vulnerabilidades/$D
 echo "" >> .vulnerabilidades/$DOMAIN-web-googlehacking.txt	
 fi
 
-google.pl -t "site:$DOMAIN \"access denied for user\"" -o logs/enumeracion/$DOMAIN-web-googlehacking4.txt -p 1 -l logs/enumeracion/web-googlehacking4.html
+google.pl -t "site:$DOMAIN \"access denied for user\"" -o logs/enumeracion/$DOMAIN-web-googlehacking4.txt -p 1 -l logs/enumeracion/web-googlehacking4.html 
 egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/web-googlehacking4.html
 greprc=$?
 if [[ $greprc -eq 1 ]] ; then # hay resultados
@@ -245,7 +252,13 @@ cat logs/enumeracion/$DOMAIN-web-googlehacking4.txt >> .enumeracion/$DOMAIN-web-
 echo "" >> .enumeracion/$DOMAIN-web-googlehacking.txt	
 fi
 
-google.pl -t "site:$DOMAIN intitle:\"curriculum vitae\"" -o logs/enumeracion/$DOMAIN-web-googlehacking5.txt -p 1 -l logs/enumeracion/web-googlehacking5.html
+#killall openvpn
+#openvpn /etc/openvpn/ibvpn/ibVPN_UK_London_2.ovpn > /dev/null &
+#sleep 10
+#echo "nameserver 8.8.8.8" > /etc/resolv.conf
+
+
+google.pl -t "site:$DOMAIN intitle:\"curriculum vitae\"" -o logs/enumeracion/$DOMAIN-web-googlehacking5.txt -p 1 -l logs/enumeracion/web-googlehacking5.html 
 egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/web-googlehacking5.html
 greprc=$?
 if [[ $greprc -eq 1 ]] ; then # hay resultados
@@ -255,7 +268,7 @@ cat logs/enumeracion/$DOMAIN-web-googlehacking5.txt >> .enumeracion/$DOMAIN-web-
 echo "" >> .enumeracion/$DOMAIN-web-googlehacking.txt		
 fi
 
-google.pl -t "site:$DOMAIN passwords|contrasenas|login|contrasena filetype:txt" -o logs/vulnerabilidades/$DOMAIN-web-googlehacking6.txt -p 1 -l logs/vulnerabilidades/web-googlehacking6.html
+google.pl -t "site:$DOMAIN passwords|contrasenas|login|contrasena filetype:txt" -o logs/vulnerabilidades/$DOMAIN-web-googlehacking6.txt -p 1 -l logs/vulnerabilidades/web-googlehacking6.html 
 egrep -qi "No se han encontrado resultados|did not match any" logs/vulnerabilidades/web-googlehacking6.html
 greprc=$?
 if [[ $greprc -eq 1 ]] ; then # hay resultados
@@ -265,7 +278,7 @@ cat logs/vulnerabilidades/$DOMAIN-web-googlehacking6.txt >> .vulnerabilidades/$D
 echo "" >> .vulnerabilidades/$DOMAIN-web-googlehacking.txt	
 fi
 
-google.pl -t "site:$DOMAIN inurl:intranet" -o logs/enumeracion/$DOMAIN-web-googlehacking7.txt -p 1 -l logs/enumeracion/web-googlehacking7.html
+google.pl -t "site:$DOMAIN inurl:intranet" -o logs/enumeracion/$DOMAIN-web-googlehacking7.txt -p 1 -l logs/enumeracion/web-googlehacking7.html 
 egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/web-googlehacking7.html
 greprc=$?
 if [[ $greprc -eq 1 ]] ; then # hay resultados
@@ -275,7 +288,7 @@ cat logs/enumeracion/$DOMAIN-web-googlehacking7.txt >> .enumeracion/$DOMAIN-web-
 echo "" >> .enumeracion/$DOMAIN-web-googlehacking.txt	
 fi
 
-google.pl -t "site:$DOMAIN inurl:\":8080\" -intext:8080" -o logs/enumeracion/$DOMAIN-web-googlehacking8.txt -p 1 -l logs/enumeracion/web-googlehacking8.html
+google.pl -t "site:$DOMAIN inurl:\":8080\" -intext:8080" -o logs/enumeracion/$DOMAIN-web-googlehacking8.txt -p 1 -l logs/enumeracion/web-googlehacking8.html 
 egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/web-googlehacking8.html
 greprc=$?
 if [[ $greprc -eq 1 ]] ; then # hay resultados
@@ -285,7 +298,14 @@ cat logs/enumeracion/$DOMAIN-web-googlehacking8.txt >> .enumeracion/$DOMAIN-web-
 echo "" >> .enumeracion/$DOMAIN-web-googlehacking.txt	
 fi
 
-google.pl -t "site:$DOMAIN filetype:asmx OR filetype:svc OR inurl:wsdl" -o logs/enumeracion/$DOMAIN-web-googlehacking9.txt -p 1 -l logs/enumeracion/web-googlehacking9.html
+
+#killall openvpn
+#openvpn /etc/openvpn/ibvpn/ibVPN_USA_Houston_1.ovpn > /dev/null &
+#sleep 10
+#echo "nameserver 8.8.8.8" > /etc/resolv.conf
+
+
+google.pl -t "site:$DOMAIN filetype:asmx OR filetype:svc OR inurl:wsdl" -o logs/enumeracion/$DOMAIN-web-googlehacking9.txt -p 1 -l logs/enumeracion/web-googlehacking9.html 
 egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/web-googlehacking9.html
 greprc=$?
 if [[ $greprc -eq 1 ]] ; then # hay resultados
@@ -295,7 +315,8 @@ cat logs/enumeracion/$DOMAIN-web-googlehacking9.txt >> .enumeracion/$DOMAIN-web-
 echo "" >> .enumeracion/$DOMAIN-web-googlehacking.txt	
 fi
 
-google.pl -t "site:$DOMAIN inurl:(_vti_bin|api|webservice)" -o logs/enumeracion/$DOMAIN-web-googlehacking10.txt -p 1 -l logs/enumeracion/web-googlehacking10.html
+
+google.pl -t "site:$DOMAIN inurl:(_vti_bin|api|webservice)" -o logs/enumeracion/$DOMAIN-web-googlehacking10.txt -p 1 -l logs/enumeracion/web-googlehacking10.html 
 egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/web-googlehacking10.html
 greprc=$?
 if [[ $greprc -eq 1 ]] ; then # hay resultados
@@ -305,7 +326,7 @@ cat logs/enumeracion/$DOMAIN-web-googlehacking10.txt >> .enumeracion/$DOMAIN-web
 echo "" >> .enumeracion/$DOMAIN-web-googlehacking.txt	
 fi
 
-google.pl -t "site:trello.com passwords|contrasenas|login|contrasena intext:\"$DOMAIN\"" -o logs/vulnerabilidades/$DOMAIN-web-googlehacking11.txt -p 1 -l logs/vulnerabilidades/web-googlehacking11.html
+google.pl -t "site:trello.com passwords|contrasenas|login|contrasena intext:\"$DOMAIN\"" -o logs/vulnerabilidades/$DOMAIN-web-googlehacking11.txt -p 1 -l logs/vulnerabilidades/web-googlehacking11.html 
 egrep -qi "No se han encontrado resultados|did not match any" logs/vulnerabilidades/web-googlehacking11.html
 greprc=$?
 if [[ $greprc -eq 1 ]] ; then # hay resultados
@@ -315,8 +336,8 @@ cat logs/vulnerabilidades/$DOMAIN-web-googlehacking11.txt >> .vulnerabilidades/$
 echo "" >> .vulnerabilidades/$DOMAIN-web-googlehacking.txt	
 fi
 
-google.pl -t "site:pastebin.com intext:"*@$DOMAIN"" -o logs/enumeracion/$DOMAIN-web-googlehacking12.txt -p 1 -l logs/enumeracion/$DOMAIN-web-googlehacking12.html
-egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/$DOMAIN-web-googlehacking12.html
+google.pl -t "site:pastebin.com intext:"*@$DOMAIN"" -o logs/enumeracion/$DOMAIN-web-googlehacking12.txt -p 1 -l logs/enumeracion/web-googlehacking12.html 
+egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/web-googlehacking12.html
 greprc=$?
 if [[ $greprc -eq 1 ]] ; then # hay resultados
 echo "site:github.com intext:$DOMAIN" >> .enumeracion/$DOMAIN-web-googlehacking.txt	
@@ -324,6 +345,28 @@ sed -i '/^\s*$/d' logs/enumeracion/$DOMAIN-web-googlehacking12.txt # delete empt
 cat logs/enumeracion/$DOMAIN-web-googlehacking12.txt >> .enumeracion/$DOMAIN-web-googlehacking.txt	
 echo "" >> .enumeracion/$DOMAIN-web-googlehacking.txt	
 fi
+
+
+google.pl -t "site:$DOMAIN \"Undefined index\" " -o logs/enumeracion/$DOMAIN-web-googlehacking13.txt -p 1 -l logs/enumeracion/web-googlehacking13.html 
+egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/web-googlehacking13.html
+greprc=$?
+if [[ $greprc -eq 1 ]] ; then # hay resultados
+echo "site:$DOMAIN \"Undefined index\" " >> .enumeracion/$DOMAIN-web-googlehacking.txt	
+sed -i '/^\s*$/d' logs/enumeracion/$DOMAIN-web-googlehacking13.txt # delete empty lines	
+cat logs/enumeracion/$DOMAIN-web-googlehacking13.txt >> .enumeracion/$DOMAIN-web-googlehacking.txt	
+echo "" >> .enumeracion/$DOMAIN-web-googlehacking.txt	
+fi
+
+google.pl -t "site:$DOMAIN inurl:storage" -o logs/enumeracion/$DOMAIN-web-googlehacking14.txt -p 1 -l logs/enumeracion/web-googlehacking14.html 
+egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/web-googlehacking14.html
+greprc=$?
+if [[ $greprc -eq 1 ]] ; then # hay resultados
+echo "site:$DOMAIN inurl:storage" >> .enumeracion/$DOMAIN-web-googlehacking.txt	
+sed -i '/^\s*$/d' logs/enumeracion/$DOMAIN-web-googlehacking14.txt # delete empty lines	
+cat logs/enumeracion/$DOMAIN-web-googlehacking14.txt >> .enumeracion/$DOMAIN-web-googlehacking.txt	
+echo "" >> .enumeracion/$DOMAIN-web-googlehacking.txt	
+fi
+
 
 insert_data
 sleep 90
@@ -338,8 +381,10 @@ sleep 90
 echo -e "$OKBLUE+ -- --=############ Recopilando URL indexadas ... #########$RESET" 
 
 google.pl -t "site:$DOMAIN" -o logs/enumeracion/$DOMAIN-web-indexado2.txt -l logs/enumeracion/$DOMAIN-google.html 
+echo "Ejecutando: sort logs/enumeracion/$DOMAIN-web-indexado2.txt | uniq | egrep -v"
 sort logs/enumeracion/$DOMAIN-web-indexado2.txt | uniq | egrep -v "pdf|doc" > .enumeracion/$DOMAIN-web-indexado.txt
 insert_data
+
 	
 ####### wait to finish ########
   while true; do
