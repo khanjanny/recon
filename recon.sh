@@ -212,6 +212,32 @@ insert_data
 #echo "nameserver 8.8.8.8" > /etc/resolv.conf
 
 echo -e "$OKBLUE+ -- --=############ Google hacking ... #########$RESET"
+
+google.pl -t "site:$DOMAIN inurl:add" -o logs/vulnerabilidades/$DOMAIN-web-googlehacking0.txt -p 1 -l logs/vulnerabilidades/web-googlehacking0.html 
+egrep -qi "No se han encontrado resultados|did not match any" logs/vulnerabilidades/web-googlehacking0.html
+greprc=$?
+if [[ $greprc -eq 1 ]] ; then # hay resultados
+echo "site:$DOMAIN inurl:add" >> .vulnerabilidades/$DOMAIN-web-googlehacking.txt	
+sed -i '/^\s*$/d' logs/vulnerabilidades/$DOMAIN-web-googlehacking0.txt # delete empty lines	
+cat logs/vulnerabilidades/$DOMAIN-web-googlehacking0.txt >> .vulnerabilidades/$DOMAIN-web-googlehacking.txt	
+echo "" >> .vulnerabilidades/$DOMAIN-web-googlehacking.txt	
+fi
+
+sleep 10;
+
+
+google.pl -t "site:$DOMAIN inurl:edit" -o logs/vulnerabilidades/$DOMAIN-web-googlehacking1.txt -p 1 -l logs/vulnerabilidades/web-googlehacking1.html 
+egrep -qi "No se han encontrado resultados|did not match any" logs/vulnerabilidades/web-googlehacking1.html
+greprc=$?
+if [[ $greprc -eq 1 ]] ; then # hay resultados
+echo "site:$DOMAIN inurl:edit" >> .vulnerabilidades/$DOMAIN-web-googlehacking.txt	
+sed -i '/^\s*$/d' logs/vulnerabilidades/$DOMAIN-web-googlehacking1.txt # delete empty lines	
+cat logs/vulnerabilidades/$DOMAIN-web-googlehacking1.txt >> .vulnerabilidades/$DOMAIN-web-googlehacking.txt	
+echo "" >> .vulnerabilidades/$DOMAIN-web-googlehacking.txt	
+fi
+
+sleep 10;
+
 google.pl -t "site:github.com intext:$DOMAIN" -o logs/enumeracion/$DOMAIN-web-googlehacking.txt -p 1 -l logs/enumeracion/web-googlehacking.html 
 egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/web-googlehacking.html
 greprc=$?
@@ -221,6 +247,8 @@ sed -i '/^\s*$/d' logs/enumeracion/$DOMAIN-web-googlehacking.txt # delete empty 
 cat logs/enumeracion/$DOMAIN-web-googlehacking.txt >> .enumeracion/$DOMAIN-web-googlehacking.txt	          
 echo "" >> .enumeracion/$DOMAIN-web-googlehacking.txt	
 fi
+
+sleep 10;
 
 google.pl -t "site:$DOMAIN intitle:index.of" -o logs/vulnerabilidades/$DOMAIN-web-googlehacking2.txt -p 1 -l logs/vulnerabilidades/web-googlehacking2.html 
 egrep -qi "No se han encontrado resultados|did not match any" logs/vulnerabilidades/web-googlehacking2.html
@@ -232,6 +260,8 @@ cat logs/vulnerabilidades/$DOMAIN-web-googlehacking2.txt >> .vulnerabilidades/$D
 echo "" >> .vulnerabilidades/$DOMAIN-web-googlehacking.txt	
 fi
 
+sleep 10;
+
 google.pl -t "site:$DOMAIN filetype:sql" -o logs/vulnerabilidades/$DOMAIN-web-googlehacking3.txt -p 1 -l logs/vulnerabilidades/web-googlehacking3.html 
 egrep -qi "No se han encontrado resultados|did not match any" logs/vulnerabilidades/web-googlehacking3.html
 greprc=$?
@@ -241,6 +271,8 @@ sed -i '/^\s*$/d' logs/vulnerabilidades/$DOMAIN-web-googlehacking3.txt # delete 
 cat logs/vulnerabilidades/$DOMAIN-web-googlehacking3.txt >> .vulnerabilidades/$DOMAIN-web-googlehacking.txt	
 echo "" >> .vulnerabilidades/$DOMAIN-web-googlehacking.txt	
 fi
+
+sleep 10;
 
 google.pl -t "site:$DOMAIN \"access denied for user\"" -o logs/enumeracion/$DOMAIN-web-googlehacking4.txt -p 1 -l logs/enumeracion/web-googlehacking4.html 
 egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/web-googlehacking4.html
@@ -256,7 +288,7 @@ fi
 #openvpn /etc/openvpn/ibvpn/ibVPN_UK_London_2.ovpn > /dev/null &
 #sleep 10
 #echo "nameserver 8.8.8.8" > /etc/resolv.conf
-
+sleep 10;
 
 google.pl -t "site:$DOMAIN intitle:\"curriculum vitae\"" -o logs/enumeracion/$DOMAIN-web-googlehacking5.txt -p 1 -l logs/enumeracion/web-googlehacking5.html 
 egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/web-googlehacking5.html
@@ -268,6 +300,8 @@ cat logs/enumeracion/$DOMAIN-web-googlehacking5.txt >> .enumeracion/$DOMAIN-web-
 echo "" >> .enumeracion/$DOMAIN-web-googlehacking.txt		
 fi
 
+sleep 10;
+
 google.pl -t "site:$DOMAIN passwords|contrasenas|login|contrasena filetype:txt" -o logs/vulnerabilidades/$DOMAIN-web-googlehacking6.txt -p 1 -l logs/vulnerabilidades/web-googlehacking6.html 
 egrep -qi "No se han encontrado resultados|did not match any" logs/vulnerabilidades/web-googlehacking6.html
 greprc=$?
@@ -277,6 +311,8 @@ sed -i '/^\s*$/d' logs/vulnerabilidades/$DOMAIN-web-googlehacking6.txt # delete 
 cat logs/vulnerabilidades/$DOMAIN-web-googlehacking6.txt >> .vulnerabilidades/$DOMAIN-web-googlehacking.txt	
 echo "" >> .vulnerabilidades/$DOMAIN-web-googlehacking.txt	
 fi
+
+sleep 10;
 
 google.pl -t "site:$DOMAIN inurl:intranet" -o logs/enumeracion/$DOMAIN-web-googlehacking7.txt -p 1 -l logs/enumeracion/web-googlehacking7.html 
 egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/web-googlehacking7.html
@@ -288,6 +324,8 @@ cat logs/enumeracion/$DOMAIN-web-googlehacking7.txt >> .enumeracion/$DOMAIN-web-
 echo "" >> .enumeracion/$DOMAIN-web-googlehacking.txt	
 fi
 
+sleep 10;
+
 google.pl -t "site:$DOMAIN inurl:\":8080\" -intext:8080" -o logs/enumeracion/$DOMAIN-web-googlehacking8.txt -p 1 -l logs/enumeracion/web-googlehacking8.html 
 egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/web-googlehacking8.html
 greprc=$?
@@ -298,12 +336,7 @@ cat logs/enumeracion/$DOMAIN-web-googlehacking8.txt >> .enumeracion/$DOMAIN-web-
 echo "" >> .enumeracion/$DOMAIN-web-googlehacking.txt	
 fi
 
-
-#killall openvpn
-#openvpn /etc/openvpn/ibvpn/ibVPN_USA_Houston_1.ovpn > /dev/null &
-#sleep 10
-#echo "nameserver 8.8.8.8" > /etc/resolv.conf
-
+sleep 10;
 
 google.pl -t "site:$DOMAIN filetype:asmx OR filetype:svc OR inurl:wsdl" -o logs/enumeracion/$DOMAIN-web-googlehacking9.txt -p 1 -l logs/enumeracion/web-googlehacking9.html 
 egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/web-googlehacking9.html
@@ -315,6 +348,7 @@ cat logs/enumeracion/$DOMAIN-web-googlehacking9.txt >> .enumeracion/$DOMAIN-web-
 echo "" >> .enumeracion/$DOMAIN-web-googlehacking.txt	
 fi
 
+sleep 10;
 
 google.pl -t "site:$DOMAIN inurl:(_vti_bin|api|webservice)" -o logs/enumeracion/$DOMAIN-web-googlehacking10.txt -p 1 -l logs/enumeracion/web-googlehacking10.html 
 egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/web-googlehacking10.html
@@ -326,6 +360,8 @@ cat logs/enumeracion/$DOMAIN-web-googlehacking10.txt >> .enumeracion/$DOMAIN-web
 echo "" >> .enumeracion/$DOMAIN-web-googlehacking.txt	
 fi
 
+sleep 10;
+
 google.pl -t "site:trello.com passwords|contrasenas|login|contrasena intext:\"$DOMAIN\"" -o logs/vulnerabilidades/$DOMAIN-web-googlehacking11.txt -p 1 -l logs/vulnerabilidades/web-googlehacking11.html 
 egrep -qi "No se han encontrado resultados|did not match any" logs/vulnerabilidades/web-googlehacking11.html
 greprc=$?
@@ -335,6 +371,8 @@ sed -i '/^\s*$/d' logs/vulnerabilidades/$DOMAIN-web-googlehacking11.txt # delete
 cat logs/vulnerabilidades/$DOMAIN-web-googlehacking11.txt >> .vulnerabilidades/$DOMAIN-web-googlehacking.txt	
 echo "" >> .vulnerabilidades/$DOMAIN-web-googlehacking.txt	
 fi
+
+sleep 10;
 
 google.pl -t "site:pastebin.com intext:"*@$DOMAIN"" -o logs/enumeracion/$DOMAIN-web-googlehacking12.txt -p 1 -l logs/enumeracion/web-googlehacking12.html 
 egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/web-googlehacking12.html
@@ -346,6 +384,7 @@ cat logs/enumeracion/$DOMAIN-web-googlehacking12.txt >> .enumeracion/$DOMAIN-web
 echo "" >> .enumeracion/$DOMAIN-web-googlehacking.txt	
 fi
 
+sleep 10;
 
 google.pl -t "site:$DOMAIN \"Undefined index\" " -o logs/enumeracion/$DOMAIN-web-googlehacking13.txt -p 1 -l logs/enumeracion/web-googlehacking13.html 
 egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/web-googlehacking13.html
@@ -356,6 +395,8 @@ sed -i '/^\s*$/d' logs/enumeracion/$DOMAIN-web-googlehacking13.txt # delete empt
 cat logs/enumeracion/$DOMAIN-web-googlehacking13.txt >> .enumeracion/$DOMAIN-web-googlehacking.txt	
 echo "" >> .enumeracion/$DOMAIN-web-googlehacking.txt	
 fi
+
+sleep 10;
 
 google.pl -t "site:$DOMAIN inurl:storage" -o logs/enumeracion/$DOMAIN-web-googlehacking14.txt -p 1 -l logs/enumeracion/web-googlehacking14.html 
 egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/web-googlehacking14.html
