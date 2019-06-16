@@ -27,7 +27,7 @@ RESET="\033[00m"       # Normal
 
 echo -e "${RED}[+]${BLUE} Instando de repositorio .. ${RESET}"
 
-sudo apt-get install fierce 
+sudo apt-get install fierce dnsenum
 
 echo -e "${RED}[+]${BLUE} Copiando ejecutables ${RESET}"
 
@@ -38,6 +38,7 @@ sudo cp grep.sh /usr/bin/
 sudo cp infoga.sh /usr/bin/
 sudo cp ctfr.sh /usr/bin/
 sudo cp pymeta.sh /usr/bin/
+mkdir /usr/share/wordlists
 sudo cp hosts.txt /usr/share/wordlists/hosts.txt
 echo "xyz" > /usr/share/fierce/hosts.txt # erase host list
 
