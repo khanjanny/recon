@@ -422,6 +422,14 @@ sleep 90
 echo -e "$OKBLUE+ -- --=############ Recopilando URL indexadas ... #########$RESET" 
 
 google.pl -t "site:$DOMAIN" -o logs/enumeracion/$DOMAIN-web-indexado2.txt -l logs/enumeracion/$DOMAIN-google.html 
+
+egrep -i "Buy|Pharmacy|medication|cheap|porn|viagra|hacked" logs/enumeracion/$DOMAIN-google.html
+greprc=$?
+if [[ $greprc -eq 0 ]] ; then			
+	echo -e "\t$OKRED[!] Redirección  a sitios de terceros detectado \n $RESET"
+	echo "Vulnerable site:$DOMAIN" > .vulnerabilidades/$DOMAIN-google-redirect.txt 	
+fi	
+
 echo "Ejecutando: sort logs/enumeracion/$DOMAIN-web-indexado2.txt | uniq | egrep -v"
 sort logs/enumeracion/$DOMAIN-web-indexado2.txt | uniq | egrep -v "pdf|doc" > .enumeracion/$DOMAIN-web-indexado.txt
 insert_data
