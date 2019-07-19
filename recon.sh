@@ -9,11 +9,9 @@ OKGREEN='\033[92m'
 OKORANGE='\033[93m'
 RESET='\e[0m'
 
-#https://github.com/Ice3man543/subfinder
 #https://github.com/daudmalik06/ReconCat
 #https://github.com/mobrine-mob/M0B-tool-v2
 #https://github.com/GerbenJavado/LinkFinder
-#https://github.com/Ice3man543/SubOver
 #https://github.com/franccesco/getaltname
 #https://github.com/twelvesec/gasmask
 
@@ -36,15 +34,11 @@ RESET='\e[0m'
 #https://github.com/m4ll0k/WAScan
 
 
-##https://github.com/peterpt/eternal_check
-#https://www.kitploit.com/2018/04/nix-auditor-nix-audit-made-easier-rhel.html
-
 # mobile app
 #https://github.com/UltimateHackers/Diggy
 #https://github.com/Security-Onion-Solutions/security-onion
 
 #Vuln app
-#https://github.com/vegabird/xvna  vuln site
 #https://github.com/logicalhacking/DVHMA
 
 #other
@@ -54,7 +48,6 @@ RESET='\e[0m'
 #https://github.com/floriankunushevci/aragog
 #https://github.com/mthbernardes/ipChecker
 #https://www.kitploit.com/2018/02/roxysploit-penetration-testing-suite.html
-#https://www.kitploit.com/2018/02/meterpreter-paranoid-mode-meterpreter.html
 #https://www.kitploit.com/2018/02/grouper-powershell-script-for-helping.html
 #https://github.com/B16f00t/whapa
 
@@ -167,6 +160,11 @@ fi
 echo -e "\t[+] Iniciando CTFR ( Certificate Transparency logs) .."
 ctfr.sh -d $DOMAIN > logs/enumeracion/ctfr.txt
 
+echo -e "\t[+] Iniciando Sublist3r ( Baidu, Yahoo, Google, Bing, Ask, Netcraft, DNSdumpster, Virustotal, ThreatCrowd, SSL Certificates, PassiveDNS) .."
+Sublist3r.sh -d $DOMAIN > logs/enumeracion/Sublist3r.txt
+
+echo -e "\t[+] Iniciando findomain ( Crtsh API, CertSpotter API, facebook) .."
+findomain --all-apis --target $DOMAIN > logs/enumeracion/findomain.txt
 
 ##################### Email, subdominios #################
 
@@ -284,10 +282,6 @@ cat logs/enumeracion/$DOMAIN-web-googlehacking4.txt >> .enumeracion/$DOMAIN-web-
 echo "" >> .enumeracion/$DOMAIN-web-googlehacking.txt	
 fi
 
-#killall openvpn
-#openvpn /etc/openvpn/ibvpn/ibVPN_UK_London_2.ovpn > /dev/null &
-#sleep 10
-#echo "nameserver 8.8.8.8" > /etc/resolv.conf
 sleep 10;
 
 google.pl -t "site:$DOMAIN intitle:\"curriculum vitae\"" -o logs/enumeracion/$DOMAIN-web-googlehacking5.txt -p 1 -l logs/enumeracion/web-googlehacking5.html 
@@ -481,7 +475,18 @@ else
 fi
 
 # ctfr
-cat logs/enumeracion/ctfr.txt >> subdominios.txt
+# [-]  dialin.organojudicial.gob.bo
+cat logs/enumeracion/ctfr.txt | grep --color=never $DOMAIN | awk '{print $2}' >> subdominios.txt
+
+# Sublist3r
+#www.comibol.gob.bo
+cat logs/enumeracion/Sublist3r.txt | grep --color=never $DOMAIN  >> subdominios.txt
+
+# findomain
+#  --> correo.siahcomibol.gob.bo
+cat logs/enumeracion/findomain.txt | grep --color=never "\-\-" |  awk '{print $2}' >> subdominios.txt
+
+
 
 # theharvester y google
 cat logs/enumeracion/theharvester-google.txt | grep --color=never $DOMAIN | grep -v @ >> subdominios.txt
@@ -496,7 +501,7 @@ sed -i "s/$DOMAIN./$DOMAIN/g" subdominios.txt
 sed -i "s/:/,/g" subdominios.txt
 
 #filtrar dominios
-grep $DOMAIN subdominios.txt | egrep -v '\--|Testing|Trying|DNS|\*' | sort | uniq -i > subdominios2.txt
+grep $DOMAIN subdominios.txt | egrep -v '\--|Testing|Trying|TARGET|subdomains|DNS|\*' | sort | uniq -i > subdominios2.txt
 
 for line in `cat subdominios2.txt`;
 do 		

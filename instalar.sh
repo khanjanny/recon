@@ -32,10 +32,12 @@ sudo apt-get install fierce dnsenum
 echo -e "${RED}[+]${BLUE} Copiando ejecutables ${RESET}"
 
 sudo cp recon.sh /usr/bin/
+sudo cp findomain /usr/bin/
 sudo cp get-geodata.sh /usr/bin/
 sudo cp spoofcheck.sh /usr/bin/
 sudo cp grep.sh /usr/bin/
 sudo cp infoga.sh /usr/bin/
+sudo cp Sublist3r.sh /usr/bin/
 sudo cp ctfr.sh /usr/bin/
 sudo cp pymeta.sh /usr/bin/
 mkdir /usr/share/wordlists
@@ -43,10 +45,12 @@ sudo cp hosts.txt /usr/share/wordlists/hosts.txt
 echo "xyz" > /usr/share/fierce/hosts.txt # erase host list
 
 sudo chmod a+x /usr/bin/recon.sh
+sudo chmod a+x /usr/bin/findomain
 sudo chmod a+x /usr/bin/grep.sh
 sudo chmod a+x /usr/bin/ctfr.sh
 sudo chmod a+x /usr/bin/spoofcheck.sh 
 sudo chmod a+x /usr/bin/infoga.sh 
+sudo chmod a+x /usr/bin/Sublist3r.sh
 sudo chmod a+x /usr/bin/pymeta.sh 
 sudo chmod a+x /usr/bin/get-geodata.sh
 
@@ -81,6 +85,12 @@ bash setup.sh
 cd  ..
 sudo cp -R pymeta /usr/share/
 
+echo -e "${RED}[+]${BLUE} Instalando Sublist3r ${RESET}"
+sudo cp -R Sublist3r /usr/share/
+cd Sublist3r
+sudo pip install -r requirements.txt
+cd ..
+
 echo -e "${RED}[+]${BLUE} Instalando ctfr ${RESET}"
 sudo cp -R ctfr /usr/share/
 cd ctfr
@@ -95,3 +105,4 @@ sudo cp hosts.txt /usr/share/wordlists/hosts.txt
 cd spoofcheck
 sudo pip install -r requirements.txt
 cd ..
+
