@@ -154,11 +154,11 @@ if [[ $greprc -eq 0 ]] ; then # Si se hizo volcado de zona
 	echo -e "$OKRED \t  [!] Volcado de zona detectado !! $RESET"		
 else	
 	echo -e "\t[+] Iniciando dnsenum (bruteforce DNS ) .."
-	dnsenum $DOMAIN --nocolor -f /usr/share/wordlists/hosts.txt --noreverse --threads 3 > logs/enumeracion/dnsenum.txt &
+	dnsenum $DOMAIN --nocolor -f /usr/share/wordlists/hosts.txt --noreverse --threads 3 > logs/enumeracion/dnsenum.txt 2>/dev/null &
 fi
 
 echo -e "\t[+] Iniciando CTFR ( Certificate Transparency logs) .."
-ctfr.sh -d $DOMAIN > logs/enumeracion/ctfr.txt
+ctfr.sh -d $DOMAIN > logs/enumeracion/ctfr.txt 2>/dev/null
 
 echo -e "\t[+] Iniciando Sublist3r ( Baidu, Yahoo, Google, Bing, Ask, Netcraft, DNSdumpster, Virustotal, ThreatCrowd, SSL Certificates, PassiveDNS) .."
 Sublist3r.sh -d $DOMAIN > logs/enumeracion/Sublist3r.txt
@@ -415,9 +415,10 @@ sleep 90
 
 echo -e "$OKBLUE+ -- --=############ Recopilando URL indexadas ... #########$RESET" 
 
-google.pl -t "site:$DOMAIN" -o logs/enumeracion/$DOMAIN-web-indexado2.txt -l logs/enumeracion/$DOMAIN-google.html 
+google.pl -t "site:$DOMAIN" -o logs/enumeracion/$DOMAIN-google-indexado2.txt -l logs/enumeracion/$DOMAIN-google.html 
 
-egrep -i "Buy|Pharmacy|medication|cheap|porn|viagra|hacked" logs/enumeracion/$DOMAIN-google.html
+echo -e "$OKBLUE+ -- --=############ Comprobando si google indexo páginas hackeadas ... #########$RESET" 
+egrep -iq " Buy| Pharmacy | medication| cheap| porn| viagra|hacked" logs/enumeracion/$DOMAIN-google.html
 greprc=$?
 if [[ $greprc -eq 0 ]] ; then			
 	echo -e "\t$OKRED[!] Redirección  a sitios de terceros detectado \n $RESET"
@@ -464,13 +465,13 @@ if [[ $greprc -eq 0 ]] ; then # Si se hizo volcado de zona
 	#echo -e "$OKRED Volcado de zona !! $RESET"	
 	grep "IN     A" logs/enumeracion/fierce.txt | awk '{print $5,$1}' | tr ' ' ',' >> subdominios.txt
 	grep "IN	A" logs/enumeracion/fierce.txt | awk '{print $5,$1}' | tr ' ' ',' >> subdominios.txt	
-	grep "CNAME" logs/enumeracion/fierce.txt | awk '{print $5,$1}' | tr ' ' ',' >> subdominios.txt
+	grep "CNAME" logs/enumeracion/fierce.txt | awk '{print $1}' | tr ' ' ',' >> subdominios.txt
 	cp logs/enumeracion/fierce.txt  .vulnerabilidades/$DOMAIN-dns-transferenciaDNS.txt
 else	
 #	echo -e "\t[+] Iniciando dnsenum (bruteforce DNS ) .."
 	#dnsenum	
 	grep "IN    A" logs/enumeracion/dnsenum.txt | awk '{print $5,$1}' | tr ' ' ',' >> subdominios.txt	
-	grep "CNAME" logs/enumeracion/dnsenum.txt | awk '{print $5,$1}' | tr ' ' ',' >> subdominios.txt
+	grep "CNAME" logs/enumeracion/dnsenum.txt | awk '{print $1}' >> subdominios.txt
 
 fi
 
@@ -510,7 +511,7 @@ do
 			echo $line >> subdominios3.txt
 	else
 		#descubrir a que ip resuelve
-		hostline=`host $line | grep -v alias`	
+		hostline=`host $line | egrep -v "alias|IPv6"`
 		total_ips=$(echo $hostline | grep -o address | wc -l)					
 		
 		#Si tiene mas de una IP
