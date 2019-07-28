@@ -22,7 +22,7 @@ RESET='\e[0m'
 
 #WEB
 #https://github.com/MrSqar-Ye/BadMod
-#https://www.kitploit.com/2018/04/jcs-joomla-vulnerability-component.html
+#https://www.kitploit.com/2018/04/jcs-joomla_vulnerability-component.html
 #https://github.com/steverobbins/magescan
 #https://github.com/fgeek/pyfiscan
 #https://github.com/vortexau/mooscan
@@ -129,7 +129,7 @@ mkdir -p logs/vulnerabilidades
 mkdir webClone
 mkdir importarMaltego
 mkdir -p archivos	
-touch .enumeracion/web-googlehacking.txt
+touch .enumeracion/web_googlehacking.txt
 cp /usr/share/lanscanner/resultados.db .
 echo -e "$OKORANGE+ -- --=############ Usando servidor DNS  ... #########$RESET"
 grep nameserver /etc/resolv.conf
@@ -170,13 +170,13 @@ findomain --all-apis --target $DOMAIN > logs/enumeracion/findomain.txt
 
 echo -e "$OKBLUE+ -- --=############ Obteniendo  correos,subdominios, etc ... #########$RESET"
 echo -e "\t[+] Iniciando whois .."
-whois $DOMAIN > .enumeracion/$DOMAIN-dns-whois.txt
+whois $DOMAIN > .enumeracion/"$DOMAIN"_dns_whois.txt
 
 echo -e "\t[+] Iniciando theharvester .."
 echo -e "\t\t[+] Buscando correos en google .."
-theharvester -d $DOMAIN -b google > logs/enumeracion/theharvester-google.txt 2>/dev/null
+theharvester -d $DOMAIN -b google > logs/enumeracion/theharvester_google.txt 2>/dev/null
 echo -e "\t\t[+] Buscando correos en bing .."
-theharvester -d $DOMAIN -b bing > logs/enumeracion/theharvester-bing.txt 2>/dev/null
+theharvester -d $DOMAIN -b bing > logs/enumeracion/theharvester_bing.txt 2>/dev/null
 
 
 echo -e "\t[+] Iniciando infoga .."
@@ -191,11 +191,11 @@ rm logs/enumeracion/infoga2.txt
 
 echo -e "$OKBLUE+ -- --=############ Probando si se puede spoofear el dominio... #########$RESET"
 
-spoofcheck.sh $DOMAIN > logs/vulnerabilidades/dns-spoof.txt
-egrep -iq "Spoofing possible" logs/vulnerabilidades/dns-spoof.txt
+spoofcheck.sh $DOMAIN > logs/vulnerabilidades/dns_spoof.txt
+egrep -iq "Spoofing possible" logs/vulnerabilidades/dns_spoof.txt
 greprc=$?
 if [[ $greprc -eq 0 ]] ; then			
-	cp logs/vulnerabilidades/dns-spoof.txt .vulnerabilidades/$DOMAIN-dns-spoof.txt		
+	cp logs/vulnerabilidades/dns_spoof.txt .vulnerabilidades/"$DOMAIN"_dns_spoof.txt		
 fi
 echo -e "$OKBLUE+ -- --=############ Recopilando informacion ... #########$RESET"
 insert_data
@@ -211,195 +211,195 @@ insert_data
 
 echo -e "$OKBLUE+ -- --=############ Google hacking ... #########$RESET"
 
-google.pl -t "site:$DOMAIN inurl:add" -o logs/vulnerabilidades/$DOMAIN-web-googlehacking0.txt -p 1 -l logs/vulnerabilidades/web-googlehacking0.html 
-egrep -qi "No se han encontrado resultados|did not match any" logs/vulnerabilidades/web-googlehacking0.html
+google.pl -t "site:$DOMAIN inurl:add" -o logs/vulnerabilidades/"$DOMAIN"_web_googlehacking0.txt -p 1 -l logs/vulnerabilidades/web_googlehacking0.html 
+egrep -qi "No se han encontrado resultados|did not match any" logs/vulnerabilidades/web_googlehacking0.html
 greprc=$?
 if [[ $greprc -eq 1 ]] ; then # hay resultados
-echo "site:$DOMAIN inurl:add" >> .vulnerabilidades/$DOMAIN-web-googlehacking.txt	
-sed -i '/^\s*$/d' logs/vulnerabilidades/$DOMAIN-web-googlehacking0.txt # delete empty lines	
-cat logs/vulnerabilidades/$DOMAIN-web-googlehacking0.txt >> .vulnerabilidades/$DOMAIN-web-googlehacking.txt	
-echo "" >> .vulnerabilidades/$DOMAIN-web-googlehacking.txt	
+echo "site:$DOMAIN inurl:add" >> .vulnerabilidades/"$DOMAIN"_web_googlehacking.txt	
+sed -i '/^\s*$/d' logs/vulnerabilidades/"$DOMAIN"_web_googlehacking0.txt # delete empty lines	
+cat logs/vulnerabilidades/"$DOMAIN"_web_googlehacking0.txt >> .vulnerabilidades/"$DOMAIN"_web_googlehacking.txt	
+echo "" >> .vulnerabilidades/"$DOMAIN"_web_googlehacking.txt	
 fi
 
 sleep 10;
 
 
-google.pl -t "site:$DOMAIN inurl:edit" -o logs/vulnerabilidades/$DOMAIN-web-googlehacking1.txt -p 1 -l logs/vulnerabilidades/web-googlehacking1.html 
-egrep -qi "No se han encontrado resultados|did not match any" logs/vulnerabilidades/web-googlehacking1.html
+google.pl -t "site:$DOMAIN inurl:edit" -o logs/vulnerabilidades/"$DOMAIN"_web_googlehacking1.txt -p 1 -l logs/vulnerabilidades/web_googlehacking1.html 
+egrep -qi "No se han encontrado resultados|did not match any" logs/vulnerabilidades/web_googlehacking1.html
 greprc=$?
 if [[ $greprc -eq 1 ]] ; then # hay resultados
-echo "site:$DOMAIN inurl:edit" >> .vulnerabilidades/$DOMAIN-web-googlehacking.txt	
-sed -i '/^\s*$/d' logs/vulnerabilidades/$DOMAIN-web-googlehacking1.txt # delete empty lines	
-cat logs/vulnerabilidades/$DOMAIN-web-googlehacking1.txt >> .vulnerabilidades/$DOMAIN-web-googlehacking.txt	
-echo "" >> .vulnerabilidades/$DOMAIN-web-googlehacking.txt	
+echo "site:$DOMAIN inurl:edit" >> .vulnerabilidades/"$DOMAIN"_web_googlehacking.txt	
+sed -i '/^\s*$/d' logs/vulnerabilidades/"$DOMAIN"_web_googlehacking1.txt # delete empty lines	
+cat logs/vulnerabilidades/"$DOMAIN"_web_googlehacking1.txt >> .vulnerabilidades/"$DOMAIN"_web_googlehacking.txt	
+echo "" >> .vulnerabilidades/"$DOMAIN"_web_googlehacking.txt	
 fi
 
 sleep 10;
 
-google.pl -t "site:github.com intext:$DOMAIN" -o logs/enumeracion/$DOMAIN-web-googlehacking.txt -p 1 -l logs/enumeracion/web-googlehacking.html 
-egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/web-googlehacking.html
+google.pl -t "site:github.com intext:$DOMAIN" -o logs/enumeracion/"$DOMAIN"_web_googlehacking.txt -p 1 -l logs/enumeracion/web_googlehacking.html 
+egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/web_googlehacking.html
 greprc=$?
 if [[ $greprc -eq 1 ]] ; then # hay resultados
-echo "site:github.com intext:$DOMAIN" >> .enumeracion/$DOMAIN-web-googlehacking.txt	
-sed -i '/^\s*$/d' logs/enumeracion/$DOMAIN-web-googlehacking.txt # delete empty lines	
-cat logs/enumeracion/$DOMAIN-web-googlehacking.txt >> .enumeracion/$DOMAIN-web-googlehacking.txt	          
-echo "" >> .enumeracion/$DOMAIN-web-googlehacking.txt	
+echo "site:github.com intext:$DOMAIN" >> .enumeracion/"$DOMAIN"_web_googlehacking.txt	
+sed -i '/^\s*$/d' logs/enumeracion/"$DOMAIN"_web_googlehacking.txt # delete empty lines	
+cat logs/enumeracion/"$DOMAIN"_web_googlehacking.txt >> .enumeracion/"$DOMAIN"_web_googlehacking.txt	          
+echo "" >> .enumeracion/"$DOMAIN"_web_googlehacking.txt	
 fi
 
 sleep 10;
 
-google.pl -t "site:$DOMAIN intitle:index.of" -o logs/vulnerabilidades/$DOMAIN-web-googlehacking2.txt -p 1 -l logs/vulnerabilidades/web-googlehacking2.html 
-egrep -qi "No se han encontrado resultados|did not match any" logs/vulnerabilidades/web-googlehacking2.html
+google.pl -t "site:$DOMAIN intitle:index.of" -o logs/vulnerabilidades/"$DOMAIN"_web_googlehacking2.txt -p 1 -l logs/vulnerabilidades/web_googlehacking2.html 
+egrep -qi "No se han encontrado resultados|did not match any" logs/vulnerabilidades/web_googlehacking2.html
 greprc=$?
 if [[ $greprc -eq 1 ]] ; then # hay resultados
-echo "site:$DOMAIN intitle:index.of" >> .vulnerabilidades/$DOMAIN-web-googlehacking.txt	
-sed -i '/^\s*$/d' logs/vulnerabilidades/$DOMAIN-web-googlehacking2.txt # delete empty lines	
-cat logs/vulnerabilidades/$DOMAIN-web-googlehacking2.txt >> .vulnerabilidades/$DOMAIN-web-googlehacking.txt	
-echo "" >> .vulnerabilidades/$DOMAIN-web-googlehacking.txt	
+echo "site:$DOMAIN intitle:index.of" >> .vulnerabilidades/"$DOMAIN"_web_googlehacking.txt	
+sed -i '/^\s*$/d' logs/vulnerabilidades/"$DOMAIN"_web_googlehacking2.txt # delete empty lines	
+cat logs/vulnerabilidades/"$DOMAIN"_web_googlehacking2.txt >> .vulnerabilidades/"$DOMAIN"_web_googlehacking.txt	
+echo "" >> .vulnerabilidades/"$DOMAIN"_web_googlehacking.txt	
 fi
 
 sleep 10;
 
-google.pl -t "site:$DOMAIN filetype:sql" -o logs/vulnerabilidades/$DOMAIN-web-googlehacking3.txt -p 1 -l logs/vulnerabilidades/web-googlehacking3.html 
-egrep -qi "No se han encontrado resultados|did not match any" logs/vulnerabilidades/web-googlehacking3.html
+google.pl -t "site:$DOMAIN filetype:sql" -o logs/vulnerabilidades/"$DOMAIN"_web_googlehacking3.txt -p 1 -l logs/vulnerabilidades/web_googlehacking3.html 
+egrep -qi "No se han encontrado resultados|did not match any" logs/vulnerabilidades/web_googlehacking3.html
 greprc=$?
 if [[ $greprc -eq 1 ]] ; then # hay resultados
-echo "site:$DOMAIN filetype:sql" >> .vulnerabilidades/$DOMAIN-web-googlehacking.txt	
-sed -i '/^\s*$/d' logs/vulnerabilidades/$DOMAIN-web-googlehacking3.txt # delete empty lines	
-cat logs/vulnerabilidades/$DOMAIN-web-googlehacking3.txt >> .vulnerabilidades/$DOMAIN-web-googlehacking.txt	
-echo "" >> .vulnerabilidades/$DOMAIN-web-googlehacking.txt	
+echo "site:$DOMAIN filetype:sql" >> .vulnerabilidades/"$DOMAIN"_web_googlehacking.txt	
+sed -i '/^\s*$/d' logs/vulnerabilidades/"$DOMAIN"_web_googlehacking3.txt # delete empty lines	
+cat logs/vulnerabilidades/"$DOMAIN"_web_googlehacking3.txt >> .vulnerabilidades/"$DOMAIN"_web_googlehacking.txt	
+echo "" >> .vulnerabilidades/"$DOMAIN"_web_googlehacking.txt	
 fi
 
 sleep 10;
 
-google.pl -t "site:$DOMAIN \"access denied for user\"" -o logs/enumeracion/$DOMAIN-web-googlehacking4.txt -p 1 -l logs/enumeracion/web-googlehacking4.html 
-egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/web-googlehacking4.html
+google.pl -t "site:$DOMAIN \"access denied for user\"" -o logs/enumeracion/"$DOMAIN"_web_googlehacking4.txt -p 1 -l logs/enumeracion/web_googlehacking4.html 
+egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/web_googlehacking4.html
 greprc=$?
 if [[ $greprc -eq 1 ]] ; then # hay resultados
-echo "site:$DOMAIN \"access denied for user\"" >> .enumeracion/$DOMAIN-web-googlehacking.txt	
-sed -i '/^\s*$/d' logs/enumeracion/$DOMAIN-web-googlehacking4.txt # delete empty lines	
-cat logs/enumeracion/$DOMAIN-web-googlehacking4.txt >> .enumeracion/$DOMAIN-web-googlehacking.txt	
-echo "" >> .enumeracion/$DOMAIN-web-googlehacking.txt	
+echo "site:$DOMAIN \"access denied for user\"" >> .enumeracion/"$DOMAIN"_web_googlehacking.txt	
+sed -i '/^\s*$/d' logs/enumeracion/"$DOMAIN"_web_googlehacking4.txt # delete empty lines	
+cat logs/enumeracion/"$DOMAIN"_web_googlehacking4.txt >> .enumeracion/"$DOMAIN"_web_googlehacking.txt	
+echo "" >> .enumeracion/"$DOMAIN"_web_googlehacking.txt	
 fi
 
 sleep 10;
 
-google.pl -t "site:$DOMAIN intitle:\"curriculum vitae\"" -o logs/enumeracion/$DOMAIN-web-googlehacking5.txt -p 1 -l logs/enumeracion/web-googlehacking5.html 
-egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/web-googlehacking5.html
+google.pl -t "site:$DOMAIN intitle:\"curriculum vitae\"" -o logs/enumeracion/"$DOMAIN"_web_googlehacking5.txt -p 1 -l logs/enumeracion/web_googlehacking5.html 
+egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/web_googlehacking5.html
 greprc=$?
 if [[ $greprc -eq 1 ]] ; then # hay resultados
-echo "site:$DOMAIN intitle:\"curriculum vitae\"" >> .enumeracion/$DOMAIN-web-googlehacking.txt	
-sed -i '/^\s*$/d' logs/enumeracion/$DOMAIN-web-googlehacking5.txt # delete empty lines	
-cat logs/enumeracion/$DOMAIN-web-googlehacking5.txt >> .enumeracion/$DOMAIN-web-googlehacking.txt
-echo "" >> .enumeracion/$DOMAIN-web-googlehacking.txt		
+echo "site:$DOMAIN intitle:\"curriculum vitae\"" >> .enumeracion/"$DOMAIN"_web_googlehacking.txt	
+sed -i '/^\s*$/d' logs/enumeracion/"$DOMAIN"_web_googlehacking5.txt # delete empty lines	
+cat logs/enumeracion/"$DOMAIN"_web_googlehacking5.txt >> .enumeracion/"$DOMAIN"_web_googlehacking.txt
+echo "" >> .enumeracion/"$DOMAIN"_web_googlehacking.txt		
 fi
 
 sleep 10;
 
-google.pl -t "site:$DOMAIN passwords|contrasenas|login|contrasena filetype:txt" -o logs/vulnerabilidades/$DOMAIN-web-googlehacking6.txt -p 1 -l logs/vulnerabilidades/web-googlehacking6.html 
-egrep -qi "No se han encontrado resultados|did not match any" logs/vulnerabilidades/web-googlehacking6.html
+google.pl -t "site:$DOMAIN passwords|contrasenas|login|contrasena filetype:txt" -o logs/vulnerabilidades/"$DOMAIN"_web_googlehacking6.txt -p 1 -l logs/vulnerabilidades/web_googlehacking6.html 
+egrep -qi "No se han encontrado resultados|did not match any" logs/vulnerabilidades/web_googlehacking6.html
 greprc=$?
 if [[ $greprc -eq 1 ]] ; then # hay resultados
-echo "site:$DOMAIN passwords|contrasenas|login|contrasena filetype:txt" >> .vulnerabilidades/$DOMAIN-web-googlehacking.txt	
-sed -i '/^\s*$/d' logs/vulnerabilidades/$DOMAIN-web-googlehacking6.txt # delete empty lines	
-cat logs/vulnerabilidades/$DOMAIN-web-googlehacking6.txt >> .vulnerabilidades/$DOMAIN-web-googlehacking.txt	
-echo "" >> .vulnerabilidades/$DOMAIN-web-googlehacking.txt	
+echo "site:$DOMAIN passwords|contrasenas|login|contrasena filetype:txt" >> .vulnerabilidades/"$DOMAIN"_web_googlehacking.txt	
+sed -i '/^\s*$/d' logs/vulnerabilidades/"$DOMAIN"_web_googlehacking6.txt # delete empty lines	
+cat logs/vulnerabilidades/"$DOMAIN"_web_googlehacking6.txt >> .vulnerabilidades/"$DOMAIN"_web_googlehacking.txt	
+echo "" >> .vulnerabilidades/"$DOMAIN"_web_googlehacking.txt	
 fi
 
 sleep 10;
 
-google.pl -t "site:$DOMAIN inurl:intranet" -o logs/enumeracion/$DOMAIN-web-googlehacking7.txt -p 1 -l logs/enumeracion/web-googlehacking7.html 
-egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/web-googlehacking7.html
+google.pl -t "site:$DOMAIN inurl:intranet" -o logs/enumeracion/"$DOMAIN"_web_googlehacking7.txt -p 1 -l logs/enumeracion/web_googlehacking7.html 
+egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/web_googlehacking7.html
 greprc=$?
 if [[ $greprc -eq 1 ]] ; then # hay resultados
-echo "site:$DOMAIN inurl:intranet" >> .enumeracion/$DOMAIN-web-googlehacking.txt	
-sed -i '/^\s*$/d' logs/enumeracion/$DOMAIN-web-googlehacking7.txt # delete empty lines	
-cat logs/enumeracion/$DOMAIN-web-googlehacking7.txt >> .enumeracion/$DOMAIN-web-googlehacking.txt	
-echo "" >> .enumeracion/$DOMAIN-web-googlehacking.txt	
+echo "site:$DOMAIN inurl:intranet" >> .enumeracion/"$DOMAIN"_web_googlehacking.txt	
+sed -i '/^\s*$/d' logs/enumeracion/"$DOMAIN"_web_googlehacking7.txt # delete empty lines	
+cat logs/enumeracion/"$DOMAIN"_web_googlehacking7.txt >> .enumeracion/"$DOMAIN"_web_googlehacking.txt	
+echo "" >> .enumeracion/"$DOMAIN"_web_googlehacking.txt	
 fi
 
 sleep 10;
 
-google.pl -t "site:$DOMAIN inurl:\":8080\" -intext:8080" -o logs/enumeracion/$DOMAIN-web-googlehacking8.txt -p 1 -l logs/enumeracion/web-googlehacking8.html 
-egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/web-googlehacking8.html
+google.pl -t "site:$DOMAIN inurl:\":8080\" -intext:8080" -o logs/enumeracion/"$DOMAIN"_web_googlehacking8.txt -p 1 -l logs/enumeracion/web_googlehacking8.html 
+egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/web_googlehacking8.html
 greprc=$?
 if [[ $greprc -eq 1 ]] ; then # hay resultados
-echo "site:$DOMAIN inurl:\":8080\" -intext:8080" >> .enumeracion/$DOMAIN-web-googlehacking.txt	
-sed -i '/^\s*$/d' logs/enumeracion/$DOMAIN-web-googlehacking8.txt # delete empty lines	
-cat logs/enumeracion/$DOMAIN-web-googlehacking8.txt >> .enumeracion/$DOMAIN-web-googlehacking.txt	
-echo "" >> .enumeracion/$DOMAIN-web-googlehacking.txt	
+echo "site:$DOMAIN inurl:\":8080\" -intext:8080" >> .enumeracion/"$DOMAIN"_web_googlehacking.txt	
+sed -i '/^\s*$/d' logs/enumeracion/"$DOMAIN"_web_googlehacking8.txt # delete empty lines	
+cat logs/enumeracion/"$DOMAIN"_web_googlehacking8.txt >> .enumeracion/"$DOMAIN"_web_googlehacking.txt	
+echo "" >> .enumeracion/"$DOMAIN"_web_googlehacking.txt	
 fi
 
 sleep 10;
 
-google.pl -t "site:$DOMAIN filetype:asmx OR filetype:svc OR inurl:wsdl" -o logs/enumeracion/$DOMAIN-web-googlehacking9.txt -p 1 -l logs/enumeracion/web-googlehacking9.html 
-egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/web-googlehacking9.html
+google.pl -t "site:$DOMAIN filetype:asmx OR filetype:svc OR inurl:wsdl" -o logs/enumeracion/"$DOMAIN"_web_googlehacking9.txt -p 1 -l logs/enumeracion/web_googlehacking9.html 
+egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/web_googlehacking9.html
 greprc=$?
 if [[ $greprc -eq 1 ]] ; then # hay resultados
-echo "site:github.com intext:$DOMAIN" >> .enumeracion/$DOMAIN-web-googlehacking.txt	
-sed -i '/^\s*$/d' logs/enumeracion/$DOMAIN-web-googlehacking9.txt # delete empty lines	
-cat logs/enumeracion/$DOMAIN-web-googlehacking9.txt >> .enumeracion/$DOMAIN-web-googlehacking.txt	
-echo "" >> .enumeracion/$DOMAIN-web-googlehacking.txt	
+echo "site:github.com intext:$DOMAIN" >> .enumeracion/"$DOMAIN"_web_googlehacking.txt	
+sed -i '/^\s*$/d' logs/enumeracion/"$DOMAIN"_web_googlehacking9.txt # delete empty lines	
+cat logs/enumeracion/"$DOMAIN"_web_googlehacking9.txt >> .enumeracion/"$DOMAIN"_web_googlehacking.txt	
+echo "" >> .enumeracion/"$DOMAIN"_web_googlehacking.txt	
 fi
 
 sleep 10;
 
-google.pl -t "site:$DOMAIN inurl:(_vti_bin|api|webservice)" -o logs/enumeracion/$DOMAIN-web-googlehacking10.txt -p 1 -l logs/enumeracion/web-googlehacking10.html 
-egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/web-googlehacking10.html
+google.pl -t "site:$DOMAIN inurl:(_vti_bin|api|webservice)" -o logs/enumeracion/"$DOMAIN"_web_googlehacking10.txt -p 1 -l logs/enumeracion/web_googlehacking10.html 
+egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/web_googlehacking10.html
 greprc=$?
 if [[ $greprc -eq 1 ]] ; then # hay resultados
-echo "site:$DOMAIN inurl:(_vti_bin|api|webservice)" >> .enumeracion/$DOMAIN-web-googlehacking.txt	
-sed -i '/^\s*$/d' logs/enumeracion/$DOMAIN-web-googlehacking10.txt # delete empty lines	
-cat logs/enumeracion/$DOMAIN-web-googlehacking10.txt >> .enumeracion/$DOMAIN-web-googlehacking.txt	
-echo "" >> .enumeracion/$DOMAIN-web-googlehacking.txt	
+echo "site:$DOMAIN inurl:(_vti_bin|api|webservice)" >> .enumeracion/"$DOMAIN"_web_googlehacking.txt	
+sed -i '/^\s*$/d' logs/enumeracion/"$DOMAIN"_web_googlehacking10.txt # delete empty lines	
+cat logs/enumeracion/"$DOMAIN"_web_googlehacking10.txt >> .enumeracion/"$DOMAIN"_web_googlehacking.txt	
+echo "" >> .enumeracion/"$DOMAIN"_web_googlehacking.txt	
 fi
 
 sleep 10;
 
-google.pl -t "site:trello.com passwords|contrasenas|login|contrasena intext:\"$DOMAIN\"" -o logs/vulnerabilidades/$DOMAIN-web-googlehacking11.txt -p 1 -l logs/vulnerabilidades/web-googlehacking11.html 
-egrep -qi "No se han encontrado resultados|did not match any" logs/vulnerabilidades/web-googlehacking11.html
+google.pl -t "site:trello.com passwords|contrasenas|login|contrasena intext:\"$DOMAIN\"" -o logs/vulnerabilidades/"$DOMAIN"_web_googlehacking11.txt -p 1 -l logs/vulnerabilidades/web_googlehacking11.html 
+egrep -qi "No se han encontrado resultados|did not match any" logs/vulnerabilidades/web_googlehacking11.html
 greprc=$?
 if [[ $greprc -eq 1 ]] ; then # hay resultados
-echo "site:trello.com passwords|contrasenas|login|contrasena intext:\"$DOMAIN\"" >> .vulnerabilidades/$DOMAIN-web-googlehacking.txt	
-sed -i '/^\s*$/d' logs/vulnerabilidades/$DOMAIN-web-googlehacking11.txt # delete empty lines	
-cat logs/vulnerabilidades/$DOMAIN-web-googlehacking11.txt >> .vulnerabilidades/$DOMAIN-web-googlehacking.txt	
-echo "" >> .vulnerabilidades/$DOMAIN-web-googlehacking.txt	
+echo "site:trello.com passwords|contrasenas|login|contrasena intext:\"$DOMAIN\"" >> .vulnerabilidades/"$DOMAIN"_web_googlehacking.txt	
+sed -i '/^\s*$/d' logs/vulnerabilidades/"$DOMAIN"_web_googlehacking11.txt # delete empty lines	
+cat logs/vulnerabilidades/"$DOMAIN"_web_googlehacking11.txt >> .vulnerabilidades/"$DOMAIN"_web_googlehacking.txt	
+echo "" >> .vulnerabilidades/"$DOMAIN"_web_googlehacking.txt	
 fi
 
 sleep 10;
 
-google.pl -t "site:pastebin.com intext:"*@$DOMAIN"" -o logs/enumeracion/$DOMAIN-web-googlehacking12.txt -p 1 -l logs/enumeracion/web-googlehacking12.html 
-egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/web-googlehacking12.html
+google.pl -t "site:pastebin.com intext:"*@$DOMAIN"" -o logs/enumeracion/"$DOMAIN"_web_googlehacking12.txt -p 1 -l logs/enumeracion/web_googlehacking12.html 
+egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/web_googlehacking12.html
 greprc=$?
 if [[ $greprc -eq 1 ]] ; then # hay resultados
-echo "site:github.com intext:$DOMAIN" >> .enumeracion/$DOMAIN-web-googlehacking.txt	
-sed -i '/^\s*$/d' logs/enumeracion/$DOMAIN-web-googlehacking12.txt # delete empty lines	
-cat logs/enumeracion/$DOMAIN-web-googlehacking12.txt >> .enumeracion/$DOMAIN-web-googlehacking.txt	
-echo "" >> .enumeracion/$DOMAIN-web-googlehacking.txt	
+echo "site:github.com intext:$DOMAIN" >> .enumeracion/"$DOMAIN"_web_googlehacking.txt	
+sed -i '/^\s*$/d' logs/enumeracion/"$DOMAIN"_web_googlehacking12.txt # delete empty lines	
+cat logs/enumeracion/"$DOMAIN"_web_googlehacking12.txt >> .enumeracion/"$DOMAIN"_web_googlehacking.txt	
+echo "" >> .enumeracion/"$DOMAIN"_web_googlehacking.txt	
 fi
 
 sleep 10;
 
-google.pl -t "site:$DOMAIN \"Undefined index\" " -o logs/enumeracion/$DOMAIN-web-googlehacking13.txt -p 1 -l logs/enumeracion/web-googlehacking13.html 
-egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/web-googlehacking13.html
+google.pl -t "site:$DOMAIN \"Undefined index\" " -o logs/enumeracion/"$DOMAIN"_web_googlehacking13.txt -p 1 -l logs/enumeracion/web_googlehacking13.html 
+egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/web_googlehacking13.html
 greprc=$?
 if [[ $greprc -eq 1 ]] ; then # hay resultados
-echo "site:$DOMAIN \"Undefined index\" " >> .enumeracion/$DOMAIN-web-googlehacking.txt	
-sed -i '/^\s*$/d' logs/enumeracion/$DOMAIN-web-googlehacking13.txt # delete empty lines	
-cat logs/enumeracion/$DOMAIN-web-googlehacking13.txt >> .enumeracion/$DOMAIN-web-googlehacking.txt	
-echo "" >> .enumeracion/$DOMAIN-web-googlehacking.txt	
+echo "site:$DOMAIN \"Undefined index\" " >> .enumeracion/"$DOMAIN"_web_googlehacking.txt	
+sed -i '/^\s*$/d' logs/enumeracion/"$DOMAIN"_web_googlehacking13.txt # delete empty lines	
+cat logs/enumeracion/"$DOMAIN"_web_googlehacking13.txt >> .enumeracion/"$DOMAIN"_web_googlehacking.txt	
+echo "" >> .enumeracion/"$DOMAIN"_web_googlehacking.txt	
 fi
 
 sleep 10;
 
-google.pl -t "site:$DOMAIN inurl:storage" -o logs/enumeracion/$DOMAIN-web-googlehacking14.txt -p 1 -l logs/enumeracion/web-googlehacking14.html 
-egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/web-googlehacking14.html
+google.pl -t "site:$DOMAIN inurl:storage" -o logs/enumeracion/"$DOMAIN"_web_googlehacking14.txt -p 1 -l logs/enumeracion/web_googlehacking14.html 
+egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/web_googlehacking14.html
 greprc=$?
 if [[ $greprc -eq 1 ]] ; then # hay resultados
-echo "site:$DOMAIN inurl:storage" >> .enumeracion/$DOMAIN-web-googlehacking.txt	
-sed -i '/^\s*$/d' logs/enumeracion/$DOMAIN-web-googlehacking14.txt # delete empty lines	
-cat logs/enumeracion/$DOMAIN-web-googlehacking14.txt >> .enumeracion/$DOMAIN-web-googlehacking.txt	
-echo "" >> .enumeracion/$DOMAIN-web-googlehacking.txt	
+echo "site:$DOMAIN inurl:storage" >> .enumeracion/"$DOMAIN"_web_googlehacking.txt	
+sed -i '/^\s*$/d' logs/enumeracion/"$DOMAIN"_web_googlehacking14.txt # delete empty lines	
+cat logs/enumeracion/"$DOMAIN"_web_googlehacking14.txt >> .enumeracion/"$DOMAIN"_web_googlehacking.txt	
+echo "" >> .enumeracion/"$DOMAIN"_web_googlehacking.txt	
 fi
 
 
@@ -409,24 +409,24 @@ sleep 90
 
 echo -e "$OKBLUE+ -- --=############ Recopilando Metadatos ... #########$RESET" 
 pymeta.sh -d $DOMAIN -dir `pwd`"/archivos/" -csv -out `pwd`"/reportes/metada.csv" 2>/dev/null
-cat reportes/metada.csv | cut -d "," -f4 | sort | uniq > .enumeracion/$DOMAIN-metadata-pymeta.txt
+cat reportes/metada.csv | cut -d "," -f4 | sort | uniq > .enumeracion/"$DOMAIN"_metadata-pymeta.txt
 insert_data
 sleep 90
 
 echo -e "$OKBLUE+ -- --=############ Recopilando URL indexadas ... #########$RESET" 
 
-google.pl -t "site:$DOMAIN" -o logs/enumeracion/$DOMAIN-google-indexado2.txt -l logs/enumeracion/$DOMAIN-google.html 
+google.pl -t "site:$DOMAIN" -o logs/enumeracion/"$DOMAIN"_google_indexado2.txt -l logs/enumeracion/"$DOMAIN"_google.html 
 
 echo -e "$OKBLUE+ -- --=############ Comprobando si google indexo páginas hackeadas ... #########$RESET" 
-egrep -iq " Buy| Pharmacy | medication| cheap| porn| viagra|hacked" logs/enumeracion/$DOMAIN-google.html
+egrep -iq " Buy| Pharmacy | medication| cheap| porn| viagra|hacked" logs/enumeracion/"$DOMAIN"_google.html
 greprc=$?
 if [[ $greprc -eq 0 ]] ; then			
 	echo -e "\t$OKRED[!] Redirección  a sitios de terceros detectado \n $RESET"
-	echo "Vulnerable site:$DOMAIN" > .vulnerabilidades/$DOMAIN-google-redirect.txt 	
+	echo "Vulnerable site:$DOMAIN" > .vulnerabilidades/"$DOMAIN"_google_redirect.txt 	
 fi	
 
-echo "Ejecutando: sort logs/enumeracion/$DOMAIN-web-indexado2.txt | uniq | egrep -v"
-sort logs/enumeracion/$DOMAIN-web-indexado2.txt | uniq | egrep -v "pdf|doc" > .enumeracion/$DOMAIN-web-indexado.txt
+echo "Ejecutando: sort logs/enumeracion/"$DOMAIN"_google_indexado2.txt | uniq | egrep -v"
+sort logs/enumeracion/"$DOMAIN"_google_indexado2.txt | uniq | egrep -v "pdf|doc" > .enumeracion/"$DOMAIN"_google_indexado.txt
 insert_data
 
 	
@@ -444,15 +444,15 @@ insert_data
 ##############################
 	  
 ######## extraer correos ###########
-cat logs/enumeracion/theharvester-google.txt | grep --color=never @ | grep -v edge-security >> .enumeracion/$DOMAIN-correos.txt
-cat logs/enumeracion/theharvester-bing.txt | grep --color=never @ | grep -v edge-security >> .enumeracion/$DOMAIN-correos.txt
-cat logs/enumeracion/infoga.txt | grep --color=never "correo:" | cut -d " " -f3 >> .enumeracion/$DOMAIN-correos.txt
+cat logs/enumeracion/theharvester_google.txt | grep --color=never @ | grep -v edge-security >> .enumeracion/"$DOMAIN"_correos.txt
+cat logs/enumeracion/theharvester_bing.txt | grep --color=never @ | grep -v edge-security >> .enumeracion/"$DOMAIN"_correos.txt
+cat logs/enumeracion/infoga.txt | grep --color=never "correo:" | cut -d " " -f3 >> .enumeracion/"$DOMAIN"_correos.txt
 
 # dar formato para importar a maltego
-lines=`wc -l .enumeracion/$DOMAIN-correos.txt | cut -d " " -f1`
+lines=`wc -l .enumeracion/"$DOMAIN"_correos.txt | cut -d " " -f1`
 perl -E "say \"$DOMAIN\n\" x $lines" > domain.txt # file with the domain (n times)
 sed -i '$ d' domain.txt # delete last line
-paste -d ',' domain.txt .enumeracion/$DOMAIN-correos.txt > importarMaltego/correos1.csv 
+paste -d ',' domain.txt .enumeracion/"$DOMAIN"_correos.txt > importarMaltego/correos1.csv 
 cat importarMaltego/correos1.csv  | sort | uniq > importarMaltego/correos.csv 
 rm importarMaltego/correos1.csv domain.txt
 #####################################
@@ -466,7 +466,7 @@ if [[ $greprc -eq 0 ]] ; then # Si se hizo volcado de zona
 	grep "IN     A" logs/enumeracion/fierce.txt | awk '{print $5,$1}' | tr ' ' ',' >> subdominios.txt
 	grep "IN	A" logs/enumeracion/fierce.txt | awk '{print $5,$1}' | tr ' ' ',' >> subdominios.txt	
 	grep "CNAME" logs/enumeracion/fierce.txt | awk '{print $1}' | tr ' ' ',' >> subdominios.txt
-	cp logs/enumeracion/fierce.txt  .vulnerabilidades/$DOMAIN-dns-transferenciaDNS.txt
+	cp logs/enumeracion/fierce.txt  .vulnerabilidades/"$DOMAIN"_dns_transferenciaDNS.txt
 else	
 #	echo -e "\t[+] Iniciando dnsenum (bruteforce DNS ) .."
 	#dnsenum	
@@ -490,12 +490,12 @@ cat logs/enumeracion/findomain.txt | grep --color=never "\-\-" |  awk '{print $2
 
 
 # theharvester y google
-cat logs/enumeracion/theharvester-google.txt | grep --color=never $DOMAIN | grep -v @ >> subdominios.txt
-cat logs/enumeracion/theharvester-bing.txt| grep --color=never $DOMAIN | grep -v @ >> subdominios.txt
+cat logs/enumeracion/theharvester_google.txt | grep --color=never $DOMAIN | grep -v @ >> subdominios.txt
+cat logs/enumeracion/theharvester_bing.txt| grep --color=never $DOMAIN | grep -v @ >> subdominios.txt
 cat logs/enumeracion/google.txt 2>/dev/null | cut -d "/" -f 3 | cut -d ":" -f1 | sort | uniq >> subdominios.txt
 
 # URL indexadas
-cat .enumeracion2/$DOMAIN-web-indexado.txt | cut -d "/" -f 3 | grep --color=never $DOMAIN | sort | uniq >> subdominios.txt
+cat .enumeracion2/"$DOMAIN"_google_indexado.txt | cut -d "/" -f 3 | grep --color=never $DOMAIN | sort | uniq >> subdominios.txt
 ############################################
 
 sed -i "s/$DOMAIN./$DOMAIN/g" subdominios.txt
@@ -546,8 +546,8 @@ do
     echo "Obteniendo datos del subdominio: $subdominio"
     geodata=$(geoip.pl $ip)
     echo "$DOMAIN,$line,$geodata" >> importarMaltego/subdominios.csv
-    echo "$line,$geodata" >> .enumeracion/$DOMAIN-subdominios.txt
-    perl -i -pe 's/[^[:ascii:]]//g' .enumeracion/$DOMAIN-subdominios.txt #remover caracteres especiales
+    echo "$line,$geodata" >> .enumeracion/"$DOMAIN"_subdominios.txt
+    perl -i -pe 's/[^[:ascii:]]//g' .enumeracion/"$DOMAIN"_subdominios.txt #remover caracteres especiales
     
 done <subdominios4.txt 
 
@@ -557,4 +557,4 @@ insert_data
 rm subdominios4.txt  cookies.txt 2>/dev/null
 ######################################################
 
-ln -s .enumeracion2/$DOMAIN-subdominios.txt subdominios.txt
+ln -s .enumeracion2/"$DOMAIN"_subdominios.txt subdominios.txt
