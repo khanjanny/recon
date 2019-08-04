@@ -497,12 +497,12 @@ cat logs/enumeracion/findomain.txt | grep --color=never "\-\-" |  awk '{print $2
 
 
 # theharvester y google
-cat logs/enumeracion/theharvester_google.txt | grep --color=never $DOMINIO | grep -v @ >> subdominios.txt
-cat logs/enumeracion/theharvester_bing.txt| grep --color=never $DOMINIO | grep -v @ >> subdominios.txt
+cat logs/enumeracion/theharvester_google.txt | grep --color=never $DOMINIO | egrep -v "@|harvesting" >> subdominios.txt
+cat logs/enumeracion/theharvester_bing.txt| grep --color=never $DOMINIO |egrep -v "@|harvesting" >> subdominios.txt
 cat .enumeracion2/"$DOMINIO"_google_indexado.txt | cut -d "/" -f 3 | cut -d ":" -f1 | grep --color=never $DOMINIO | sort | uniq >> subdominios.txt
 ############################################
 
-sed -i "s/$DOMINIO./$DOMINIO/g" subdominios.txt #Eliminar punto extra al final
+sed -i "s/$DOMINIO\./$DOMINIO/g" subdominios.txt #Eliminar punto extra al final
 sed -i "s/:/;/g" subdominios.txt
 
 #filtrar dominios
