@@ -4330,7 +4330,6 @@ loadrunner
 local
 local.api
 locales
-localhost
 localmail
 locations
 loco
