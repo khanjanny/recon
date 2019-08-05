@@ -477,14 +477,14 @@ if [[ $greprc -eq 0 ]] ; then
 	cp logs/enumeracion/fierce.txt  .vulnerabilidades/"$DOMINIO"_dns_transferenciaDNS.txt
 else	
 	#dnsenum	
-	grep "IN    A" logs/enumeracion/dnsenum.txt | awk '{print $5,$1}' | tr ' ' ';' >> subdominios.txt	
+	grep "IN    A" logs/enumeracion/dnsenum.txt | awk '{print $1}' >> subdominios.txt	
 	grep "CNAME" logs/enumeracion/dnsenum.txt | awk '{print $1}' >> subdominios.txt
 
 fi
 
 # ctfr
 # [-]  dialin.organojudicial.gob.bo
-cat logs/enumeracion/ctfr.txt | grep --color=never $DOMINIO | awk '{print $2}' >> subdominios.txt
+cat logs/enumeracion/ctfr.txt | grep --color=never $DOMINIO | grep -v TARGET | awk '{print $2}' >> subdominios.txt
 
 # Sublist3r
 #www.comibol.gob.bo
@@ -492,27 +492,26 @@ cat logs/enumeracion/Sublist3r.txt | grep --color=never $DOMINIO | cut -d ":" -f
 
 # findomain
 #  --> correo.siahcomibol.gob.bo
-cat logs/enumeracion/findomain.txt | grep --color=never "\-\-" |  awk '{print $2}' >> subdominios.txt
+cat logs/enumeracion/findomain.txt | egrep --color=never "\-\-|>>" |  awk '{print $2}' >> subdominios.txt
 
 
 
 # theharvester y google
-cat logs/enumeracion/theharvester_google.txt | grep --color=never $DOMINIO | egrep -v "@|harvesting" >> subdominios.txt
-cat logs/enumeracion/theharvester_bing.txt| grep --color=never $DOMINIO |egrep -v "@|harvesting" >> subdominios.txt
+cat logs/enumeracion/theharvester_google.txt | grep --color=never $DOMINIO | egrep -v "empty|@|harvesting" | cut -d ":" -f1 >> subdominios.txt
+cat logs/enumeracion/theharvester_bing.txt| grep --color=never $DOMINIO |egrep -v "empty|@|harvesting" | cut -d ":" -f1  >> subdominios.txt
 cat .enumeracion2/"$DOMINIO"_google_indexado.txt | cut -d "/" -f 3 | cut -d ":" -f1 | grep --color=never $DOMINIO | sort | uniq >> subdominios.txt
 ############################################
 
 sed -i "s/$DOMINIO\./$DOMINIO/g" subdominios.txt #Eliminar punto extra al final
-sed -i "s/:/;/g" subdominios.txt
 
 #filtrar dominios
-grep --color=never $DOMINIO subdominios.txt | egrep -v '\--|Testing|Trying|TARGET|subDOMINIOs|DNS|\*' | sort | uniq -i > subdominios2.txt
+grep --color=never $DOMINIO subdominios.txt | egrep -iv '\--|Testing|Trying|TARGET|subDOMINIOs|DNS|\*' | sort | uniq -i > subdominios2.txt
 
 
 for line in `cat subdominios2.txt`;
 do 		
 	#Si ya tiene ip identificada
-	if [[ ${line} == *";"* || ${line} == *","*  ]];then 
+	if [[ ${line} == *";"*  ]];then 
 			line=`echo $line | tr ',' ';'` # Convertir , --> ;
 			echo $line >> subdominios3.txt
 	else
