@@ -32,7 +32,6 @@ sudo apt-get install fierce dnsenum
 echo -e "${RED}[+]${BLUE} Copiando ejecutables ${RESET}"
 
 sudo cp recon.sh /usr/bin/
-sudo cp findomain /usr/bin/
 sudo cp get-geodata.sh /usr/bin/
 sudo cp spoofcheck.sh /usr/bin/
 sudo cp grep.sh /usr/bin/
@@ -45,7 +44,6 @@ sudo cp hosts.txt /usr/share/wordlists/hosts.txt
 echo "xyz" > /usr/share/fierce/hosts.txt # erase host list
 
 sudo chmod a+x /usr/bin/recon.sh
-sudo chmod a+x /usr/bin/findomain
 sudo chmod a+x /usr/bin/grep.sh
 sudo chmod a+x /usr/bin/ctfr.sh
 sudo chmod a+x /usr/bin/spoofcheck.sh 
@@ -53,6 +51,16 @@ sudo chmod a+x /usr/bin/infoga.sh
 sudo chmod a+x /usr/bin/Sublist3r.sh
 sudo chmod a+x /usr/bin/pymeta.sh 
 sudo chmod a+x /usr/bin/get-geodata.sh
+
+kernel=`uname -a`
+if [[ $kernel == *"aarch64"* ]]; then #rasberry
+	sudo cp findomain-aarch64 /usr/bin/findomain
+	sudo chmod a+x /usr/bin/findomain
+else
+	sudo cp findomain-amd64 /usr/bin/findomain
+	sudo chmod a+x /usr/bin/findomain
+fi
+
 
 echo -e "${RED}[+]${BLUE} Instalando librerias de python ${RESET}"
 sudo pip install xlrd
