@@ -434,7 +434,7 @@ fi
 
 echo "Ejecutando: sort logs/enumeracion/"$DOMINIO"_google_indexado2.txt | uniq | egrep -v"
 sort logs/enumeracion/"$DOMINIO"_google_indexado2.txt | uniq | egrep -v "pdf|doc" > .enumeracion/"$DOMINIO"_google_indexado.txt
-egrep -ia "username|usuario|password|contrase|token|sesion|session|" .enumeracion/"$DOMINIO"_google_indexado.txt > .vulnerabilidades/"$DOMINIO"_google_credencialURL.txt
+egrep -ia "username|usuario|password|contrase|token|sesion|session" .enumeracion/"$DOMINIO"_google_indexado.txt > .vulnerabilidades/"$DOMINIO"_google_credencialURL.txt
 insert_data
 
 
