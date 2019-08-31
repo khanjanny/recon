@@ -196,7 +196,7 @@ rm logs/enumeracion/infoga2.txt
 
 echo -e "$OKBLUE+ -- --=############ Probando si se puede spoofear el dominio... #########$RESET"
 
-spoofcheck.sh $DOMINIO > logs/vulnerabilidades/dns_spoof.txt
+spoofcheck.sh $DOMINIO > logs/vulnerabilidades/"$DOMINIO"_dns_spoof.txt
 egrep -iq "Spoofing possible" logs/vulnerabilidades/dns_spoof.txt
 greprc=$?
 if [[ $greprc -eq 0 ]] ; then			
