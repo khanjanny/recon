@@ -413,7 +413,7 @@ fi
 insert_data
 
 # mover los listados de URL identificados por google (Dejas solo los .html en la carpeta log)
-mv logs/vulnerabilidades/*_web_googlehacking*.txt .vulnerabilidades2/
+mv logs/vulnerabilidades/*_web_googlehacking*.txt .vulnerabilidades2/ 2>/dev/null
 
 sleep 90
 
@@ -436,7 +436,7 @@ if [[ $greprc -eq 0 ]] ; then
 	echo "Vulnerable site:$DOMINIO" > .vulnerabilidades/"$DOMINIO"_google_redirect.txt 	
 fi	
 
-echo "Ejecutando: sort logs/enumeracion/"$DOMINIO"_google_indexado2.txt | uniq | egrep -v"
+#echo "Ejecutando: sort logs/enumeracion/"$DOMINIO"_google_indexado2.txt | uniq | egrep -v"
 sort logs/enumeracion/"$DOMINIO"_google_indexado2.txt | uniq | egrep -v "pdf|doc" > .enumeracion/"$DOMINIO"_google_indexado.txt
 egrep -ia "username|usuario|password|contrase|token|sesion|session" .enumeracion/"$DOMINIO"_google_indexado.txt > .vulnerabilidades/"$DOMINIO"_google_credencialURL.txt
 insert_data
