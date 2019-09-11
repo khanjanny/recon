@@ -168,6 +168,7 @@ ctfr.sh -d $DOMINIO > logs/enumeracion/ctfr.txt 2>/dev/null
 echo -e "\t[+] Iniciando Sublist3r ( Baidu, Yahoo, Google, Bing, Ask, Netcraft, DNSdumpster, Virustotal, ThreatCrowd, SSL Certificates, PassiveDNS) .."
 Sublist3r.sh -d $DOMINIO -o `pwd`/logs/enumeracion/Sublist3r.txt
 
+
 echo -e "\t[+] Iniciando findomain ( Crtsh API, CertSpotter API, facebook) .."
 findomain --all-apis --target $DOMINIO > logs/enumeracion/findomain.txt
 
