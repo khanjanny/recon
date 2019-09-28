@@ -124,7 +124,7 @@ mkdir .vulnerabilidades
 mkdir .vulnerabilidades2 
 mkdir .masscan
 mkdir reportes
-mkdir .servicios
+mkdir servicios
 mkdir .tmp
 mkdir -p logs/cracking
 mkdir -p logs/enumeracion
@@ -134,7 +134,7 @@ mkdir webClone
 mkdir importarMaltego
 mkdir -p archivos	
 touch .enumeracion/"$DOMINIO"_google_googlehacking.txt
-cp /usr/share/lanscanner/resultados.db .
+cp /usr/share/lanscanner/.resultados.db .
 echo -e "$OKORANGE+ -- --=############ Usando servidor DNS  ... #########$RESET"
 echo "nameserver 8.8.8.8" > /etc/resolv.conf
 grep nameserver /etc/resolv.conf
