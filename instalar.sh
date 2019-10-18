@@ -27,7 +27,7 @@ RESET="\033[00m"       # Normal
 
 echo -e "${RED}[+]${BLUE} Instando de repositorio .. ${RESET}"
 
-sudo apt-get install fierce dnsenum
+sudo apt-get install fierce dnsenum cargo
 
 echo -e "${RED}[+]${BLUE} Copiando ejecutables ${RESET}"
 
@@ -54,12 +54,14 @@ sudo chmod a+x /usr/bin/get-geodata.sh
 
 kernel=`uname -a`
 if [[ $kernel == *"aarch64"* ]]; then #rasberry
-	sudo cp findomain-aarch64 /usr/bin/findomain
-	sudo chmod a+x /usr/bin/findomain
+	#sudo cp findomain-aarch64 /usr/bin/findomain
+	#sudo chmod a+x /usr/bin/findomain
+	cargo install findomain
+	mv ~/.cargo/bin/findomain /usr/bin/findomain
 else
-	sudo cp findomain-amd64 /usr/bin/findomain
-	sudo chmod a+x /usr/bin/findomain
+	sudo cp findomain-amd64 /usr/bin/findomain	
 fi
+sudo chmod a+x /usr/bin/findomain
 
 
 echo -e "${RED}[+]${BLUE} Instalando librerias de python ${RESET}"

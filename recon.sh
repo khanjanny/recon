@@ -576,6 +576,8 @@ echo "n/a;n/a;$correo;n/a" >> reportes/correos_motoresBusqueda.csv
 done
 ################
 
-
-
+grep --color=never -ira "10\." logs/enumeracion/dnsenum.txt | sort | uniq >> .vulnerabilidades/"$DOMAIN"_dns_IPinterna.txt
+grep --color=never -ira "192\.1" logs/enumeracion/dnsenum.txt | sort | uniq >> .vulnerabilidades/"$DOMAIN"_dns_IPinterna.txt
+grep --color=never -ira "172\.1" logs/enumeracion/dnsenum.txt | sort | uniq >> .vulnerabilidades/"$DOMAIN"_dns_IPinterna.txt
+insert_data
 cp .enumeracion2/"$DOMINIO"_subdominios.txt reportes/subdominios.csv
