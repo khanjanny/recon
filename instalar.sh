@@ -27,7 +27,7 @@ RESET="\033[00m"       # Normal
 
 echo -e "${RED}[+]${BLUE} Instando de repositorio .. ${RESET}"
 
-sudo apt-get install fierce dnsenum cargo
+sudo apt-get install -y fierce dnsenum cargo
 
 echo -e "${RED}[+]${BLUE} Copiando ejecutables ${RESET}"
 
@@ -53,11 +53,16 @@ sudo chmod a+x /usr/bin/pymeta.sh
 sudo chmod a+x /usr/bin/get-geodata.sh
 
 kernel=`uname -a`
-if [[ $kernel == *"aarch64"* ]]; then #rasberry
+if [[ $kernel == *"Nethunter"* ]]; then #rasberry
 	#sudo cp findomain-aarch64 /usr/bin/findomain
 	#sudo chmod a+x /usr/bin/findomain
-	cargo install findomain
-	mv ~/.cargo/bin/findomain /usr/bin/findomain
+	
+	which findomain >/dev/null
+	if [ $? -eq 1 ]
+	then
+		cargo install findomain
+		mv ~/.cargo/bin/findomain /usr/bin/findomain
+	fi	
 else
 	sudo cp findomain-amd64 /usr/bin/findomain	
 fi

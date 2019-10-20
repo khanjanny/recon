@@ -141,6 +141,10 @@ grep nameserver /etc/resolv.conf
 echo -e "$OKORANGE+ -- --=############ ############## #########$RESET"
 echo ""
 
+kernel=`uname -a`
+if [[ $kernel == *"Nethunter"* ]]; then #NetHunter
+	export PATH=/root/bin:/root/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/system/xbin:/usr/bin/pentest
+fi
 
 
 ####################  DNS test ########################
@@ -170,7 +174,16 @@ Sublist3r.sh -d $DOMINIO -o `pwd`/logs/enumeracion/Sublist3r.txt
 
 
 echo -e "\t[+] Iniciando findomain ( Crtsh API, CertSpotter API, facebook) .."
-findomain --all-apis --target $DOMINIO > logs/enumeracion/findomain.txt
+
+
+if [[ $kernel == *"Nethunter"* ]]; then #NetHunter
+	findomain --target $DOMINIO > logs/enumeracion/findomain.txt
+else
+	findomain --all-apis --target $DOMINIO > logs/enumeracion/findomain.txt
+fi
+
+
+
 
 ##################### Email, subdominios #################
 
