@@ -631,12 +631,14 @@ class DNSdumpster(enumratorBaseThreaded):
         return self.get_response(resp)
 
     def get_csrftoken(self, resp):
-        csrf_regex = re.compile("<input type='hidden' name='csrfmiddlewaretoken' value='(.*?)' />", re.S)
+		#<input type="hidden" name="csrfmiddlewaretoken" value="HCOJH0fWhUp7SYTpyvUOztZqe4ekTG6pzVcZySvkJWpMQw6ieAjSNrZkPzk34MZB">
+        csrf_regex = re.compile("<input type='hidden' name='csrfmiddlewaretoken' value='(.*?)' />", re.S)        
         token = csrf_regex.findall(resp)[0]
         return token.strip()
 
     def enumerate(self):
         resp = self.req('GET', self.base_url)
+        print self.base_url
         token = self.get_csrftoken(resp)
         params = {'csrfmiddlewaretoken': token, 'targetip': self.domain}
         post_resp = self.req('POST', self.base_url, params)

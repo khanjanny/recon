@@ -177,6 +177,7 @@ echo -e "\t[+] Iniciando findomain ( Crtsh API, CertSpotter API, facebook) .."
 
 
 if [[ $kernel == *"Nethunter"* ]]; then #NetHunter
+	echo -e "\t[+] Nethunter Detectado"
 	findomain --target $DOMINIO > logs/enumeracion/findomain.txt
 else
 	findomain --all-apis --target $DOMINIO > logs/enumeracion/findomain.txt
