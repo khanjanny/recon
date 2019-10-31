@@ -53,21 +53,25 @@ sudo chmod a+x /usr/bin/pymeta.sh
 sudo chmod a+x /usr/bin/get-geodata.sh
 
 kernel=`uname -a`
-if [[ $kernel == *"Nethunter"* ]]; then #rasberry
-	#sudo cp findomain-aarch64 /usr/bin/findomain
-	#sudo chmod a+x /usr/bin/findomain
-	
+if [[ $kernel == *"aarch64"* ]]; then #rasberry	
+	sudo cp findomain-aarch64 /usr/bin/findomain
+	sudo cp amass-arm64 /usr/bin/amass 
+else
+	sudo cp findomain-amd64 /usr/bin/findomain		
+	sudo cp amass-amd64 /usr/bin/amass 
+fi
+
+if [[ $kernel == *"Nethunter"* ]]; then #rasberry	
 	which findomain >/dev/null
 	if [ $? -eq 1 ]
 	then
 		cargo install findomain
 		mv ~/.cargo/bin/findomain /usr/bin/findomain
-	fi	
-else
-	sudo cp findomain-amd64 /usr/bin/findomain	
+	fi		
 fi
-sudo chmod a+x /usr/bin/findomain
 
+
+sudo chmod a+x /usr/bin/findomain
 
 echo -e "${RED}[+]${BLUE} Instalando librerias de python ${RESET}"
 sudo pip install xlrd

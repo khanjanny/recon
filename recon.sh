@@ -154,6 +154,9 @@ echo -e "$OKBLUE+ -- --=############ Reconocimiento DNS  ... #########$RESET"
 echo -e "\t[+] Iniciando dnsrecon (DNS info) .."
 dnsrecon -d $DOMINIO --lifetime 60  > logs/enumeracion/dnsrecon.txt &
 
+echo -e "\t[+] Iniciando Amass"
+amass enum -ip -d $DOMINIO | grep --color=never $DOMINIO > logs/enumeracion/amass.txt 2>/dev/null &
+
 echo -e "\t[+] Iniciando fierce (Volcado de zona) .."
 fierce -dns $DOMINIO -threads 3 > logs/enumeracion/fierce.txt 
 
@@ -514,7 +517,8 @@ cat logs/enumeracion/Sublist3r.txt | grep --color=never $DOMINIO | cut -d ":" -f
 #  --> correo.siahcomibol.gob.bo
 cat logs/enumeracion/findomain.txt | egrep --color=never "\-\-|>>" |  awk '{print $2}' >> subdominios.txt
 
-
+#amass
+cat logs/enumeracion/amass.txt |  awk '{print $1}' >> subdominios.txt
 
 # theharvester y google
 cat logs/enumeracion/theharvester_google.txt | grep --color=never $DOMINIO | egrep -v "empty|@|harvesting" | cut -d ":" -f1 >> subdominios.txt
