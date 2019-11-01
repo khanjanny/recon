@@ -136,7 +136,7 @@ mkdir -p archivos
 touch .enumeracion/"$DOMINIO"_google_googlehacking.txt
 cp /usr/share/lanscanner/.resultados.db .
 echo -e "$OKORANGE+ -- --=############ Usando servidor DNS  ... #########$RESET"
-echo "nameserver 8.8.8.8" > /etc/resolv.conf
+echo "nameserver 1.1.1.1" > /etc/resolv.conf
 grep nameserver /etc/resolv.conf
 echo -e "$OKORANGE+ -- --=############ ############## #########$RESET"
 echo ""
