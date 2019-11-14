@@ -11,7 +11,6 @@ RESET='\e[0m'
 
 #https://github.com/daudmalik06/ReconCat
 #https://github.com/mobrine-mob/M0B-tool-v2
-#https://github.com/GerbenJavado/LinkFinder
 #https://github.com/franccesco/getaltname
 #https://github.com/twelvesec/gasmask
 
@@ -136,7 +135,6 @@ mkdir -p archivos
 touch .enumeracion/"$DOMINIO"_google_googlehacking.txt
 cp /usr/share/lanscanner/.resultados.db .
 echo -e "$OKORANGE+ -- --=############ Usando servidor DNS  ... #########$RESET"
-echo "nameserver 1.1.1.1" > /etc/resolv.conf
 grep nameserver /etc/resolv.conf
 echo -e "$OKORANGE+ -- --=############ ############## #########$RESET"
 echo ""
@@ -155,7 +153,7 @@ echo -e "\t[+] Iniciando dnsrecon (DNS info) .."
 dnsrecon -d $DOMINIO --lifetime 60  > logs/enumeracion/dnsrecon.txt &
 
 echo -e "\t[+] Iniciando Amass"
-amass enum -ip -d $DOMINIO | grep --color=never $DOMINIO > logs/enumeracion/amass.txt 2>/dev/null &
+amass enum -src -min-for-recursive 2 -d $DOMINIO -config /usr/share/lanscanner/amass-config.ini > logs/enumeracion/amass.txt &
 
 echo -e "\t[+] Iniciando fierce (Volcado de zona) .."
 fierce -dns $DOMINIO -threads 3 > logs/enumeracion/fierce.txt 
@@ -169,8 +167,6 @@ else
 	dnsenum $DOMINIO --nocolor -f /usr/share/wordlists/hosts.txt --noreverse --threads 3 > logs/enumeracion/dnsenum.txt 2>/dev/null &
 fi
 
-echo -e "\t[+] Iniciando CTFR ( Certificate Transparency logs) .."
-ctfr.sh -d $DOMINIO > logs/enumeracion/ctfr.txt 2>/dev/null
 
 echo -e "\t[+] Iniciando Sublist3r ( Baidu, Yahoo, Google, Bing, Ask, Netcraft, DNSdumpster, Virustotal, ThreatCrowd, SSL Certificates, PassiveDNS) .."
 Sublist3r.sh -d $DOMINIO -o `pwd`/logs/enumeracion/Sublist3r.txt
@@ -447,7 +443,7 @@ echo -e "$OKBLUE+ -- --=############ Recopilando URL indexadas ... #########$RES
 google.pl -t "site:$DOMINIO" -o logs/enumeracion/"$DOMINIO"_google_indexado2.txt -l logs/enumeracion/"$DOMINIO"_google.html 
 
 echo -e "$OKBLUE+ -- --=############ Comprobando si google indexo páginas hackeadas ... #########$RESET" 
-egrep -iq " Buy| Pharmacy | medication| cheap| porn| viagra|hacked" logs/enumeracion/"$DOMINIO"_google.html
+egrep -iq " Buy| Pharmacy | medication| cheap| porn| viagra|hacked|drug" logs/enumeracion/"$DOMINIO"_google.html
 greprc=$?
 if [[ $greprc -eq 0 ]] ; then			
 	echo -e "\t$OKRED[!] Redirección  a sitios de terceros detectado \n $RESET"
@@ -462,10 +458,10 @@ insert_data
 
 ####### wait to finish ########
   while true; do
-	dnsenum_instances=$((`ps aux | grep dnsenum | wc -l` - 1)) 
+	dnsenum_instances=$((`ps aux | egrep "dnsenum|amass" | wc -l` - 1)) 
   if [ "$dnsenum_instances" -gt 0 ]
 	then
-		echo "Todavia hay escaneos de dnsenum activos ($dnsenum_instances)"  
+		echo "Todavia hay escaneos de dnsenum o amass activos ($dnsenum_instances)"  
 		sleep 30
 	else
 		break		  		 
@@ -505,9 +501,6 @@ else
 
 fi
 
-# ctfr
-# [-]  dialin.organojudicial.gob.bo
-cat logs/enumeracion/ctfr.txt | grep --color=never $DOMINIO | grep -v TARGET | awk '{print $2}' >> subdominios.txt
 
 # Sublist3r
 #www.comibol.gob.bo
@@ -518,7 +511,7 @@ cat logs/enumeracion/Sublist3r.txt | grep --color=never $DOMINIO | cut -d ":" -f
 cat logs/enumeracion/findomain.txt | egrep --color=never "\-\-|>>" |  awk '{print $2}' >> subdominios.txt
 
 #amass
-cat logs/enumeracion/amass.txt |  awk '{print $1}' >> subdominios.txt
+cat logs/enumeracion/amass.txt  | cut -d "]" -f 2 | sed "s/ //g" >> subdominios.txt
 
 # theharvester y google
 cat logs/enumeracion/theharvester_google.txt | grep --color=never $DOMINIO | egrep -v "empty|@|harvesting" | cut -d ":" -f1 >> subdominios.txt
@@ -529,7 +522,11 @@ cat .enumeracion2/"$DOMINIO"_google_indexado.txt | cut -d "/" -f 3 | cut -d ":" 
 sed -i "s/$DOMINIO\./$DOMINIO/g" subdominios.txt #Eliminar punto extra al final
 
 #filtrar dominios
-grep --color=never $DOMINIO subdominios.txt | egrep -iv '\--|Testing|Trying|TARGET|subDOMINIOs|DNS|\*' | sort | uniq -i > subdominios2.txt
+grep --color=never $DOMINIO subdominios.txt | egrep -iv '\--|Testing|Trying|TARGET|subDOMINIOs|DNS|\:\:|\*' | sort | uniq -i > subdominios2.txt
+
+echo -e "\t[+] Iniciando subjack .."
+subjack -w subdominios2.txt -t 100 -timeout 30 -ssl -c /usr/share/lanscanner/fingerprints-domain.json -v 3 > logs/vulnerabilidades/"$DOMINIO"_dns_subjack.txt 
+grep -v "Not Vulnerable" logs/vulnerabilidades/"$DOMINIO"_dns_subjack.txt  > .vulnerabilidades/"$DOMINIO"_dns_subjack.txt 
 
 
 for line in `cat subdominios2.txt`;
@@ -594,8 +591,8 @@ echo "n/a;n/a;$correo;n/a" >> reportes/correos_motoresBusqueda.csv
 done
 ################
 
-grep --color=never -ira "10\." logs/enumeracion/dnsenum.txt | sort | uniq >> .vulnerabilidades/"$DOMAIN"_dns_IPinterna.txt
-grep --color=never -ira "192\.1" logs/enumeracion/dnsenum.txt | sort | uniq >> .vulnerabilidades/"$DOMAIN"_dns_IPinterna.txt
-grep --color=never -ira "172\.1" logs/enumeracion/dnsenum.txt | sort | uniq >> .vulnerabilidades/"$DOMAIN"_dns_IPinterna.txt
+grep --color=never -ira "10\." logs/enumeracion/dnsenum.txt | sort | uniq >> .vulnerabilidades/"$DOMINIO"_dns_IPinterna.txt
+grep --color=never -ira "192\.1" logs/enumeracion/dnsenum.txt | sort | uniq >> .vulnerabilidades/"$DOMINIO"_dns_IPinterna.txt
+grep --color=never -ira "172\.1" logs/enumeracion/dnsenum.txt | sort | uniq >> .vulnerabilidades/"$DOMINIO"_dns_IPinterna.txt
 insert_data
 cp .enumeracion2/"$DOMINIO"_subdominios.txt reportes/subdominios.csv

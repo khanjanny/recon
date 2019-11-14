@@ -27,7 +27,7 @@ RESET="\033[00m"       # Normal
 
 echo -e "${RED}[+]${BLUE} Instando de repositorio .. ${RESET}"
 
-sudo apt-get install -y fierce dnsenum cargo
+sudo apt-get install -y fierce dnsenum cargo golang
 
 echo -e "${RED}[+]${BLUE} Copiando ejecutables ${RESET}"
 
@@ -110,11 +110,9 @@ cd Sublist3r
 sudo pip install -r requirements.txt
 cd ..
 
-echo -e "${RED}[+]${BLUE} Instalando ctfr ${RESET}"
-sudo cp -R ctfr /usr/share/
-cd ctfr
-sudo pip install -r requirements.txt
-cd ..
+echo -e "${RED}[+]${BLUE} Instalando subjack ${RESET}"
+go get github.com/haccer/subjack
+ln -s ~/go/bin/subjack /usr/bin/subjack
 
 
 echo -e "${RED}[+]${BLUE} Instalando spoofcheck ${RESET}"
