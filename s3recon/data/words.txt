@@ -1,0 +1,7 @@
+walmart
+google
+apple
+microsoft
+uber
+lyft
+amazon

@@ -1,0 +1,1 @@
+include LICENSE README.md s3recon/s3recon.yml data/*.txt

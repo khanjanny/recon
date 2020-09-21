@@ -1,4 +1,4 @@
 #!/bin/bash
 
-cd /usr/share/Sublist3r && python sublist3r.py "$@"
+cd /usr/share/Sublist3r && python3 sublist3r.py "$@"
 
