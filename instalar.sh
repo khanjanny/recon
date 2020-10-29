@@ -27,7 +27,7 @@ RESET="\033[00m"       # Normal
 
 echo -e "${RED}[+]${BLUE} Instando de repositorio .. ${RESET}"
 
-sudo apt-get install -y fierce dnsenum cargo golang subjack
+sudo apt-get install -y fierce dnsenum cargo golang subjack sqlmap
 
 echo -e "${RED}[+]${BLUE} Copiando ejecutables ${RESET}"
 

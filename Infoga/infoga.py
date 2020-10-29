@@ -100,10 +100,10 @@ class Infoga(object):
 
 	def Pgp(self):
 		Printer.MyPrinter().nprint("Searching \"%s\" in Pgp..."%(self.CheckUrl(self.Keyword)))
-		Search = PgpSearch.Pgpsearch(self.CheckUrl(self.Keyword))
-		Search.Process()
-		Emails = Search.GetEmail()
-		self.AllEmails.extend(Emails)
+		#Search = PgpSearch.Pgpsearch(self.CheckUrl(self.Keyword))
+		#Search.Process()
+		#Emails = Search.GetEmail()
+		#self.AllEmails.extend(Emails)
 
 	def All(self):
 		self.Google()
