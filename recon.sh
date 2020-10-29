@@ -158,7 +158,7 @@ echo -e "\t[+] Iniciando Amass"
 amass enum -src -min-for-recursive 2 -d $DOMINIO -config /usr/share/lanscanner/amass-config.ini > logs/enumeracion/amass.txt &
 
 echo -e "\t[+] Iniciando fierce (Volcado de zona) .."
-fierce -dns $DOMINIO -threads 3 > logs/enumeracion/fierce.txt 
+fierce ---domain $DOMINIO -threads 3 > logs/enumeracion/fierce.txt 
 
 egrep -iq "SOA" logs/enumeracion/fierce.txt 
 greprc=$?
