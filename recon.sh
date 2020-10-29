@@ -1,4 +1,664 @@
 #!/bin/bash
-z="
-";aWz='lor=';hQz='type';Gz='[94m';jYz='wk '\''';THz='T"';KMz='et $';mTz='repo';aVz='on|s';IHz='grep';gQz='g2.t';aNz='ga2.';XCz='-pri';sQz='user';iz='EOF"';RQz='y li';PYz='rm i';UVz='rio|';pUz='  a ';KPz=' any';XTz='pwd`';pJz='logs';XMz='enie';gSz=' lin';SSz='sswo';aSz='ng11';iCz='pty ';aIz='nici';oOz='l:ad';wKz=' > l';mVz='s=$(';jRz='l:\"';vcz='odat';tcz='IO;$';yz='| ( ';GKz='Si s';iTz='v" 2';DYz='rtar';KNz='vest';Abz='t`;';bFz='map_';lUz='D[!]';Pbz='ir ,';aTz='os/"';uYz='nsfe';JKz='olca';Iaz='-iv ';cMz='domi';hIz='dnsr';YDz='/nul';ARz='ulum';JNz='ehar';NGz='bClo';dPz='leha';IXz='| gr';Maz='|Try';jVz='num_';Caz='ar p';kLz='`pwd';GHz='#$RE';jEz='SO: ';JPz='atch';vGz='-- -';wEz='n li';LYz='> im';JDz='enum';Gaz='l fi';TLz='tal,';NCz=' () ';QUz='gina';BOz='oofe';aBz='\ \_';ebz='stli';OWz='s ac';QDz='ull';TFz='rp';AFz='-c [';FOz='o...';IUz='ndex';hLz='ist3';jWz='nnec';PFz='IO';hPz=' "" ';rTz='| cu';jKz='or -';tQz='\"" ';bcz='d ";';xQz='\"cu';iFz='rs';WHz='unam';tz='_ \(';pMz='is.t';KZz='d ":';oPz=';';Mbz=''\''` #';caz='ack ';ZHz='[ $k';LJz='lans';ZZz='2 | ';sHz='bin:';kBz='/(__';ZSz='IO\"';SJz='on/a';wGz='-=##';gbz='p -o';RGz='lteg';adz='es/c';JUz='ado2';Jz='D='\''\';kCz='s';SNz=' inf';NZz='/fin';vBz='http';eEz='O" ]';TRz='txt"';NDz='nume';kJz='t';eNz='1B\[';MDz='* .e';pSz='ng12';FVz='ct.t';iJz='ierc';Vbz='host';PEz='DOMI';mz='  __';rQz='for ';XKz=' $RE';qZz='2/"$';HJz='nfig';EZz='awk ';BRz=' vit';nJz='q "S';ZPz='bili';JQz='ng.h';sWz='p --';Tcz='on d';NNz=' bin';Vdz='llid';pRz='g8.t';QNz='_bin';eGz='ng.t';dQz='g2.h';NLz='ft, ';GPz='os|d';sZz=' 3 |';IBz='|  \';kFz='on';sGz='"$OK';LMz='NIO ';iZz='>> s';NYz='s.cs';hZz='-f1 ';JIz='in/p';HYz='eos1';Kbz='r '\'',';yCz='# de';tWz='colo';REz='${DO';IKz='zo v';LPz='.htm';RJz='ini ';mdz='*"`;';lz=' ___';iPz='>> .';rGz=' -e ';lKz='sr/s';ZLz='rtif';hbz=' add';KQz='tml';ldz='"\@"';FLz='Yaho';Pz='3[92';Ybz='"ali';IZz='/Sub';gdz='sv';KCz=' ins';mUz=' Red';jXz='the ';gVz='URL.';IEz='TARG';ePz='ckin';OFz='r $D';KEz='$0';SOz='" lo';hCz='e em';oIz='gs/e';GNz='goog';kPz='ehac';Ccz='p ad';WMz=' Obt';mNz='//g"';YOz='/"$D';mKz='hare';NJz='er/a';ZOz='IO"_';cZz='v "e';pPz='l:ed';dYz='s.tx';rEz='mbre';xDz='G;;';ILz='e, B';LRz='sena';GWz='then';RMz='t $D';LKz='e zo';kQz='g3.h';yaz='`cat';TWz='brea';xbz='`ech';ROz='ible';Pdz='rm c';VZz='/ama';HKz='e hi';oXz='e la';pTz='ada.';OEz='done';KTz='es2/';PHz='conf';sSz='\"Un';pIz='on/d';aQz='ng2.';Gdz=':]]/';RUz='s ha';NRz='gin|';fBz=' (__';eWz='-v "';TEz='O:=N';faz='00 -';Hez='ion2';fDz='" OP';BNz='gle ';UPz='*$/d';PJz='-con';SHz='###$';CEz='f "O';kcz='o: $';DJz='-rec';kdz='_* |';HFz=' res';qcz='pl $';UHz='kern';PTz='.. #';GZz='int ';eRz='ng7.';sIz='txt ';Gcz='-d "';WKz='o !!';jLz=' -o ';pbz='ne| ';nNz='n/in';xVz=' "$d';dKz=' ) .';YHz='`';FDz='rt-d';IWz='davi';tHz='/usr';fz=' {';pYz='omin';ycz=' "$l';Dez='tern';tNz='rm l';uUz='etec';AMz=' fac';RPz='ing.';wz='   /';pQz=' den';LHz='ver ';mIz='60  ';PZz=' egr';Kz='033[';DHz='or D';MEz=' 2;;';pGz='.db ';jTz='>/de';Scz='maci';ERz='g5.h';HTz='mv l';dUz='p| p';eCz='null';UKz='dete';nbz='1 ];';RNz='g.tx';ICz='cii_';nXz=' DOM';OSz='te:t';KJz='are/';WVz='tras';uGz='GE+ ';wcz='a" >';iKz='ocol';GIz='/xbi';DUz=' URL';PGz='r im';lQz='ing3';QZz=' "\-';cFz='1000';vJz='txt';bGz='ogle';iOz='hack';xFz='es';HHz='SET"';hWz='urit';tVz=' | w';Ydz='go" ';Dbz=' *";';uz='_  )';OTz='os .';tZz='O | ';gXz='# fi';xGz='####';yVz='nsen';jNz=',2})';Cz='"30"';Oz=''\''\03';yXz='go/c';LFz=' ""';mPz='slee';vUz='tado';aJz=') ..';JHz=' nam';WGz='h .e';IPz='ot m';YXz='perl';XVz='e|to';daz='-w s';WBz=' | (';tYz='_tra';dFz='p';pHz='t/bi';Nbz=' Con';aZz='"s/ ';yQz='rric';lJz='egre';kVz='inst';GCz='prin';yPz='te:g';aDz='whil';Wcz='e re';TUz='das ';YVz='ken|';tPz='t -p';YRz='.vul';Ucz='s IP';EPz='resu';UGz='hivo';waz='t  >';ESz='l:(_';QHz='## #';hz='<< "';XRz='ing6';eXz='x $l';DLz=' Bai';GQz='xt -';FUz='exad';aOz='dns_';mXz='$ d'\''';yEz='in] ';EYz='Malt';bUz='on| ';Kdz=' car';sVz='ass"';SCz='abil';JVz='uniq';cHz=' *"N';ZGz='INIO';SIz='nto ';dMz='nios';tGz='ORAN';fUz=' via';iaz='30 -';FNz=' -b ';MTz=' Met';yZz='O/g"';KBz='| (_';IVz='t | ';DOz='l do';sBz='s@ow';FTz='e" >';AHz='sand';Xcz='ad l';Yz='e[0m';oQz='cess';CJz='-for';acz='o  $';PXz=' cut';vPz='l lo';gLz='Subl';VFz='scan';vRz='etyp';nSz='xt:*';XQz='inde';bHz='l ==';iGz='shar';jJz='e.tx';qLz='doma';OHz='olv.';AIz=':/us';wTz='ort ';aXz='"say';QLz='ter,';AXz='ecur';IGz='ng';gaz='time';DIz='/bin';Cdz='_sub';eVz='eden';dLz='iveD';VLz='eatC';Ocz=' -i ';CZz='n/dn';FGz=' log';MSz='0.ht';xSz='3.ht';oYz='subd';RYz=' "IN';vNz='band';SBz=')|  ';ANz=' goo';QXz='" " ';pWz='r_bi';GGz='s/cr';RZz='\-|>';GDz='ata.';Xz='T='\''\';sXz='e -d';lZz=' --c';qYz='ios.';sYz='xt  ';DXz='ecti';sFz='r .m';BPz=' han';Wdz='o;Co';PLz='umps';kTz='v/nu';Ncz='" ];';SZz='>" |';kGz='nsca';wVz='1))';MWz='e dn';wOz='ng0.';FMz='ecta';FQz='O" -';DBz='\/| ';tLz='sh A';UTz='h -d';tFz='assc';TQz=' >> ';hEz='echo';kaz='-c /';Wbz='=`ho';AOz='e sp';nYz='| tr';pDz='IO=$';BUz='a_py';rCz='t0 |';cWz='r @ ';nIz='> lo';DMz='+] N';NKz='RED ';OZz='in.t';gEz='en';TZz='  aw';rcz='ip)';dVz='e_cr';fNz='([0-';uFz='an';MLz='tcra';vKz='ds 3';QCz=' .vu';TGz=' arc';yBz='ub.c';nKz='/wor';aGz='"_go';edz='sque';yJz='[ $g';BJz='-min';UFz='r .e';gNz='9]{1';GMz='do"';kWz=' tim';FXz='imed';jCz='file';Hz=''\''';fdz='da.c';VGz='touc';xCz='ull ';fVz='cial';scz=' "$D';Uz='33[9';YZz=' -f ';iUz='rug"';yTz='iq >';xXz='alte';qPz='it" ';uPz=' 1 -';QSz='o.co';xMz='o co';VEz='NOMB';nFz='ulne';LXz='or=n';yIz='um -';uTz=' -f4';tKz=' --t';qKz='osts';xWz=' "ed';CCz='lTor';JLz='ing,';PSz='rell';XEz='{NOM';Mdz='res ';tRz=':asm';INz='n/th';jcz='el s';GVz='sort';Xbz='st $';oMz='_who';wJz='rc=$';gDz='TION';rBz='orre';IMz='n --';bVz='essi';YMz='ndo ';uBz='org';gIz=' .."';KVz=' | e';IJz=' /us';fZz='g" |';Obz='vert';KRz='ntra';rOz='O"_g';ZCz='|xar';HLz='oogl';oGz='ados';UZz='t $2';UYz='k '\''{';fOz='rt_d';yWz='ge-s';QIz='onoc';pLz=' fin';sLz=' Crt';JMz='targ';lGz='nner';bNz='sed ';PDz='on2 ';Iez='/sub';XXz='1`';wDz='PTAR';TVz='usua';fcz=' "Ob';bKz='orce';WFz='eos';IYz='.csv';Acz='ostl';qBz='el.t';AZz='t $1';kHz='er';ACz='om/D';uKz='hrea';tCz='s -0';RLz=' Vir';Sdz='xt 2';UQz='.enu';CHz='rvid';EKz=' the';cPz='gle_';EDz='inse';ZVz='sesi';ndz=' do';LEz='exit';hGz='usr/';uCz=' rm ';HVz='xado';FEz='vali';CQz='m in';uEz='ntid';EVz='dire';XHz='e -a';fIz='nfo)';xRz='c OR';CSz='9.tx';vz='( ( ';iYz=' | a';bZz='IO |';Waz=' uni';MUz='prob';ubz='ine"';Zaz='os2.';ecz='2)';xBz='gith';cXz='NIO\';Fcz='cut ';iQz=':sql';lMz='n/"$';Bez='\.1"';lVz='ance';ALz=' Sub';YCz='nt0 ';WQz='tle:';ODz='raci';rLz='in (';aaz='jack';vDz='E=$O';Raz='NS|\';ZRz='l:in';maz='s-do';wMz='cand';USz='nas|';UOz='des/';yHz='sbin';Jbz=' | t';Ddz='-pe ';PNz='bing';rKz='orev';fTz='es/m';sdz='er -';HBz=' ) |';JWz='a ha';HWz=' "To';nCz='acio';JCz='art';iEz=' " U';YQz='x.of';gPz='xt >';xEz='nked';Xaz='q -i';VYz='t $5';AJz='src ';SFz='r .a';BHz='o se';nBz='  )_';TDz='ilid';Eaz=' ext';lNz='m|K]';eOz='orma';az='tion';aEz='L}';UMz='ndom';iMz='is .';kbz='tal_';aCz='gs -';EXz='on t';nZz='=nev';yNz='pued';ZXz=' -E ';sNz='oga.';JBz='  ( ';HSz='api|';sbz=' "$i';lFz='on2';YEz='BRE:';lbz='ips ';lOz=' "si';RCz='lner';vQz='ing4';EGz='r -p';Kaz='|Tes';VJz=' fie';LWz='cane';SPz='-i '\''';aPz='dade';YYz='tr '\''';EFz='para';GRz='g5.t';Xdz=';Car';FPz='ltad';Odz=' <su';sKz='erse';pXz='st l';gcz='teni';pEz='] -n';bCz='0 rm';AYz='os1.';AUz='_met';qCz=' 0 -';xz='|';aUz='cati';lSz='com ';eDz='d:n:';XFz='r .d';vCz='2>/d';MOz='s_sp';MGz='r we';rbz='4`';Zbz='as|I';WIz='##$R';VPz=''\'' lo';dTz='ut `';lEz='n.sh';cLz='Pass';Mz='OKGR';kUz='"\t$';xJz='?';ADz='lete';VWz='/the';TPz='/^\s';RSz='m pa';eKz='."';GBz=' (  ';sPz='1.tx';PMz='apis';dZz='|@|h';HDz='py';Qdz='ooki';Baz='imin';CMz='k) .';bbz='tota';oWz='os.t';vLz='Cert';cUz='chea';Faz='ra a';xcz='o/su';yRz=' inu';DZz='m.tx';lDz='S in';OCz='{';FRz='ing5';uHz='/loc';JYz=' | u';eBz='_/\|';vXz='mpor';hTz='a.cs';rVz='m|am';hVz='e tr';gFz='r .b';BZz='}'\'' >';xZz='/$DO';yDz='?)  ';nUz='irec';EHz='NS  ';FZz=''\''{pr';cSz='t # ';cYz='bdom';Wz='RESE';gHz=']; t';Gbz='hen';BXz='ity|';kSz='bin.';FWz=']';naz='.jso';VRz='6.ht';lCz=' .en';WWz='r_go';Sz='ANGE';DQz='text';DSz='ng9.';raz='bjac';LBz='___)';qGz='.';wPz='ing1';KOz='es/"';ELz='du, ';CNz='theh';Az='THRE';wRz='e:sv';dDz='s ":';Lz='91m'\''';JSz='ervi';qEz=' [no';AGz='rvic';baz='subj';WSz='n|co';KHz='eser';bdz='os_m';WPz='line';nRz='ext:';LLz=', Ne';XGz='on/"';JOz='h $D';iNz=';[0-';STz='pyme';nWz='O"_c';SQz='nes';uaz=' Vul';kEz='reco';DKz=']] ;';Udz=';Ape';Fdz='^[:a';mJz='p -i';xHz='in:/';XDz='/dev';YUz='y | ';OYz='v';Bdz='$geo';HGz='acki';KDz='erac';cRz='ing7';UJz=' &';tOz='ing0';xTz='| un';ZFz='r .n';ZYz=' '\'' '\''';DPz='ontr';iDz='do';TMz='n/fi';wBz='s://';vYz='renc';oDz='OMIN';xPz='g1.t';Mcz='"$ip';ULz=' Thr';wIz='amas';DDz='iles';kXz='(n t';UIz=' ...';sUz='e te';tUz='rcer';FBz=' \/|';rNz='/inf';KFz='"';hUz='ed|d';Aaz=' #El';gCz='elet';VOz='O"_d';GOz='spoo';TKz='ona ';WJz='rce ';uWz='r=ne';ZTz='chiv';gBz='_) |';pBz='dani';BEz='rint';Haz='nal';CFz='pala';oLz='st3r';NHz='/res';BSz='sdl"';Sbz=' $li';fPz='g0.t';kIz='ifet';oCz='n -s';NTz='adat';oRz='8080';OJz='mass';uZz='-i "';qUz='siti';oJz='OA" ';AWz='um_i';laz='gerp';PRz='rase';TBz='__) ';MMz='indo';BYz='csv';QYz='i "S';cIz=' dns';dWz='| eg';qVz='senu';FSz='vti_';QEz='NIO=';KWz='y es';Bcz='ine|';HCz='t_as';nz='_  _';gUz='gra|';qFz='des';TYz='| aw';MYz='o/co';iLz='r.sh';HZz='$1}'\''';vIz='ss"';Jaz=''\''\--';cNz='-r "';XNz=' $DO';fXz='NIO.';Iz='OKRE';YSz='\"$D';NSz='ng10';tbz='p;$l';xdz='s_IP';sDz='n)  ';MNz='t 2>';mDz='d)  ';dz='scii';Daz='unto';Fbz=']];t';qJz='/enu';VQz='inti';dRz='g7.h';hOz=' Goo';WCz='  0 ';NOz='oof.';mcz='geod';vbz='ios3';VSz='logi';qHz='n:/r';iHz='#Net';IFz='ulta';oz='__  ';tTz=' ","';Lbz=''\'' '\'';';xKz='ogs/';HMz='omai';DFz='bra ';LCz='ert_';ucz=';$ge';bEz='if [';PIz=' Rec';qTz='csv ';gKz='num ';nVz='(`ps';jdz='at l';ncz='ata=';KLz=' Ask';sMz='r ..';hNz=',2}(';wSz='ng13';GSz='bin|';eQz='ing2';SGz='o';KSz='ce)"';JEz='\n" ';mHz='rt P';bBz='_| (';JXz='ep -';eTz='"/re';uMz='t[+]';HXz='_cor';WTz='ir `';SDz='erab';WEz='RE=$';AEz='   p';jGz='e/la';eaz='-t 1';UCz='es -';jQz='ng3.';cBz='/\| ';qDz='OPTA';qz='(  _';oVz=' aux';Hdz='/g'\'' ';ZBz='| ) ';XPz='/vul';VCz='size';VBz=' \) ';ZEz='=NUL';qSz='g12.';obz='ip=`';nHz='ATH=';TJz='.txt';lPz='king';YWz='rep ';abz='Pv6"';idz='n `c';Cez='IPin';LGz='s/vu';pdz='a;n/';mMz='NIO"';gRz='ines';cTz='v -o';rdz='o;n/';GYz='corr';eUz='orn|';UBz='| (\';mOz='te:$';LZz='1 >>';SMz='IO >';OGz='ne';WNz='h -t';qNz='t > ';MJz='cann';GFz='trar';eMz=', et';hHz='hen ';gJz='s 3 ';cJz='ce -';RKz='ado ';YBz='\   ';uQz='4.tx';Rcz='nfor';FHz='... ';eSz='te e';RTz='ET"';TTz='ta.s';hRz='7.tx';BVz='e:$D';ZQz='" -o';ocz='$(ge';SKz='de z';HQz='p 1 ';Vz='3m'\''';ETz='4.ht';sJz='cion';wdz='q >>';Ndz='espe';oEz='inio';wbz='ip2=';mbz='-gt ';tXz=' '\'';'\''';IDz='mv .';NEz='esac';nDz='   D';nEz='[dom';jaz='ssl ';tMz='"\t\';oaz='n -v';CDz='ty f';qQz='ied ';QGz='arMa';sTz='t -d';fWz='edge';MXz='ever';EWz='t 0 ';yYz='A" l';Qz='m'\''';qMz='harv';hXz='le w';uLz='PI, ';PUz='o pá';Cbz='} ==';jz='____';rYz='ce.t';tdz='ira ';cz='nt_a';QPz='> .v';COz='ar e';CGz='r .t';oFz='rabi';aKz='utef';dcz='io=$';MPz='q 1 ';hKz=' --n';lWz='ed o';MIz='BLUE';wLz='Spot';UWz='k';BMz='eboo';uDz='OMBR';iWz='y|Co';QOz='poss';SYz=' A" ';ybz='o $h';odz=' "n/';NUz=' si ';XJz='(Vol';bLz='es, ';APz='i "N';BTz='l:st';fFz='ers';mSz='inte';gWz='-sec';fYz=' "CN';WXz='" -f';JTz='ing*';Ecz='s|  ';VXz='d " ';Taz='\*'\'' ';bIz='ando';VHz='el=`';qbz='|  c';bMz=',sub';yOz='p -q';GUz='as .';Icz='f8`';kDz=' $OP';yLz='API,';xOz='html';vZz='s/$D';wFz='port';haz='out ';jMz='whoi';TSz='rds|';bPz='s/"$';sRz='8.tx';XWz=' | g';SXz='s=`w';Ubz='s3.t';aHz='erne';YLz='L Ce';BCz='anie';Gez='cp .';WLz='rowd';iIz='econ';XBz='| | ';wHz='al/b';iSz='te:p';OXz=':" |';YPz='nera';lLz='`/lo';bJz='fier';oBz=')';Ibz='ho $';tBz='asp.';eYz='	A" ';ZUz='medi';tSz='defi';WYz=',$1}';mLz='on/S';DCz='res1';dCz='dev/';Idz='#rem';URz='g6.t';fKz='dnse';Fez='"172';xaz=' in ';pVz=' "dn';ydz='rna.';eLz='NS) ';OMz='all-';pOz='d" -';EOz='mini';TCz='idad';cbz='l_ip';Saz=':\:|';VIz=' ###';Dz='OKBL';KKz='do d';jHz='Hunt';Ldz='acte';hdz='eo i';mWz='ut" ';gOz='ata';OUz='le i';vFz='r re';Tz='='\''\0';uRz='x OR';mYz='1}'\'' ';taz='"Not';qXz='ine';Uaz='| so';cOz='t .v';Dcz='dres';eJz=' -th';rJz='mera';BGz='ios';MBz='  | ';jZz='ubdo';lTz='ll';DVz='e_re';pKz='ts/h';EQz=':$DO';JFz='dos]';OLz='DNSd';LIz='st';ZIz='+] I';cGz='_goo';LDz='ion/';SVz='ame|';LNz='er_g';QQz='empt';bYz='> su';OVz='" > ';jDz='case';GLz='o, G';udz='"10\';cKz=' DNS';rIz='con.';hMz=' who';ZNz=' all';VDz='/* .';rSz='12.t';dOz='opil';RVz='sern';dXz='n\" ';wUz=' \n ';FCz='}';gMz='. ##';PVz='ado.';rRz='ng8.';lHz='expo';NBz='|   ';HRz='pass';GXz=' out';oNz='foga';mGz='/.re';EBz='(   ';QFz='cd $';XUz='rmac';dEz='"$DO';UUz='q " ';Bbz='[ ${';lRz='0\" ';EJz='ursi';aLz='icat';JGz='s/en';hYz='erce';LOz='"_dn';oSz='@$DO';lcz='io"';Vcz='s ##';MQz='> .e';MRz='s|lo';JZz='3r.t';VUz='Buy|';FKz='n # ';yUz='able';sz=' \( ';lXz='imes';IQz='-l l';CBz='    ';Ycz='ip=$';eZz='stin';kOz='l -t';vOz='1 -l';NFz='mkdi';FFz=' fil';VKz='ctad';RRz='ilet';FIz='stem';fRz='ty l';uIz=' Ama';VMz='ain.';RIz='imie';uOz=' -p ';DGz='mp';rz=')(  ';IIz='sr/b';XIz='ESET';hcz='endo';oZz='er $';vTz=' | s';fMz='c ..';Ez='UE='\''';aMz='reos';fQz='" >>';TOz='gs/v';MZz=' sub';ccz='1)';oUz='ción';cVz='on" ';IOz='ck.s';CKz='q 0 ';MHz='/etc';VNz='ga.s';ySz='3.tx';jFz='rs2';bXz=' \"$';uNz=' Pro';fLz='.."';uVz='c -l';tIz='&';jUz='gle.';LQz='O" >';BFz='UNA ';sOz='e_go';HIz='n:/u';bOz='f.tx';tDz='   N';ZWz='--co';OKz='\t  ';ZMz=' cor';fCz=' # d';rZz='d "/';bTz=' -cs';SEz='MINI';cdz='otor';WDz='2 2>';WRz='ml';qaz='s_su';ZJz='zona';pNz='2.tx';NIz='+ --';nQz='\"ac';QMz='arge';MVz='"pdf';XYz=''\'' | ';RDz='vuln';Kcz=' " "';ZKz=' (br';mBz='__/(';Qbz=' -->';mEz=' -d ';FYz='ego/';BWz='nsta';Aez='"192';QTz='$RES';wXz='tarM';Edz=''\''s/[';hDz='S';GTz='g14.';YTz='"/ar';mFz='r .v';sCz='xarg';rFz='des2';ECz='EOF';UEz='ULL}';MKz='na';CWz='nces';kKz='f /u';ASz='rl:w';RHz='# ##';saz='k.tx';kz='___ ';dSz='dele';OIz=' --=';cDz='topt';qRz='ing8';Zdz='> re';XZz=' "]"';iRz='t >>';CLz='3r (';aYz=';'\'' >';UDz='ades';dGz='gleh';CXz='Conn';NWz='m o ';ddz='esBu';hFz='anne';AQz='ithu';RWz='s)"';Oaz='ET|s';rXz='past';wNz='o si';xLz='ter ';RBz='\ | ';dbz=' $ho';bz=' pri';qWz='xt |';vSz='x\" ';KGz='n';vWz='@ | ';fHz='"* ]';QJz='fig.';nOz='inur';PQz='ete ';CUz='meta';kNz='?)?[';NVz='|doc';CRz='ae\"';SUz='ckea';tEz='la e';jBz=' \__';cQz=' -l ';xNz=' se ';dNz='s/\x';fEz='; th';VVz='|con';Fz='\033';Rz='OKOR';tJz='/fie';vEz='ad e';qOz='o lo';pcz='oip.';LUz=' Com';NMz='main';HOz='fche';paz=' 3 >';cEz=' -z ';iXz='ith ';ITz='/*_g';rDz='RG;;';nGz='sult';nPz='p 10';eHz='nter';Rdz='es.t';Laz='ting';Adz='ine;';Vaz='rt |';jIz=' --l';mZz='olor';EMz=' Det';jSz='aste';fGz='xt';PPz='d" >';fbz='ne |';kRz=':808';pFz='lida';bDz='e ge';BLz='list';mCz='umer';CPz=' enc';bSz='1.ht';QKz='Volc';Hbz='=`ec';OQz=' del';pCz='ize ';qdz='a;$c';lBz='_/(_';UXz='ut -';QWz='s ($';pz='_';ABz='   )';jbz=' $to';AKz='repr';OBz='   |';LTz='p 90';YIz='"\t[';oHz='/roo';xYz='S.tx';bWz='neve';Yaz=' > s';Rbz=' ;';kMz='s $D';GJz=' -co';mRz='-int';ez='_art';EIz=':/sy';nMz='_dns';CYz='impo';wZz='IO\.';ONz='g ..';xIz='s en';Nz='EEN=';LSz='10.t';oKz='dlis';Tdz=' "No';yMz='rreo';ZDz='l';cCz=' 2>/';yKz='num.';JJz='r/sh';rHz='oot/';vMz=' Bus';ORz='cont';rUz='os d';mQz='g3.t';BKz='c -e';rMz='este';bRz='et" ';wYz='iaDN';YFz='atos';BDz=' emp';EEz='n In';DTz='e" -';dBz='(___';CTz='orag';iVz='ue; ';Lcz=' -n ';dHz='ethu';JRz='s|co';wQz='g4.t';YKz='else';PWz='tivo';NQz='xt #';PKz='[!] ';Tbz='ne >';fSz='mpty';TNz='oga ';aFz='map';aRz='tran';nTz='rtes';SRz='ype:';KUz='le.h';OOz='poof';XLz=', SS';rPz='-o l';kZz='xt| ';SWz='p 30';GEz='da: ';eIz='NS i';kYz='{pri';BQz='b.co';Paz='ubDO';LVz=' -v ';hBz=' \  ';QBz=' | |';Zz='func';ibz='ress';HEz='-$OP';UNz='info';SLz='usto';NXz=' "co';Qcz='GeoI';MCz='data';KYz='niq ';CVz='IO" ';RFz='NIO';DEz='pcio';gTz='etad';hJz='on/f';YJz='cado';VTz='O -d';gGz='cp /';QVz='a "u';ISz='webs';EUz=' ind';fJz='read';Qaz='Os|D';DNz='arve';WUz=' Pha';vaz='ble"';Pcz='s4.t';uJz='rce.';OPz='os';HUz='le_i';qIz='nsre';wWz='p -v';ATz='g13.';nLz='ubli';bQz='-p 1';Bz='ADS=';dJz='dns ';XSz=' int';YNz='O -s';XOz='cp l';uSz='ned ';AVz=' sit';icz=' dat';TXz=' | c';Hcz=' " -';NPz='hay ';PCz='find';yGz='## U';KIz='ente';lIz='ime ';CIz='n:/s';IRz='word';vdz='." l';Ebz='"*  ';PBz=' |  ';sEz=' de ';Jcz='p2;$';lYz='nt $';YGz='$DOM';hSz='g11.';BIz='r/bi';BBz='|| (';gYz='AME"';oTz='/met';rWz=' gre';KXz='-col';Naz='ing|';ENz='ster';DRz='ng5.';uXz=' > i';yFz='r se';jOz='le.p';RXz='-f3 ';FJz='ve 2';DWz='" -g';wCz='ev/n';MFz='fi';vHz='al/s';WOz='ns_s';Eez='a.tx';HPz='id n';gZz='":" ';WZz='ss.t';pZz='|egr';xUz=' "Vu';eFz='bann';Zcz='(ech';gz='cat ';TIz='DNS ';iBz='|/  ';jPz='le_g';vVz='` - ';dIz='n (D';QRz='na f';POz='ing ';HNz='le >';Jdz='over';
-eval "$Az$Bz$Cz$z$Dz$Ez$Fz$Gz$Hz$z$Iz$Jz$Kz$Lz$z$Mz$Nz$Oz$Pz$Qz$z$Rz$Sz$Tz$Uz$Vz$z$Wz$Xz$Yz$Hz$z$Zz$az$bz$cz$dz$ez$fz$z$gz$hz$iz$z$jz$kz$lz$jz$mz$jz$nz$jz$oz$pz$z$qz$kz$rz$jz$sz$lz$tz$mz$uz$vz$wz$xz$z$yz$ABz$BBz$CBz$DBz$EBz$FBz$GBz$HBz$IBz$JBz$xz$z$KBz$LBz$BBz$oz$MBz$NBz$OBz$PBz$QBz$NBz$RBz$xz$z$NBz$mz$SBz$TBz$MBz$NBz$OBz$PBz$QBz$UBz$VBz$xz$z$UBz$GBz$WBz$CBz$MBz$NBz$OBz$PBz$QBz$XBz$YBz$xz$z$ZBz$aBz$bBz$jz$cBz$dBz$eBz$fBz$gBz$ZBz$hBz$xz$z$iBz$jBz$kBz$jz$lBz$jz$mBz$jz$LBz$iBz$nBz$oBz$z$pBz$qBz$rBz$sBz$tBz$uBz$z$vBz$wBz$xBz$yBz$ACz$BCz$CCz$DCz$z$ECz$z$FCz$z$GCz$HCz$ICz$JCz$z$Zz$az$KCz$LCz$MCz$NCz$OCz$z$PCz$QCz$RCz$SCz$TCz$UCz$VCz$WCz$XCz$YCz$ZCz$aCz$bCz$cCz$dCz$eCz$fCz$gCz$hCz$iCz$jCz$kCz$z$PCz$lCz$mCz$nCz$oCz$pCz$qCz$GCz$rCz$sCz$tCz$uCz$vCz$wCz$xCz$yCz$ADz$BDz$CDz$DDz$z$EDz$FDz$GDz$HDz$z$IDz$JDz$KDz$LDz$MDz$NDz$ODz$PDz$vCz$wCz$QDz$z$IDz$RDz$SDz$TDz$UDz$VDz$RDz$SDz$TDz$UDz$WDz$XDz$YDz$ZDz$z$FCz$z$aDz$bDz$cDz$dDz$eDz$fDz$gDz$hDz$z$iDz$z$jDz$kDz$gDz$lDz$z$mDz$nDz$oDz$pDz$qDz$rDz$z$sDz$tDz$uDz$vDz$wDz$xDz$z$yDz$AEz$BEz$CEz$DEz$EEz$FEz$GEz$HEz$IEz$JEz$KEz$z$LEz$MEz$z$NEz$z$OEz$z$PEz$QEz$REz$SEz$TEz$UEz$z$VEz$WEz$XEz$YEz$ZEz$aEz$z$bEz$cEz$dEz$SEz$eEz$fEz$gEz$z$hEz$iEz$jEz$kEz$lEz$mEz$nEz$oEz$pEz$qEz$rEz$sEz$tEz$uEz$vEz$wEz$xEz$yEz$AFz$BFz$CFz$DFz$EFz$FFz$GFz$HFz$IFz$JFz$KFz$z$hEz$LFz$z$LEz$z$MFz$z$NFz$OFz$oDz$PFz$z$QFz$PEz$RFz$z$NFz$SFz$TFz$z$NFz$UFz$VFz$WFz$z$NFz$XFz$YFz$z$NFz$ZFz$aFz$z$NFz$ZFz$bFz$cFz$dFz$z$NFz$ZFz$bFz$eFz$fFz$z$NFz$gFz$hFz$iFz$z$NFz$gFz$hFz$jFz$z$NFz$UFz$NDz$ODz$kFz$z$NFz$UFz$NDz$ODz$lFz$z$NFz$mFz$nFz$oFz$pFz$qFz$z$NFz$mFz$nFz$oFz$pFz$rFz$z$NFz$sFz$tFz$uFz$z$NFz$vFz$wFz$xFz$z$NFz$yFz$AGz$BGz$z$NFz$CGz$DGz$z$NFz$EGz$FGz$GGz$HGz$IGz$z$NFz$EGz$FGz$JGz$mCz$nCz$KGz$z$NFz$EGz$FGz$LGz$RCz$SCz$TCz$xFz$z$NFz$MGz$NGz$OGz$z$NFz$PGz$wFz$QGz$RGz$SGz$z$NFz$EGz$TGz$UGz$kCz$z$VGz$WGz$NDz$ODz$XGz$YGz$ZGz$aGz$bGz$cGz$dGz$HGz$eGz$fGz$z$gGz$hGz$iGz$jGz$kGz$lGz$mGz$nGz$oGz$pGz$qGz$z$hEz$rGz$sGz$tGz$uGz$vGz$wGz$xGz$xGz$yGz$AHz$BHz$CHz$DHz$EHz$FHz$xGz$xGz$GHz$HHz$z$IHz$JHz$KHz$LHz$MHz$NHz$OHz$PHz$z$hEz$rGz$sGz$tGz$uGz$vGz$wGz$xGz$xGz$QHz$xGz$xGz$xGz$RHz$xGz$SHz$Wz$THz$z$hEz$LFz$z$UHz$VHz$WHz$XHz$YHz$z$bEz$ZHz$aHz$bHz$cHz$dHz$eHz$fHz$gHz$hHz$iHz$jHz$kHz$z$lHz$mHz$nHz$oHz$pHz$qHz$rHz$sHz$tHz$uHz$vHz$sHz$tHz$uHz$wHz$xHz$hGz$yHz$AIz$BIz$CIz$sHz$DIz$EIz$FIz$GIz$HIz$IIz$JIz$KIz$LIz$z$MFz$z$hEz$rGz$sGz$MIz$NIz$OIz$xGz$xGz$xGz$PIz$QIz$RIz$SIz$TIz$UIz$VIz$xGz$WIz$XIz$KFz$z$hEz$rGz$YIz$ZIz$aIz$bIz$cIz$kEz$dIz$eIz$fIz$gIz$z$hIz$iIz$mEz$YGz$ZGz$jIz$kIz$lIz$mIz$nIz$oIz$NDz$ODz$pIz$qIz$rIz$sIz$tIz$z$hEz$rGz$YIz$ZIz$aIz$bIz$uIz$vIz$z$wIz$xIz$yIz$AJz$BJz$CJz$DJz$EJz$FJz$mEz$YGz$ZGz$GJz$HJz$IJz$JJz$KJz$LJz$MJz$NJz$OJz$PJz$QJz$RJz$nIz$oIz$NDz$ODz$SJz$OJz$TJz$UJz$z$hEz$rGz$YIz$ZIz$aIz$bIz$VJz$WJz$XJz$YJz$sEz$ZJz$aJz$KFz$z$bJz$cJz$dJz$YGz$ZGz$eJz$fJz$gJz$nIz$oIz$NDz$ODz$hJz$iJz$jJz$kJz$z$lJz$mJz$nJz$oJz$pJz$qJz$rJz$sJz$tJz$uJz$vJz$z$IHz$wJz$xJz$z$bEz$yJz$AKz$BKz$CKz$DKz$EKz$FKz$GKz$HKz$IKz$JKz$KKz$LKz$MKz$z$hEz$rGz$sGz$NKz$OKz$PKz$QKz$RKz$SKz$TKz$UKz$VKz$WKz$XKz$HHz$z$YKz$z$hEz$rGz$YIz$ZIz$aIz$bIz$cIz$JDz$ZKz$aKz$bKz$cKz$dKz$eKz$z$fKz$gKz$YGz$ZGz$hKz$iKz$jKz$kKz$lKz$mKz$nKz$oKz$pKz$qKz$TJz$hKz$rKz$sKz$tKz$uKz$vKz$wKz$xKz$JDz$KDz$LDz$fKz$yKz$sIz$vCz$wCz$xCz$tIz$z$MFz$z$hEz$rGz$YIz$ZIz$aIz$bIz$ALz$BLz$CLz$DLz$ELz$FLz$GLz$HLz$ILz$JLz$KLz$LLz$MLz$NLz$OLz$PLz$QLz$RLz$SLz$TLz$ULz$VLz$WLz$XLz$YLz$ZLz$aLz$bLz$cLz$dLz$eLz$fLz$z$gLz$hLz$iLz$mEz$YGz$ZGz$jLz$kLz$lLz$oIz$NDz$ODz$mLz$nLz$oLz$TJz$z$hEz$rGz$YIz$ZIz$aIz$bIz$pLz$qLz$rLz$sLz$tLz$uLz$vLz$wLz$xLz$yLz$AMz$BMz$CMz$eKz$z$bEz$ZHz$aHz$bHz$cHz$dHz$eHz$fHz$gHz$hHz$iHz$jHz$kHz$z$hEz$rGz$YIz$DMz$dHz$eHz$EMz$FMz$GMz$z$PCz$HMz$IMz$JMz$KMz$PEz$LMz$nIz$oIz$NDz$ODz$hJz$MMz$NMz$TJz$z$YKz$z$PCz$HMz$IMz$OMz$PMz$tKz$QMz$RMz$oDz$SMz$FGz$JGz$mCz$nCz$TMz$UMz$VMz$vJz$z$MFz$z$hEz$rGz$sGz$MIz$NIz$OIz$xGz$xGz$xGz$WMz$XMz$YMz$ZMz$aMz$bMz$cMz$dMz$eMz$fMz$gMz$xGz$SHz$Wz$THz$z$hEz$rGz$YIz$ZIz$aIz$bIz$hMz$iMz$eKz$z$jMz$kMz$oDz$SMz$lCz$mCz$nCz$lMz$PEz$mMz$nMz$oMz$pMz$fGz$z$hEz$rGz$YIz$ZIz$aIz$bIz$EKz$qMz$rMz$sMz$KFz$z$hEz$rGz$tMz$uMz$vMz$wMz$xMz$yMz$xIz$ANz$BNz$fLz$z$CNz$DNz$ENz$mEz$YGz$ZGz$FNz$GNz$HNz$FGz$JGz$mCz$nCz$INz$JNz$KNz$LNz$HLz$jJz$MNz$XDz$YDz$ZDz$z$hEz$rGz$tMz$uMz$vMz$wMz$xMz$yMz$xIz$NNz$ONz$KFz$z$CNz$DNz$ENz$mEz$YGz$ZGz$FNz$PNz$wKz$xKz$JDz$KDz$LDz$CNz$DNz$ENz$QNz$RNz$MNz$XDz$YDz$ZDz$z$hEz$rGz$YIz$ZIz$aIz$bIz$SNz$TNz$fLz$z$UNz$VNz$WNz$XNz$SEz$YNz$ZNz$wKz$xKz$JDz$KDz$LDz$UNz$aNz$sIz$vCz$wCz$QDz$z$bNz$cNz$dNz$eNz$fNz$gNz$hNz$iNz$gNz$jNz$kNz$lNz$mNz$FGz$JGz$mCz$nCz$nNz$oNz$pNz$qNz$pJz$qJz$rJz$sJz$rNz$sNz$vJz$z$tNz$xKz$JDz$KDz$LDz$UNz$aNz$vJz$z$hEz$rGz$sGz$MIz$NIz$OIz$xGz$xGz$xGz$uNz$vNz$wNz$xNz$yNz$AOz$BOz$COz$DOz$EOz$FOz$VIz$xGz$WIz$XIz$KFz$z$GOz$HOz$IOz$JOz$oDz$SMz$FGz$LGz$RCz$SCz$TCz$KOz$YGz$ZGz$LOz$MOz$NOz$vJz$z$lJz$mJz$nJz$OOz$POz$QOz$ROz$SOz$TOz$nFz$oFz$pFz$UOz$dEz$SEz$VOz$WOz$OOz$TJz$z$IHz$wJz$xJz$z$bEz$yJz$AKz$BKz$CKz$DKz$EKz$KGz$z$XOz$xKz$RDz$SDz$TDz$UDz$YOz$oDz$ZOz$aOz$GOz$bOz$cOz$nFz$oFz$pFz$UOz$dEz$SEz$VOz$WOz$OOz$TJz$z$MFz$z$hEz$rGz$sGz$MIz$NIz$OIz$xGz$xGz$xGz$PIz$dOz$bIz$SNz$eOz$sJz$UIz$VIz$xGz$WIz$XIz$KFz$z$EDz$fOz$gOz$z$hEz$rGz$sGz$MIz$NIz$OIz$xGz$xGz$xGz$hOz$BNz$iOz$POz$FHz$xGz$xGz$GHz$HHz$z$GNz$jOz$kOz$lOz$mOz$PEz$LMz$nOz$oOz$pOz$qOz$TOz$nFz$oFz$pFz$UOz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$tOz$TJz$uOz$vOz$FGz$LGz$RCz$SCz$TCz$KOz$YGz$ZGz$aGz$bGz$cGz$dGz$HGz$wOz$xOz$z$lJz$yOz$APz$BHz$BPz$CPz$DPz$RKz$EPz$FPz$GPz$HPz$IPz$JPz$KPz$SOz$TOz$nFz$oFz$pFz$UOz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$tOz$LPz$ZDz$z$IHz$wJz$xJz$z$bEz$yJz$AKz$BKz$MPz$DKz$EKz$FKz$NPz$EPz$FPz$OPz$z$hEz$lOz$mOz$PEz$LMz$nOz$oOz$PPz$QPz$nFz$oFz$pFz$UOz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$RPz$vJz$z$bNz$SPz$TPz$UPz$VPz$TOz$nFz$oFz$pFz$UOz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$tOz$TJz$fCz$gCz$hCz$iCz$WPz$kCz$z$gz$pJz$XPz$YPz$ZPz$aPz$bPz$PEz$mMz$cGz$cPz$GNz$dPz$ePz$fPz$gPz$QPz$nFz$oFz$pFz$UOz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$RPz$vJz$z$hEz$hPz$iPz$RDz$SDz$TDz$UDz$YOz$oDz$ZOz$GNz$jPz$HLz$kPz$lPz$TJz$z$MFz$z$mPz$nPz$oPz$z$GNz$jOz$kOz$lOz$mOz$PEz$LMz$nOz$pPz$qPz$rPz$xKz$RDz$SDz$TDz$UDz$YOz$oDz$ZOz$GNz$jPz$HLz$kPz$lPz$sPz$tPz$uPz$vPz$TOz$nFz$oFz$pFz$UOz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$wPz$LPz$ZDz$z$lJz$yOz$APz$BHz$BPz$CPz$DPz$RKz$EPz$FPz$GPz$HPz$IPz$JPz$KPz$SOz$TOz$nFz$oFz$pFz$UOz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$wPz$LPz$ZDz$z$IHz$wJz$xJz$z$bEz$yJz$AKz$BKz$MPz$DKz$EKz$FKz$NPz$EPz$FPz$OPz$z$hEz$lOz$mOz$PEz$LMz$nOz$pPz$qPz$iPz$RDz$SDz$TDz$UDz$YOz$oDz$ZOz$GNz$jPz$HLz$kPz$lPz$TJz$z$bNz$SPz$TPz$UPz$VPz$TOz$nFz$oFz$pFz$UOz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$wPz$TJz$fCz$gCz$hCz$iCz$WPz$kCz$z$gz$pJz$XPz$YPz$ZPz$aPz$bPz$PEz$mMz$cGz$cPz$GNz$dPz$ePz$xPz$gPz$QPz$nFz$oFz$pFz$UOz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$RPz$vJz$z$hEz$hPz$iPz$RDz$SDz$TDz$UDz$YOz$oDz$ZOz$GNz$jPz$HLz$kPz$lPz$TJz$z$MFz$z$mPz$nPz$oPz$z$GNz$jOz$kOz$lOz$yPz$AQz$BQz$CQz$DQz$EQz$SEz$FQz$qOz$oIz$NDz$ODz$XGz$YGz$ZGz$aGz$bGz$cGz$dGz$HGz$eGz$GQz$HQz$IQz$xKz$JDz$KDz$LDz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$RPz$xOz$z$lJz$yOz$APz$BHz$BPz$CPz$DPz$RKz$EPz$FPz$GPz$HPz$IPz$JPz$KPz$SOz$oIz$NDz$ODz$XGz$YGz$ZGz$aGz$bGz$cGz$dGz$HGz$JQz$KQz$z$IHz$wJz$xJz$z$bEz$yJz$AKz$BKz$MPz$DKz$EKz$FKz$NPz$EPz$FPz$OPz$z$hEz$lOz$yPz$AQz$BQz$CQz$DQz$EQz$SEz$LQz$MQz$NDz$ODz$XGz$YGz$ZGz$aGz$bGz$cGz$dGz$HGz$eGz$fGz$z$bNz$SPz$TPz$UPz$VPz$oIz$NDz$ODz$XGz$YGz$ZGz$aGz$bGz$cGz$dGz$HGz$eGz$NQz$OQz$PQz$QQz$RQz$SQz$z$gz$pJz$qJz$rJz$sJz$YOz$oDz$ZOz$GNz$jPz$HLz$kPz$lPz$TJz$TQz$UQz$rJz$sJz$YOz$oDz$ZOz$GNz$jPz$HLz$kPz$lPz$TJz$z$hEz$hPz$iPz$JDz$KDz$LDz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$RPz$vJz$z$MFz$z$mPz$nPz$oPz$z$GNz$jOz$kOz$lOz$mOz$PEz$LMz$VQz$WQz$XQz$YQz$ZQz$FGz$LGz$RCz$SCz$TCz$KOz$YGz$ZGz$aGz$bGz$cGz$dGz$HGz$aQz$sIz$bQz$cQz$pJz$XPz$YPz$ZPz$aPz$bPz$PEz$mMz$cGz$cPz$GNz$dPz$ePz$dQz$KQz$z$lJz$yOz$APz$BHz$BPz$CPz$DPz$RKz$EPz$FPz$GPz$HPz$IPz$JPz$KPz$SOz$TOz$nFz$oFz$pFz$UOz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$eQz$LPz$ZDz$z$IHz$wJz$xJz$z$bEz$yJz$AKz$BKz$MPz$DKz$EKz$FKz$NPz$EPz$FPz$OPz$z$hEz$lOz$mOz$PEz$LMz$VQz$WQz$XQz$YQz$fQz$QCz$RCz$SCz$TCz$KOz$YGz$ZGz$aGz$bGz$cGz$dGz$HGz$eGz$fGz$z$bNz$SPz$TPz$UPz$VPz$TOz$nFz$oFz$pFz$UOz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$eQz$TJz$fCz$gCz$hCz$iCz$WPz$kCz$z$gz$pJz$XPz$YPz$ZPz$aPz$bPz$PEz$mMz$cGz$cPz$GNz$dPz$ePz$gQz$gPz$QPz$nFz$oFz$pFz$UOz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$RPz$vJz$z$hEz$hPz$iPz$RDz$SDz$TDz$UDz$YOz$oDz$ZOz$GNz$jPz$HLz$kPz$lPz$TJz$z$MFz$z$mPz$nPz$oPz$z$GNz$jOz$kOz$lOz$mOz$PEz$LMz$jCz$hQz$iQz$ZQz$FGz$LGz$RCz$SCz$TCz$KOz$YGz$ZGz$aGz$bGz$cGz$dGz$HGz$jQz$sIz$bQz$cQz$pJz$XPz$YPz$ZPz$aPz$bPz$PEz$mMz$cGz$cPz$GNz$dPz$ePz$kQz$KQz$z$lJz$yOz$APz$BHz$BPz$CPz$DPz$RKz$EPz$FPz$GPz$HPz$IPz$JPz$KPz$SOz$TOz$nFz$oFz$pFz$UOz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$lQz$LPz$ZDz$z$IHz$wJz$xJz$z$bEz$yJz$AKz$BKz$MPz$DKz$EKz$FKz$NPz$EPz$FPz$OPz$z$hEz$lOz$mOz$PEz$LMz$jCz$hQz$iQz$fQz$QCz$RCz$SCz$TCz$KOz$YGz$ZGz$aGz$bGz$cGz$dGz$HGz$eGz$fGz$z$bNz$SPz$TPz$UPz$VPz$TOz$nFz$oFz$pFz$UOz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$lQz$TJz$fCz$gCz$hCz$iCz$WPz$kCz$z$gz$pJz$XPz$YPz$ZPz$aPz$bPz$PEz$mMz$cGz$cPz$GNz$dPz$ePz$mQz$gPz$QPz$nFz$oFz$pFz$UOz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$RPz$vJz$z$hEz$hPz$iPz$RDz$SDz$TDz$UDz$YOz$oDz$ZOz$GNz$jPz$HLz$kPz$lPz$TJz$z$MFz$z$mPz$nPz$oPz$z$GNz$jOz$kOz$lOz$mOz$PEz$LMz$nQz$oQz$pQz$qQz$rQz$sQz$tQz$rPz$xKz$RDz$SDz$TDz$UDz$YOz$oDz$ZOz$GNz$jPz$HLz$kPz$lPz$uQz$tPz$uPz$vPz$TOz$nFz$oFz$pFz$UOz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$vQz$LPz$ZDz$z$lJz$yOz$APz$BHz$BPz$CPz$DPz$RKz$EPz$FPz$GPz$HPz$IPz$JPz$KPz$SOz$TOz$nFz$oFz$pFz$UOz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$vQz$LPz$ZDz$z$IHz$wJz$xJz$z$bEz$yJz$AKz$BKz$MPz$DKz$EKz$FKz$NPz$EPz$FPz$OPz$z$hEz$lOz$mOz$PEz$LMz$nQz$oQz$pQz$qQz$rQz$sQz$tQz$iPz$RDz$SDz$TDz$UDz$YOz$oDz$ZOz$GNz$jPz$HLz$kPz$lPz$TJz$z$bNz$SPz$TPz$UPz$VPz$TOz$nFz$oFz$pFz$UOz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$vQz$TJz$fCz$gCz$hCz$iCz$WPz$kCz$z$gz$pJz$XPz$YPz$ZPz$aPz$bPz$PEz$mMz$cGz$cPz$GNz$dPz$ePz$wQz$gPz$QPz$nFz$oFz$pFz$UOz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$RPz$vJz$z$hEz$hPz$iPz$RDz$SDz$TDz$UDz$YOz$oDz$ZOz$GNz$jPz$HLz$kPz$lPz$TJz$z$MFz$z$mPz$nPz$oPz$z$GNz$jOz$kOz$lOz$mOz$PEz$LMz$VQz$WQz$xQz$yQz$ARz$BRz$CRz$ZQz$FGz$LGz$RCz$SCz$TCz$KOz$YGz$ZGz$aGz$bGz$cGz$dGz$HGz$DRz$sIz$bQz$cQz$pJz$XPz$YPz$ZPz$aPz$bPz$PEz$mMz$cGz$cPz$GNz$dPz$ePz$ERz$KQz$z$lJz$yOz$APz$BHz$BPz$CPz$DPz$RKz$EPz$FPz$GPz$HPz$IPz$JPz$KPz$SOz$TOz$nFz$oFz$pFz$UOz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$FRz$LPz$ZDz$z$IHz$wJz$xJz$z$bEz$yJz$AKz$BKz$MPz$DKz$EKz$FKz$NPz$EPz$FPz$OPz$z$hEz$lOz$mOz$PEz$LMz$VQz$WQz$xQz$yQz$ARz$BRz$CRz$fQz$QCz$RCz$SCz$TCz$KOz$YGz$ZGz$aGz$bGz$cGz$dGz$HGz$eGz$fGz$z$bNz$SPz$TPz$UPz$VPz$TOz$nFz$oFz$pFz$UOz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$FRz$TJz$fCz$gCz$hCz$iCz$WPz$kCz$z$gz$pJz$XPz$YPz$ZPz$aPz$bPz$PEz$mMz$cGz$cPz$GNz$dPz$ePz$GRz$gPz$QPz$nFz$oFz$pFz$UOz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$RPz$vJz$z$hEz$hPz$iPz$RDz$SDz$TDz$UDz$YOz$oDz$ZOz$GNz$jPz$HLz$kPz$lPz$TJz$z$MFz$z$mPz$nPz$oPz$z$GNz$jOz$kOz$lOz$mOz$PEz$LMz$HRz$IRz$JRz$KRz$LRz$MRz$NRz$ORz$PRz$QRz$RRz$SRz$TRz$jLz$pJz$XPz$YPz$ZPz$aPz$bPz$PEz$mMz$cGz$cPz$GNz$dPz$ePz$URz$GQz$HQz$IQz$xKz$RDz$SDz$TDz$UDz$YOz$oDz$ZOz$GNz$jPz$HLz$kPz$lPz$VRz$WRz$z$lJz$yOz$APz$BHz$BPz$CPz$DPz$RKz$EPz$FPz$GPz$HPz$IPz$JPz$KPz$SOz$TOz$nFz$oFz$pFz$UOz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$XRz$LPz$ZDz$z$IHz$wJz$xJz$z$bEz$yJz$AKz$BKz$MPz$DKz$EKz$FKz$NPz$EPz$FPz$OPz$z$hEz$lOz$mOz$PEz$LMz$HRz$IRz$JRz$KRz$LRz$MRz$NRz$ORz$PRz$QRz$RRz$SRz$TRz$TQz$YRz$YPz$ZPz$aPz$bPz$PEz$mMz$cGz$cPz$GNz$dPz$ePz$RNz$kJz$z$bNz$SPz$TPz$UPz$VPz$TOz$nFz$oFz$pFz$UOz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$XRz$TJz$fCz$gCz$hCz$iCz$WPz$kCz$z$gz$pJz$XPz$YPz$ZPz$aPz$bPz$PEz$mMz$cGz$cPz$GNz$dPz$ePz$URz$gPz$QPz$nFz$oFz$pFz$UOz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$RPz$vJz$z$hEz$hPz$iPz$RDz$SDz$TDz$UDz$YOz$oDz$ZOz$GNz$jPz$HLz$kPz$lPz$TJz$z$MFz$z$mPz$nPz$oPz$z$GNz$jOz$kOz$lOz$mOz$PEz$LMz$nOz$ZRz$aRz$bRz$rPz$xKz$JDz$KDz$LDz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$cRz$TJz$uOz$vOz$FGz$JGz$mCz$nCz$lMz$PEz$mMz$cGz$cPz$GNz$dPz$ePz$dRz$KQz$z$lJz$yOz$APz$BHz$BPz$CPz$DPz$RKz$EPz$FPz$GPz$HPz$IPz$JPz$KPz$SOz$oIz$NDz$ODz$XGz$YGz$ZGz$aGz$bGz$cGz$dGz$HGz$eRz$xOz$z$IHz$wJz$xJz$z$bEz$yJz$AKz$BKz$MPz$DKz$EKz$FKz$NPz$EPz$FPz$OPz$z$hEz$lOz$mOz$PEz$LMz$nOz$ZRz$aRz$bRz$iPz$JDz$KDz$LDz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$RPz$vJz$z$bNz$SPz$TPz$UPz$VPz$oIz$NDz$ODz$XGz$YGz$ZGz$aGz$bGz$cGz$dGz$HGz$eRz$sIz$yCz$ADz$BDz$fRz$gRz$z$gz$pJz$qJz$rJz$sJz$YOz$oDz$ZOz$GNz$jPz$HLz$kPz$lPz$hRz$iRz$lCz$mCz$nCz$lMz$PEz$mMz$cGz$cPz$GNz$dPz$ePz$RNz$kJz$z$hEz$hPz$iPz$JDz$KDz$LDz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$RPz$vJz$z$MFz$z$mPz$nPz$oPz$z$GNz$jOz$kOz$lOz$mOz$PEz$LMz$nOz$jRz$kRz$lRz$mRz$nRz$oRz$ZQz$FGz$JGz$mCz$nCz$lMz$PEz$mMz$cGz$cPz$GNz$dPz$ePz$pRz$GQz$HQz$IQz$xKz$JDz$KDz$LDz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$qRz$LPz$ZDz$z$lJz$yOz$APz$BHz$BPz$CPz$DPz$RKz$EPz$FPz$GPz$HPz$IPz$JPz$KPz$SOz$oIz$NDz$ODz$XGz$YGz$ZGz$aGz$bGz$cGz$dGz$HGz$rRz$xOz$z$IHz$wJz$xJz$z$bEz$yJz$AKz$BKz$MPz$DKz$EKz$FKz$NPz$EPz$FPz$OPz$z$hEz$lOz$mOz$PEz$LMz$nOz$jRz$kRz$lRz$mRz$nRz$oRz$fQz$lCz$mCz$nCz$lMz$PEz$mMz$cGz$cPz$GNz$dPz$ePz$RNz$kJz$z$bNz$SPz$TPz$UPz$VPz$oIz$NDz$ODz$XGz$YGz$ZGz$aGz$bGz$cGz$dGz$HGz$rRz$sIz$yCz$ADz$BDz$fRz$gRz$z$gz$pJz$qJz$rJz$sJz$YOz$oDz$ZOz$GNz$jPz$HLz$kPz$lPz$sRz$iRz$lCz$mCz$nCz$lMz$PEz$mMz$cGz$cPz$GNz$dPz$ePz$RNz$kJz$z$hEz$hPz$iPz$JDz$KDz$LDz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$RPz$vJz$z$MFz$z$mPz$nPz$oPz$z$GNz$jOz$kOz$lOz$mOz$PEz$LMz$jCz$hQz$tRz$uRz$FFz$vRz$wRz$xRz$yRz$ASz$BSz$jLz$pJz$qJz$rJz$sJz$YOz$oDz$ZOz$GNz$jPz$HLz$kPz$lPz$CSz$tPz$uPz$vPz$oIz$NDz$ODz$XGz$YGz$ZGz$aGz$bGz$cGz$dGz$HGz$DSz$xOz$z$lJz$yOz$APz$BHz$BPz$CPz$DPz$RKz$EPz$FPz$GPz$HPz$IPz$JPz$KPz$SOz$oIz$NDz$ODz$XGz$YGz$ZGz$aGz$bGz$cGz$dGz$HGz$DSz$xOz$z$IHz$wJz$xJz$z$bEz$yJz$AKz$BKz$MPz$DKz$EKz$FKz$NPz$EPz$FPz$OPz$z$hEz$lOz$yPz$AQz$BQz$CQz$DQz$EQz$SEz$LQz$MQz$NDz$ODz$XGz$YGz$ZGz$aGz$bGz$cGz$dGz$HGz$eGz$fGz$z$bNz$SPz$TPz$UPz$VPz$oIz$NDz$ODz$XGz$YGz$ZGz$aGz$bGz$cGz$dGz$HGz$DSz$sIz$yCz$ADz$BDz$fRz$gRz$z$gz$pJz$qJz$rJz$sJz$YOz$oDz$ZOz$GNz$jPz$HLz$kPz$lPz$CSz$iRz$lCz$mCz$nCz$lMz$PEz$mMz$cGz$cPz$GNz$dPz$ePz$RNz$kJz$z$hEz$hPz$iPz$JDz$KDz$LDz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$RPz$vJz$z$MFz$z$mPz$nPz$oPz$z$GNz$jOz$kOz$lOz$mOz$PEz$LMz$nOz$ESz$FSz$GSz$HSz$ISz$JSz$KSz$jLz$pJz$qJz$rJz$sJz$YOz$oDz$ZOz$GNz$jPz$HLz$kPz$lPz$LSz$GQz$HQz$IQz$xKz$JDz$KDz$LDz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$wPz$MSz$WRz$z$lJz$yOz$APz$BHz$BPz$CPz$DPz$RKz$EPz$FPz$GPz$HPz$IPz$JPz$KPz$SOz$oIz$NDz$ODz$XGz$YGz$ZGz$aGz$bGz$cGz$dGz$HGz$NSz$LPz$ZDz$z$IHz$wJz$xJz$z$bEz$yJz$AKz$BKz$MPz$DKz$EKz$FKz$NPz$EPz$FPz$OPz$z$hEz$lOz$mOz$PEz$LMz$nOz$ESz$FSz$GSz$HSz$ISz$JSz$KSz$TQz$UQz$rJz$sJz$YOz$oDz$ZOz$GNz$jPz$HLz$kPz$lPz$TJz$z$bNz$SPz$TPz$UPz$VPz$oIz$NDz$ODz$XGz$YGz$ZGz$aGz$bGz$cGz$dGz$HGz$NSz$TJz$fCz$gCz$hCz$iCz$WPz$kCz$z$gz$pJz$qJz$rJz$sJz$YOz$oDz$ZOz$GNz$jPz$HLz$kPz$lPz$LSz$gPz$MQz$NDz$ODz$XGz$YGz$ZGz$aGz$bGz$cGz$dGz$HGz$eGz$fGz$z$hEz$hPz$iPz$JDz$KDz$LDz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$RPz$vJz$z$MFz$z$mPz$nPz$oPz$z$GNz$jOz$kOz$lOz$OSz$PSz$QSz$RSz$SSz$TSz$ORz$PRz$USz$VSz$WSz$KRz$LRz$XSz$nRz$YSz$oDz$ZSz$ZQz$FGz$LGz$RCz$SCz$TCz$KOz$YGz$ZGz$aGz$bGz$cGz$dGz$HGz$aSz$TJz$uOz$vOz$FGz$LGz$RCz$SCz$TCz$KOz$YGz$ZGz$aGz$bGz$cGz$dGz$HGz$aSz$LPz$ZDz$z$lJz$yOz$APz$BHz$BPz$CPz$DPz$RKz$EPz$FPz$GPz$HPz$IPz$JPz$KPz$SOz$TOz$nFz$oFz$pFz$UOz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$wPz$bSz$WRz$z$IHz$wJz$xJz$z$bEz$yJz$AKz$BKz$MPz$DKz$EKz$FKz$NPz$EPz$FPz$OPz$z$hEz$lOz$OSz$PSz$QSz$RSz$SSz$TSz$ORz$PRz$USz$VSz$WSz$KRz$LRz$XSz$nRz$YSz$oDz$ZSz$fQz$QCz$RCz$SCz$TCz$KOz$YGz$ZGz$aGz$bGz$cGz$dGz$HGz$eGz$fGz$z$bNz$SPz$TPz$UPz$VPz$TOz$nFz$oFz$pFz$UOz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$wPz$sPz$cSz$dSz$eSz$fSz$gSz$xFz$z$gz$pJz$XPz$YPz$ZPz$aPz$bPz$PEz$mMz$cGz$cPz$GNz$dPz$ePz$hSz$sIz$iPz$RDz$SDz$TDz$UDz$YOz$oDz$ZOz$GNz$jPz$HLz$kPz$lPz$TJz$z$hEz$hPz$iPz$RDz$SDz$TDz$UDz$YOz$oDz$ZOz$GNz$jPz$HLz$kPz$lPz$TJz$z$MFz$z$mPz$nPz$oPz$z$GNz$jOz$kOz$lOz$iSz$jSz$kSz$lSz$mSz$nSz$oSz$SEz$FQz$qOz$oIz$NDz$ODz$XGz$YGz$ZGz$aGz$bGz$cGz$dGz$HGz$pSz$TJz$uOz$vOz$FGz$JGz$mCz$nCz$lMz$PEz$mMz$cGz$cPz$GNz$dPz$ePz$qSz$xOz$z$lJz$yOz$APz$BHz$BPz$CPz$DPz$RKz$EPz$FPz$GPz$HPz$IPz$JPz$KPz$SOz$oIz$NDz$ODz$XGz$YGz$ZGz$aGz$bGz$cGz$dGz$HGz$pSz$LPz$ZDz$z$IHz$wJz$xJz$z$bEz$yJz$AKz$BKz$MPz$DKz$EKz$FKz$NPz$EPz$FPz$OPz$z$hEz$lOz$yPz$AQz$BQz$CQz$DQz$EQz$SEz$LQz$MQz$NDz$ODz$XGz$YGz$ZGz$aGz$bGz$cGz$dGz$HGz$eGz$fGz$z$bNz$SPz$TPz$UPz$VPz$oIz$NDz$ODz$XGz$YGz$ZGz$aGz$bGz$cGz$dGz$HGz$pSz$TJz$fCz$gCz$hCz$iCz$WPz$kCz$z$gz$pJz$qJz$rJz$sJz$YOz$oDz$ZOz$GNz$jPz$HLz$kPz$lPz$rSz$gPz$MQz$NDz$ODz$XGz$YGz$ZGz$aGz$bGz$cGz$dGz$HGz$eGz$fGz$z$hEz$hPz$iPz$JDz$KDz$LDz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$RPz$vJz$z$MFz$z$mPz$nPz$oPz$z$GNz$jOz$kOz$lOz$mOz$PEz$LMz$sSz$tSz$uSz$XQz$vSz$ZQz$FGz$LGz$RCz$SCz$TCz$KOz$YGz$ZGz$aGz$bGz$cGz$dGz$HGz$wSz$TJz$uOz$vOz$FGz$LGz$RCz$SCz$TCz$KOz$YGz$ZGz$aGz$bGz$cGz$dGz$HGz$wSz$LPz$ZDz$z$lJz$yOz$APz$BHz$BPz$CPz$DPz$RKz$EPz$FPz$GPz$HPz$IPz$JPz$KPz$SOz$TOz$nFz$oFz$pFz$UOz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$wPz$xSz$WRz$z$IHz$wJz$xJz$z$bEz$yJz$AKz$BKz$MPz$DKz$EKz$FKz$NPz$EPz$FPz$OPz$z$hEz$lOz$mOz$PEz$LMz$sSz$tSz$uSz$XQz$vSz$fQz$QCz$RCz$SCz$TCz$KOz$YGz$ZGz$aGz$bGz$cGz$dGz$HGz$eGz$fGz$z$bNz$SPz$TPz$UPz$VPz$TOz$nFz$oFz$pFz$UOz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$wPz$ySz$cSz$dSz$eSz$fSz$gSz$xFz$z$gz$pJz$XPz$YPz$ZPz$aPz$bPz$PEz$mMz$cGz$cPz$GNz$dPz$ePz$ATz$sIz$iPz$RDz$SDz$TDz$UDz$YOz$oDz$ZOz$GNz$jPz$HLz$kPz$lPz$TJz$z$hEz$hPz$iPz$RDz$SDz$TDz$UDz$YOz$oDz$ZOz$GNz$jPz$HLz$kPz$lPz$TJz$z$MFz$z$mPz$nPz$oPz$z$GNz$jOz$kOz$lOz$mOz$PEz$LMz$nOz$BTz$CTz$DTz$qOz$TOz$nFz$oFz$pFz$UOz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$wPz$uQz$tPz$uPz$vPz$TOz$nFz$oFz$pFz$UOz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$wPz$ETz$WRz$z$lJz$yOz$APz$BHz$BPz$CPz$DPz$RKz$EPz$FPz$GPz$HPz$IPz$JPz$KPz$SOz$TOz$nFz$oFz$pFz$UOz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$wPz$ETz$WRz$z$IHz$wJz$xJz$z$bEz$yJz$AKz$BKz$MPz$DKz$EKz$FKz$NPz$EPz$FPz$OPz$z$hEz$lOz$mOz$PEz$LMz$nOz$BTz$CTz$FTz$QPz$nFz$oFz$pFz$UOz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$RPz$vJz$z$bNz$SPz$TPz$UPz$VPz$TOz$nFz$oFz$pFz$UOz$dEz$SEz$rOz$HLz$sOz$bGz$iOz$wPz$uQz$cSz$dSz$eSz$fSz$gSz$xFz$z$gz$pJz$XPz$YPz$ZPz$aPz$bPz$PEz$mMz$cGz$cPz$GNz$dPz$ePz$GTz$sIz$iPz$RDz$SDz$TDz$UDz$YOz$oDz$ZOz$GNz$jPz$HLz$kPz$lPz$TJz$z$hEz$hPz$iPz$RDz$SDz$TDz$UDz$YOz$oDz$ZOz$GNz$jPz$HLz$kPz$lPz$TJz$z$MFz$z$EDz$fOz$gOz$z$HTz$xKz$RDz$SDz$TDz$UDz$ITz$HLz$sOz$bGz$iOz$JTz$TJz$QCz$RCz$SCz$TCz$KTz$cCz$dCz$eCz$z$mPz$LTz$z$hEz$rGz$sGz$MIz$NIz$OIz$xGz$xGz$xGz$PIz$dOz$bIz$MTz$NTz$OTz$PTz$xGz$xGz$QTz$RTz$z$STz$TTz$UTz$XNz$SEz$VTz$WTz$XTz$YTz$ZTz$aTz$bTz$cTz$dTz$XTz$eTz$wFz$fTz$gTz$hTz$iTz$jTz$kTz$lTz$z$gz$mTz$nTz$oTz$pTz$qTz$rTz$sTz$tTz$uTz$vTz$wTz$xTz$yTz$lCz$mCz$nCz$lMz$PEz$mMz$AUz$NTz$BUz$CUz$TJz$z$EDz$fOz$gOz$z$mPz$LTz$z$hEz$rGz$sGz$MIz$NIz$OIz$xGz$xGz$xGz$PIz$dOz$bIz$DUz$EUz$FUz$GUz$PTz$xGz$xGz$QTz$RTz$z$GNz$jOz$kOz$lOz$mOz$PEz$mMz$jLz$pJz$qJz$rJz$sJz$YOz$oDz$ZOz$GNz$HUz$IUz$JUz$TJz$cQz$pJz$qJz$rJz$sJz$YOz$oDz$ZOz$GNz$KUz$KQz$z$hEz$rGz$sGz$MIz$NIz$OIz$xGz$xGz$xGz$LUz$MUz$bIz$NUz$GNz$OUz$IUz$PUz$QUz$RUz$SUz$TUz$FHz$xGz$xGz$GHz$HHz$z$lJz$mJz$UUz$VUz$WUz$XUz$YUz$ZUz$aUz$bUz$cUz$dUz$eUz$fUz$gUz$iOz$hUz$iUz$FGz$JGz$mCz$nCz$lMz$PEz$mMz$cGz$jUz$xOz$z$IHz$wJz$xJz$z$bEz$yJz$AKz$BKz$CKz$DKz$EKz$KGz$z$hEz$rGz$kUz$Iz$lUz$mUz$nUz$oUz$pUz$qUz$rUz$sUz$tUz$rUz$uUz$vUz$wUz$QTz$RTz$z$hEz$xUz$RCz$yUz$AVz$BVz$oDz$CVz$QPz$nFz$oFz$pFz$UOz$dEz$SEz$rOz$HLz$DVz$EVz$FVz$fGz$z$MFz$z$GVz$FGz$JGz$mCz$nCz$lMz$PEz$mMz$cGz$cPz$XQz$HVz$pNz$IVz$JVz$KVz$IHz$LVz$MVz$NVz$OVz$UQz$rJz$sJz$YOz$oDz$ZOz$GNz$HUz$IUz$PVz$vJz$z$lJz$mJz$QVz$RVz$SVz$TVz$UVz$HRz$IRz$VVz$WVz$XVz$YVz$ZVz$aVz$bVz$cVz$UQz$rJz$sJz$YOz$oDz$ZOz$GNz$HUz$IUz$PVz$sIz$QPz$nFz$oFz$pFz$UOz$dEz$SEz$rOz$HLz$dVz$eVz$fVz$gVz$vJz$z$EDz$fOz$gOz$z$aDz$hVz$iVz$iDz$z$fKz$jVz$kVz$lVz$mVz$nVz$oVz$KVz$IHz$pVz$qVz$rVz$sVz$tVz$uVz$vVz$wVz$z$bEz$xVz$yVz$AWz$BWz$CWz$DWz$EWz$FWz$z$GWz$z$hEz$HWz$IWz$JWz$KWz$LWz$rUz$MWz$qVz$NWz$wIz$OWz$PWz$QWz$fKz$jVz$kVz$lVz$RWz$z$mPz$SWz$z$YKz$z$TWz$UWz$z$MFz$z$OEz$z$gz$pJz$qJz$rJz$sJz$VWz$qMz$rMz$WWz$bGz$TJz$XWz$YWz$ZWz$aWz$bWz$cWz$dWz$YWz$eWz$fWz$gWz$hWz$iWz$jWz$az$kWz$lWz$mWz$iPz$JDz$KDz$LDz$dEz$SEz$nWz$rBz$oWz$fGz$z$gz$pJz$qJz$rJz$sJz$VWz$qMz$rMz$pWz$eGz$qWz$rWz$sWz$tWz$uWz$LHz$vWz$lJz$wWz$xWz$yWz$AXz$BXz$CXz$DXz$EXz$FXz$GXz$fQz$lCz$mCz$nCz$lMz$PEz$mMz$HXz$aMz$TJz$z$gz$pJz$qJz$rJz$sJz$rNz$sNz$sIz$IXz$JXz$KXz$LXz$MXz$NXz$yMz$OXz$PXz$mEz$QXz$RXz$iPz$JDz$KDz$LDz$dEz$SEz$nWz$rBz$oWz$fGz$z$WPz$SXz$uVz$lCz$mCz$nCz$lMz$PEz$mMz$HXz$aMz$TJz$TXz$UXz$VXz$WXz$XXz$z$YXz$ZXz$aXz$bXz$PEz$cXz$dXz$eXz$gRz$OVz$PEz$fXz$sIz$gXz$hXz$iXz$jXz$PEz$LMz$kXz$lXz$oBz$z$bNz$SPz$mXz$nXz$ZGz$TJz$fCz$gCz$oXz$pXz$qXz$z$rXz$sXz$tXz$nXz$ZGz$TJz$lCz$mCz$nCz$lMz$PEz$mMz$HXz$aMz$TJz$uXz$vXz$wXz$xXz$yXz$rBz$AYz$BYz$z$gz$CYz$DYz$EYz$FYz$GYz$HYz$IYz$MBz$GVz$JYz$KYz$LYz$wFz$QGz$RGz$MYz$yMz$NYz$OYz$z$PYz$vXz$wXz$xXz$yXz$rBz$AYz$qTz$PEz$fXz$vJz$z$lJz$yOz$QYz$oJz$pJz$qJz$rJz$sJz$tJz$uJz$vJz$z$IHz$wJz$xJz$z$bEz$yJz$AKz$BKz$CKz$DKz$EKz$KGz$z$IHz$RYz$CBz$SYz$pJz$qJz$rJz$sJz$tJz$uJz$sIz$TYz$UYz$GCz$VYz$WYz$XYz$YYz$ZYz$aYz$bYz$cYz$oEz$dYz$kJz$z$IHz$RYz$eYz$pJz$qJz$rJz$sJz$tJz$uJz$sIz$TYz$UYz$GCz$VYz$WYz$XYz$YYz$ZYz$aYz$bYz$cYz$oEz$dYz$kJz$z$IHz$fYz$gYz$FGz$JGz$mCz$nCz$TMz$hYz$TJz$iYz$jYz$kYz$lYz$mYz$nYz$ZYz$tXz$TQz$oYz$pYz$qYz$vJz$z$XOz$xKz$JDz$KDz$LDz$bJz$rYz$sYz$YRz$YPz$ZPz$aPz$bPz$PEz$mMz$nMz$tYz$uYz$vYz$wYz$xYz$kJz$z$YKz$z$IHz$RYz$CBz$yYz$xKz$JDz$KDz$LDz$fKz$yKz$sIz$TYz$UYz$GCz$AZz$BZz$bYz$cYz$oEz$dYz$kJz$z$IHz$fYz$gYz$FGz$JGz$mCz$nCz$CZz$qVz$DZz$IVz$EZz$FZz$GZz$HZz$TQz$oYz$pYz$qYz$vJz$z$MFz$z$gz$pJz$qJz$rJz$sJz$IZz$BLz$JZz$qWz$rWz$sWz$tWz$uWz$LHz$YGz$ZGz$TXz$UXz$KZz$WXz$LZz$MZz$cMz$dMz$TJz$z$gz$pJz$qJz$rJz$sJz$NZz$qLz$OZz$qWz$PZz$JXz$KXz$LXz$MXz$QZz$RZz$SZz$TZz$UYz$GCz$UZz$BZz$bYz$cYz$oEz$dYz$kJz$z$gz$pJz$qJz$rJz$sJz$VZz$WZz$sYz$rTz$sTz$XZz$YZz$ZZz$bNz$aZz$mNz$TQz$oYz$pYz$qYz$vJz$z$gz$pJz$qJz$rJz$sJz$VWz$qMz$rMz$WWz$bGz$TJz$XWz$YWz$ZWz$aWz$bWz$OFz$oDz$bZz$PZz$JXz$cZz$fSz$dZz$DNz$eZz$fZz$PXz$mEz$gZz$hZz$iZz$jZz$EOz$oWz$fGz$z$gz$pJz$qJz$rJz$sJz$VWz$qMz$rMz$pWz$eGz$kZz$IHz$lZz$mZz$nZz$oZz$PEz$LMz$pZz$JXz$cZz$fSz$dZz$DNz$eZz$fZz$PXz$mEz$gZz$hZz$TQz$oYz$pYz$qYz$vJz$z$gz$UQz$rJz$sJz$qZz$PEz$mMz$cGz$cPz$XQz$HVz$TJz$TXz$UXz$rZz$WXz$sZz$PXz$mEz$gZz$hZz$IXz$JXz$KXz$LXz$MXz$XNz$SEz$tZz$GVz$JYz$KYz$iZz$jZz$EOz$oWz$fGz$z$bNz$uZz$vZz$oDz$wZz$xZz$SEz$yZz$MZz$cMz$dMz$TJz$Aaz$Baz$Caz$Daz$Eaz$Faz$Gaz$Haz$z$IHz$lZz$mZz$nZz$oZz$PEz$LMz$oYz$pYz$qYz$sIz$dWz$YWz$Iaz$Jaz$Kaz$Laz$Maz$Naz$IEz$Oaz$Paz$SEz$Qaz$Raz$Saz$Taz$Uaz$Vaz$Waz$Xaz$Yaz$jZz$EOz$Zaz$vJz$z$hEz$rGz$YIz$ZIz$aIz$bIz$MZz$aaz$gIz$z$baz$caz$daz$jZz$EOz$Zaz$sIz$eaz$faz$gaz$haz$iaz$jaz$kaz$hGz$iGz$jGz$kGz$lGz$NZz$laz$BEz$maz$NMz$naz$oaz$paz$FGz$LGz$RCz$SCz$TCz$KOz$YGz$ZGz$LOz$qaz$raz$saz$kJz$z$IHz$LVz$taz$uaz$YPz$vaz$FGz$LGz$RCz$SCz$TCz$KOz$YGz$ZGz$LOz$qaz$raz$saz$waz$QCz$RCz$SCz$TCz$KOz$YGz$ZGz$LOz$qaz$raz$saz$kJz$z$rQz$WPz$xaz$yaz$MZz$cMz$dMz$pNz$Abz$z$iDz$z$bEz$Bbz$WPz$Cbz$Dbz$Ebz$Fbz$Gbz$z$WPz$Hbz$Ibz$WPz$Jbz$Kbz$Lbz$Mbz$Nbz$Obz$Pbz$Qbz$Rbz$z$hEz$Sbz$Tbz$bYz$cYz$oEz$Ubz$fGz$z$YKz$z$Vbz$WPz$Wbz$Xbz$WPz$KVz$IHz$LVz$Ybz$Zbz$abz$YHz$z$bbz$cbz$mVz$hEz$dbz$ebz$fbz$rWz$gbz$hbz$ibz$tVz$uVz$oBz$z$bEz$jbz$kbz$lbz$mbz$nbz$z$GWz$z$obz$hEz$dbz$ebz$pbz$IHz$hbz$ibz$qbz$UXz$VXz$WXz$rbz$z$hEz$sbz$tbz$ubz$TQz$oYz$pYz$vbz$TJz$z$wbz$xbz$ybz$Acz$Bcz$rWz$Ccz$Dcz$Ecz$Fcz$Gcz$Hcz$Icz$z$hEz$sbz$Jcz$WPz$fQz$MZz$cMz$dMz$ySz$kJz$z$YKz$z$obz$hEz$dbz$ebz$pbz$IHz$hbz$ibz$rTz$sTz$Kcz$uTz$YHz$z$bEz$Lcz$Mcz$Ncz$EKz$KGz$z$hEz$sbz$tbz$ubz$TQz$oYz$pYz$vbz$TJz$z$MFz$z$MFz$z$MFz$z$OEz$z$GVz$MZz$cMz$dMz$ySz$IVz$JVz$Ocz$bYz$cYz$oEz$Pcz$fGz$z$hEz$rGz$sGz$MIz$NIz$OIz$xGz$xGz$xGz$WMz$XMz$YMz$Qcz$Rcz$Scz$Tcz$oXz$Ucz$Vcz$xGz$SHz$Wz$THz$z$aDz$Wcz$Xcz$qXz$z$iDz$z$Ycz$Zcz$acz$WPz$TXz$UXz$bcz$WXz$ccz$z$oYz$pYz$dcz$Zcz$acz$WPz$TXz$UXz$bcz$WXz$ecz$z$hEz$fcz$gcz$hcz$icz$rUz$jcz$jZz$EOz$kcz$oYz$pYz$lcz$z$mcz$ncz$ocz$pcz$qcz$rcz$z$hEz$scz$oDz$tcz$WPz$ucz$vcz$wcz$LYz$wFz$QGz$RGz$xcz$cYz$oEz$NYz$OYz$z$hEz$ycz$Adz$Bdz$MCz$fQz$lCz$mCz$nCz$lMz$PEz$mMz$Cdz$cMz$dMz$TJz$z$YXz$Ocz$Ddz$Edz$Fdz$dz$Gdz$Hdz$UQz$rJz$sJz$YOz$oDz$ZOz$oYz$pYz$qYz$sIz$Idz$Jdz$Kdz$Ldz$Mdz$Ndz$fVz$xFz$z$OEz$Odz$cYz$oEz$Pcz$fGz$z$EDz$fOz$gOz$z$Pdz$Qdz$Rdz$Sdz$jTz$kTz$lTz$z$hEz$Tdz$rEz$Udz$Vdz$Wdz$yMz$Xdz$Ydz$Zdz$wFz$adz$rBz$bdz$cdz$ddz$edz$fdz$gdz$z$rQz$GYz$hdz$idz$jdz$xKz$JDz$KDz$LDz$CNz$DNz$ENz$kdz$rWz$sWz$tWz$uWz$LHz$ldz$XWz$YWz$eWz$mdz$ndz$z$hEz$odz$pdz$qdz$rBz$rdz$wcz$Zdz$wFz$adz$rBz$bdz$cdz$ddz$edz$fdz$gdz$z$OEz$z$IHz$lZz$mZz$nZz$sdz$tdz$udz$vdz$xKz$JDz$KDz$LDz$fKz$yKz$sIz$Uaz$Vaz$Waz$wdz$QCz$RCz$SCz$TCz$KOz$YGz$ZGz$LOz$xdz$mSz$ydz$vJz$z$IHz$lZz$mZz$nZz$sdz$tdz$Aez$Bez$FGz$JGz$mCz$nCz$CZz$qVz$DZz$IVz$GVz$JYz$KYz$iPz$RDz$SDz$TDz$UDz$YOz$oDz$ZOz$aOz$Cez$Dez$Eez$kJz$z$IHz$lZz$mZz$nZz$sdz$tdz$Fez$Bez$FGz$JGz$mCz$nCz$CZz$qVz$DZz$IVz$GVz$JYz$KYz$iPz$RDz$SDz$TDz$UDz$YOz$oDz$ZOz$aOz$Cez$Dez$Eez$kJz$z$EDz$fOz$gOz$z$Gez$JDz$KDz$Hez$YOz$oDz$ZOz$oYz$pYz$qYz$sIz$mTz$nTz$Iez$cMz$dMz$IYz"
+# TAREAS 
+# mover todos los docs, excels a archivos
+# sacar metadatos con exiftool 
+THREADS="30"
+OKBLUE='\033[94m'
+OKRED='\033[91m'
+OKGREEN='\033[92m'
+OKORANGE='\033[93m'
+RESET='\e[0m'
+
+# Buscar cada subdominio en google menos www
+
+#https://github.com/daudmalik06/ReconCat
+#https://github.com/mobrine-mob/M0B-tool-v2
+#https://github.com/franccesco/getaltname
+#https://github.com/twelvesec/gasmask
+
+# Cloud
+#https://github.com/MindPointGroup/cloudfrunt
+#https://github.com/glen-mac/goGetBucket
+#https://github.com/yehgdotnet/S3Scanner
+
+#WEB
+#https://github.com/MrSqar-Ye/BadMod
+#https://www.kitploit.com/2018/04/jcs-joomla_vulnerability-component.html
+#https://github.com/steverobbins/magescan
+#https://github.com/fgeek/pyfiscan
+#https://github.com/vortexau/mooscan
+#https://github.com/retirejs/retire.js/
+#https://github.com/UltimateHackers/XSStrike
+#https://whatcms.org/Content-Management-Systems
+#https://github.com/m4ll0k/WPSeku
+#https://github.com/Jamalc0m/wphunter
+#https://github.com/m4ll0k/WAScan
+
+
+# mobile app
+#https://github.com/UltimateHackers/Diggy
+#https://github.com/Security-Onion-Solutions/security-onion
+
+#Vuln app
+#https://github.com/logicalhacking/DVHMA
+
+#other
+#https://github.com/m4ll0k/iCloudBrutter
+#https://github.com/Moham3dRiahi/XBruteForcer
+#https://github.com/hc0d3r/sudohulk
+#https://github.com/floriankunushevci/aragog
+#https://github.com/mthbernardes/ipChecker
+#https://www.kitploit.com/2018/02/roxysploit-penetration-testing-suite.html
+#https://www.kitploit.com/2018/02/grouper-powershell-script-for-helping.html
+#https://github.com/B16f00t/whapa
+
+function print_ascii_art {
+cat << "EOF"
+ _______  _______  _______  _______  _       
+(  ____ )(  ____ \(  ____ \(  ___  )( (    /|
+| (    )|| (    \/| (    \/| (   ) ||  \  ( |
+| (____)|| (__    | |      | |   | ||   \ | |
+|     __)|  __)   | |      | |   | || (\ \) |
+| (\ (   | (      | |      | |   | || | \   |
+| ) \ \__| (____/\| (____/\| (___) || )  \  |
+|/   \__/(_______/(_______/(_______)|/    )_)                                             
+
+		daniel.torres@owasp.org
+		https://github.com/DanielTorres1
+
+EOF
+}
+
+
+print_ascii_art
+
+function insert_data () {
+	find .vulnerabilidades -size  0 -print0 |xargs -0 rm 2>/dev/null # delete empty files
+	find .enumeracion -size  0 -print0 |xargs -0 rm 2>/dev/null # delete empty files
+	insert-data.py
+	mv .enumeracion/* .enumeracion2 2>/dev/null
+	mv .vulnerabilidades/* .vulnerabilidades2 2>/dev/null		 	
+	}
+	
+
+
+while getopts ":d:n:" OPTIONS
+do
+            case $OPTIONS in
+            d)     DOMINIO=$OPTARG;;
+            n)     NOMBRE=$OPTARG;;            
+            ?)     printf "Opcion Invalida: -$OPTARG\n" $0
+                          exit 2;;
+           esac
+done
+
+DOMINIO=${DOMINIO:=NULL}
+NOMBRE=${NOMBRE:=NULL}
+
+#echo "NOMBRE ENTIDAD $NOMBRE"
+
+##################
+#  ~~~ Menu ~~~  #
+##################
+
+if [ -z "$DOMINIO" ]; then
+echo " USO: recon.sh -d [dominio] -n [nombre de la entidad en linkedin] -c [UNA palabra para filtrar resultados]"
+echo ""
+exit
+fi
+######################
+
+mkdir $DOMINIO
+cd $DOMINIO
+
+mkdir .arp
+mkdir .escaneos
+mkdir .datos
+mkdir .nmap
+mkdir .nmap_1000p
+mkdir .nmap_banners
+mkdir .banners
+mkdir .banners2
+mkdir .enumeracion
+mkdir .enumeracion2 
+mkdir .vulnerabilidades
+mkdir .vulnerabilidades2 
+mkdir .masscan
+mkdir reportes
+mkdir servicios
+mkdir .tmp
+mkdir -p logs/cracking
+mkdir -p logs/enumeracion
+mkdir -p logs/vulnerabilidades
+
+mkdir webClone
+mkdir importarMaltego
+mkdir -p archivos	
+touch .enumeracion/"$DOMINIO"_google_googlehacking.txt
+cp /usr/share/lanscanner/.resultados.db .
+echo -e "$OKORANGE+ -- --=############ Usando servidor DNS  ... #########$RESET"
+grep nameserver /etc/resolv.conf
+echo -e "$OKORANGE+ -- --=############ ############## #########$RESET"
+echo ""
+
+kernel=`uname -a`
+if [[ $kernel == *"Nethunter"* ]]; then #NetHunter
+	export PATH=/root/bin:/root/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/system/xbin:/usr/bin/pentest
+fi
+
+
+####################  DNS test ########################
+echo -e "$OKBLUE+ -- --=############ Reconocimiento DNS  ... #########$RESET"
+
+
+echo -e "\t[+] Iniciando dnsrecon (DNS info) .."
+dnsrecon -d $DOMINIO --lifetime 60  > logs/enumeracion/dnsrecon.txt &
+
+echo -e "\t[+] Iniciando Amass"
+amass enum -src -min-for-recursive 2 -d $DOMINIO -config /usr/share/lanscanner/amass-config.ini > logs/enumeracion/amass.txt &
+
+echo -e "\t[+] Iniciando fierce (Volcado de zona) .."
+fierce -dns $DOMINIO -threads 3 > logs/enumeracion/fierce.txt 
+
+egrep -iq "SOA" logs/enumeracion/fierce.txt 
+greprc=$?
+if [[ $greprc -eq 0 ]] ; then # Si se hizo volcado de zona	
+	echo -e "$OKRED \t  [!] Volcado de zona detectado !! $RESET"		
+else	
+	echo -e "\t[+] Iniciando dnsenum (bruteforce DNS ) .."
+	dnsenum $DOMINIO --nocolor -f /usr/share/wordlists/hosts.txt --noreverse --threads 3 > logs/enumeracion/dnsenum.txt 2>/dev/null &
+fi
+
+
+echo -e "\t[+] Iniciando Sublist3r ( Baidu, Yahoo, Google, Bing, Ask, Netcraft, DNSdumpster, Virustotal, ThreatCrowd, SSL Certificates, PassiveDNS) .."
+Sublist3r.sh -d $DOMINIO -o `pwd`/logs/enumeracion/Sublist3r.txt
+
+
+echo -e "\t[+] Iniciando findomain ( Crtsh API, CertSpotter API, facebook) .."
+
+
+if [[ $kernel == *"Nethunter"* ]]; then #NetHunter
+	echo -e "\t[+] Nethunter Detectado"
+	findomain --target $DOMINIO > logs/enumeracion/findomain.txt
+else
+	findomain --all-apis --target $DOMINIO > logs/enumeracion/findomain.txt
+fi
+
+
+
+
+##################### Email, subdominios #################
+
+echo -e "$OKBLUE+ -- --=############ Obteniendo  correos,subdominios, etc ... #########$RESET"
+echo -e "\t[+] Iniciando whois .."
+whois $DOMINIO > .enumeracion/"$DOMINIO"_dns_whois.txt
+
+echo -e "\t[+] Iniciando theHarvester .."
+echo -e "\t\t[+] Buscando correos en google .."
+theHarvester -d $DOMINIO -b google > logs/enumeracion/theHarvester_google.txt 2>/dev/null
+echo -e "\t\t[+] Buscando correos en bing .."
+theHarvester -d $DOMINIO -b bing > logs/enumeracion/theHarvester_bing.txt 2>/dev/null
+
+
+echo -e "\t[+] Iniciando infoga .."
+
+infoga.sh -t $DOMINIO -s all > logs/enumeracion/infoga2.txt 2>/dev/null
+sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g" logs/enumeracion/infoga2.txt > logs/enumeracion/infoga.txt
+rm logs/enumeracion/infoga2.txt 
+
+#################
+
+######### DNS spoof ########
+
+echo -e "$OKBLUE+ -- --=############ Probando si se puede spoofear el dominio... #########$RESET"
+
+spoofcheck.sh $DOMINIO > logs/vulnerabilidades/"$DOMINIO"_dns_spoof.txt
+egrep -iq "Spoofing possible" logs/vulnerabilidades/"$DOMINIO"_dns_spoof.txt
+greprc=$?
+if [[ $greprc -eq 0 ]] ; then			
+	cp logs/vulnerabilidades/"$DOMINIO"_dns_spoof.txt .vulnerabilidades/"$DOMINIO"_dns_spoof.txt		
+fi
+echo -e "$OKBLUE+ -- --=############ Recopilando informacion ... #########$RESET"
+insert_data
+######## ###
+
+
+
+##################### search engines #################
+## linked in
+#echo -e "$OKBLUE+ -- --=############ Obteniendo lista de empleados de linkedin ... #########$RESET" 
+#linkedinFinder.pl -n "$NOMBRE"  -l logs/enumeracion/"$DOMINIO"_linkedin.csv
+#grep --color=never -ai "$NOMBRE" logs/enumeracion/"$DOMINIO"_linkedin.csv  > reportes/linkedin.csv
+
+	
+
+
+
+####### wait to finish ########
+  while true; do
+	dnsenum_instances=$((`ps aux | egrep "dnsenum|amass" | wc -l` - 1)) 
+  if [ "$dnsenum_instances" -gt 0 ]
+	then
+		echo "Todavia hay escaneos de dnsenum o amass activos ($dnsenum_instances)"  
+		sleep 30
+	else
+		break		  		 
+	fi				
+  done
+##############################
+	  
+######## extraer correos ###########
+cat logs/enumeracion/theHarvester_google.txt | grep --color=never @ | egrep -v "edge-security|Connection timed out" >> .enumeracion/"$DOMINIO"_correos.txt
+cat logs/enumeracion/theHarvester_bing.txt | grep --color=never @ | egrep -v "edge-security|Connection timed out" >> .enumeracion/"$DOMINIO"_correos.txt
+cat logs/enumeracion/infoga.txt | grep --color=never "correo:" | cut -d " " -f3 >> .enumeracion/"$DOMINIO"_correos.txt
+
+# dar formato para importar a maltego
+lines=`wc -l .enumeracion/"$DOMINIO"_correos.txt | cut -d " " -f1`
+perl -E "say \"$DOMINIO\n\" x $lines" > DOMINIO.txt # file with the DOMINIO (n times)
+sed -i '$ d' DOMINIO.txt # delete last line
+paste -d ';' DOMINIO.txt .enumeracion/"$DOMINIO"_correos.txt > importarMaltego/correos1.csv 
+cat importarMaltego/correos1.csv  | sort | uniq > importarMaltego/correos.csv 
+rm importarMaltego/correos1.csv DOMINIO.txt
+#####################################
+	  
+######## extraer subdominios ###########
+# fierce
+egrep -qi "SOA" logs/enumeracion/fierce.txt 
+greprc=$?
+if [[ $greprc -eq 0 ]] ; then 
+	# Si se hizo volcado de zona		
+	grep "IN     A" logs/enumeracion/fierce.txt | awk '{print $5,$1}' | tr ' ' ';' >> subdominios.txt
+	# 200.105.172.195;soberaniaalimentaria.gob.bo.
+	grep "IN	A" logs/enumeracion/fierce.txt | awk '{print $5,$1}' | tr ' ' ';' >> subdominios.txt	
+	grep "CNAME" logs/enumeracion/fierce.txt | awk '{print $1}' | tr ' ' ';' >> subdominios.txt
+	cp logs/enumeracion/fierce.txt  .vulnerabilidades/"$DOMINIO"_dns_transferenciaDNS.txt
+else	
+	#dnsenum	
+	grep "IN    A" logs/enumeracion/dnsenum.txt | awk '{print $1}' >> subdominios.txt	
+	grep "CNAME" logs/enumeracion/dnsenum.txt | awk '{print $1}' >> subdominios.txt
+
+fi
+
+
+# Sublist3r
+#www.comibol.gob.bo
+cat logs/enumeracion/Sublist3r.txt | grep --color=never $DOMINIO | cut -d ":" -f1 >> subdominios.txt
+
+# findomain
+#  --> correo.siahcomibol.gob.bo
+cat logs/enumeracion/findomain.txt | egrep --color=never "\-\-|>>" |  awk '{print $2}' >> subdominios.txt
+
+#amass
+cat logs/enumeracion/amass.txt  | cut -d "]" -f 2 | sed "s/ //g" >> subdominios.txt
+
+# theHarvester y google
+cat logs/enumeracion/theHarvester_google.txt | grep --color=never $DOMINIO | egrep -v "empty|@|harvesting" | cut -d ":" -f1 >> subdominios.txt
+cat logs/enumeracion/theHarvester_bing.txt| grep --color=never $DOMINIO |egrep -v "empty|@|harvesting" | cut -d ":" -f1  >> subdominios.txt
+
+############################################
+
+sed -i "s/$DOMINIO\./$DOMINIO/g" subdominios.txt #Eliminar punto extra al final
+
+#filtrar dominios
+grep --color=never $DOMINIO subdominios.txt | egrep -iv '\--|Testing|Trying|TARGET|subDOMINIOs|DNS|\:\:|\*' | sort | uniq -i > subdominios2.txt
+
+echo -e "\t[+] Iniciando subjack .."
+subjack -w subdominios2.txt -t 100 -timeout 30 -ssl -c /usr/share/lanscanner/fingerprints-domain.json -v 3 > logs/vulnerabilidades/"$DOMINIO"_dns_subjack.txt 
+grep -v "Not Vulnerable" logs/vulnerabilidades/"$DOMINIO"_dns_subjack.txt  > .vulnerabilidades/"$DOMINIO"_dns_subjack.txt 
+
+
+for line in `cat subdominios2.txt`;
+do 		
+	#Si ya tiene ip identificada
+	if [[ ${line} == *";"*  ]];then 
+			line=`echo $line | tr ',' ';'` # Convertir , --> ;
+			echo $line >> subdominios3.txt
+	else
+		#descubrir a que ip resuelve
+		hostline=`host $line | egrep -v "alias|IPv6"`
+		total_ips=$(echo $hostline | grep -o address | wc -l)					
+		
+		#Si tiene mas de una IP
+		if [ $total_ips -gt 1 ];
+		then								
+			ip=`echo $hostline| grep address|  cut -d " " -f4`
+			#echo "ip $ip"
+			echo "$ip;$line" >> subdominios3.txt
+			
+			ip2=`echo $hostline| grep address|  cut -d " " -f8`
+			#echo "ip2 $ip2"
+			echo "$ip2;$line" >> subdominios3.txt
+		else
+			#Si tiene una ip
+			ip=`echo $hostline| grep address| cut -d " " -f4`			
+			if [ -n "$ip" ]; then
+				echo "$ip;$line" >> subdominios3.txt
+			fi
+			
+		fi 															
+	fi		
+done
+
+sort subdominios3.txt | uniq -i > subdominios4.txt 
+#rm subdominios.txt subdominios2.txt subdominios3.txt
+
+echo -e "$OKBLUE+ -- --=############ Obteniendo GeoInformacion de las IPs #########$RESET"
+while read line           
+do           
+    ip=$(echo  $line | cut -d ";" -f1)
+    subdominio=$(echo  $line | cut -d ";" -f2)    
+    echo "Obteniendo datos del subdominio: $subdominio"
+    geodata=$(geoip.pl $ip)
+    echo "$DOMINIO;$line;$geodata" >> importarMaltego/subdominios.csv
+    echo "$line;$geodata" >> .enumeracion/"$DOMINIO"_subdominios.txt
+    perl -i -pe 's/[^[:ascii:]]//g' .enumeracion/"$DOMINIO"_subdominios.txt #remover caracteres especiales
+    
+done <subdominios4.txt 
+
+#rm subdominios4.txt 
+insert_data
+rm cookies.txt 2>/dev/null
+######################################################
+
+
+
+
+echo -e "$OKBLUE+ -- --=############ Recopilando URL indexadas ... #########$RESET" 
+
+while read line
+do     						
+	subdomain=`echo $line | cut -f3 -d";"`		
+	
+	if [ $subdomain != $DOMINIO ];
+	then
+		echo -e "[+] Recopilando webs indexados: $subdomain"
+		google.pl -t "site:$subdomain" -o .enumeracion/"$subdomain"_web_indexado.txt -l logs/enumeracion/"$subdomain"_google.html 
+
+		sleep 60
+
+		echo -e "$OKBLUE+ -- --=############ Comprobando si google indexo páginas hackeadas ... #########$RESET" 
+		egrep -iq " Buy| Pharmacy | medication| cheap| porn| viagra|hacked|drug" logs/enumeracion/"$subdomain"_google.html
+		greprc=$?
+		if [[ $greprc -eq 0 ]] ; then			
+			echo -e "\t$OKRED[!] Redirección  a sitios de terceros detectado \n $RESET"
+			echo "Vulnerable site:$subdomain" > .vulnerabilidades/"$subdomain"_google_redirect.txt 	
+		fi		
+	fi
+
+				
+done <importarMaltego/subdominios.csv
+insert_data
+
+cat .enumeracion2/*_indexado.txt | cut -d "/" -f 3 | cut -d ":" -f1 | grep --color=never $DOMINIO | sort | uniq >> subdominios.txt
+
+
+echo -e "$OKBLUE+ -- --=############ Probando SQL inyection. #########$RESET" 
+
+grep --color=never "\?" .enumeracion2/*_indexado.txt | sed 's/txt:/;/g' | cut -d ";" -f2 | sort | uniq > urlParametros.txt
+
+
+#  Eliminar URL repetidas
+current_uri=""
+for url in `cat urlParametros.txt`; do
+
+	uri=`echo $url | cut -f1 -d"?"`
+	param=`echo $line | cut -f2 -d"?"`
+	
+	
+	if [ "$current_uri" != "$uri" ];
+	then
+		echo  "$url" >> urlParametrosUniq.txt
+		current_uri=$uri
+	fi
+	
+done
+
+
+i=1
+for url in `cat urlParametrosUniq.txt`; do
+	echo  "$url" > logs/vulnerabilidades/"$DOMINIO"_"web$i"_sqlmap.txt
+	sqlmap -u "$url" --batch | tee -a logs/vulnerabilidades/"$DOMINIO"_"web$i"_sqlmap.txt
+	
+	egrep -iq "is vulnerable" logs/vulnerabilidades/"$DOMINIO"_"web$i"_sqlmap.txt
+	greprc=$?
+	if [[ $greprc -eq 0 ]] ; then			
+		echo -e "\t$OKRED[!] Inyeccion SQL detectada \n $RESET"
+		echo "$url" > .vulnerabilidades/"$DOMINIO"_"web$i"_sqlmap.txt
+	fi	
+		
+	i=$(( i + 1 ))	
+					
+done
+
+
+
+
+
+ 	
+echo -e "$OKBLUE+ -- --=############ Google hacking ... #########$RESET"
+
+									#-o lista de URL													-l resultado html de l busqueda
+google.pl -t "site:$DOMINIO inurl:add" -o logs/vulnerabilidades/"$DOMINIO"_google_googlehacking0.txt -p 1 -l logs/vulnerabilidades/"$DOMINIO"_google_googlehacking0.html 
+egrep -qi "No se han encontrado resultados|did not match any" logs/vulnerabilidades/"$DOMINIO"_google_googlehacking0.html
+greprc=$?
+if [[ $greprc -eq 1 ]] ; then # hay resultados
+echo "site:$DOMINIO inurl:add" >> .vulnerabilidades/"$DOMINIO"_google_googlehacking.txt	
+sed -i '/^\s*$/d' logs/vulnerabilidades/"$DOMINIO"_google_googlehacking0.txt # delete empty lines	
+cat logs/vulnerabilidades/"$DOMINIO"_google_googlehacking0.txt >> .vulnerabilidades/"$DOMINIO"_google_googlehacking.txt	
+echo "" >> .vulnerabilidades/"$DOMINIO"_google_googlehacking.txt	
+fi
+
+sleep 10;
+
+
+google.pl -t "site:$DOMINIO inurl:edit" -o logs/vulnerabilidades/"$DOMINIO"_google_googlehacking1.txt -p 1 -l logs/vulnerabilidades/"$DOMINIO"_google_googlehacking1.html 
+egrep -qi "No se han encontrado resultados|did not match any" logs/vulnerabilidades/"$DOMINIO"_google_googlehacking1.html
+greprc=$?
+if [[ $greprc -eq 1 ]] ; then # hay resultados
+echo "site:$DOMINIO inurl:edit" >> .vulnerabilidades/"$DOMINIO"_google_googlehacking.txt	
+sed -i '/^\s*$/d' logs/vulnerabilidades/"$DOMINIO"_google_googlehacking1.txt # delete empty lines	
+cat logs/vulnerabilidades/"$DOMINIO"_google_googlehacking1.txt >> .vulnerabilidades/"$DOMINIO"_google_googlehacking.txt	
+echo "" >> .vulnerabilidades/"$DOMINIO"_google_googlehacking.txt	
+fi
+
+sleep 10;
+
+google.pl -t "site:github.com intext:$DOMINIO" -o logs/enumeracion/"$DOMINIO"_google_googlehacking.txt -p 1 -l logs/enumeracion/"$DOMINIO"_google_googlehacking.html 
+egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/"$DOMINIO"_google_googlehacking.html
+greprc=$?
+if [[ $greprc -eq 1 ]] ; then # hay resultados
+echo "site:github.com intext:$DOMINIO" >> .enumeracion/"$DOMINIO"_google_googlehacking.txt	
+sed -i '/^\s*$/d' logs/enumeracion/"$DOMINIO"_google_googlehacking.txt # delete empty lines	
+cat logs/enumeracion/"$DOMINIO"_google_googlehacking.txt >> .enumeracion/"$DOMINIO"_google_googlehacking.txt	          
+echo "" >> .enumeracion/"$DOMINIO"_google_googlehacking.txt	
+fi
+
+sleep 10;
+
+google.pl -t "site:$DOMINIO intitle:index.of" -o logs/vulnerabilidades/"$DOMINIO"_google_googlehacking2.txt -p 1 -l logs/vulnerabilidades/"$DOMINIO"_google_googlehacking2.html 
+egrep -qi "No se han encontrado resultados|did not match any" logs/vulnerabilidades/"$DOMINIO"_google_googlehacking2.html
+greprc=$?
+if [[ $greprc -eq 1 ]] ; then # hay resultados
+echo "site:$DOMINIO intitle:index.of" >> .vulnerabilidades/"$DOMINIO"_google_googlehacking.txt	
+sed -i '/^\s*$/d' logs/vulnerabilidades/"$DOMINIO"_google_googlehacking2.txt # delete empty lines	
+cat logs/vulnerabilidades/"$DOMINIO"_google_googlehacking2.txt >> .vulnerabilidades/"$DOMINIO"_google_googlehacking.txt	
+echo "" >> .vulnerabilidades/"$DOMINIO"_google_googlehacking.txt	
+fi
+
+sleep 10;
+
+google.pl -t "site:$DOMINIO filetype:sql" -o logs/vulnerabilidades/"$DOMINIO"_google_googlehacking3.txt -p 1 -l logs/vulnerabilidades/"$DOMINIO"_google_googlehacking3.html 
+egrep -qi "No se han encontrado resultados|did not match any" logs/vulnerabilidades/"$DOMINIO"_google_googlehacking3.html
+greprc=$?
+if [[ $greprc -eq 1 ]] ; then # hay resultados
+echo "site:$DOMINIO filetype:sql" >> .vulnerabilidades/"$DOMINIO"_google_googlehacking.txt	
+sed -i '/^\s*$/d' logs/vulnerabilidades/"$DOMINIO"_google_googlehacking3.txt # delete empty lines	
+cat logs/vulnerabilidades/"$DOMINIO"_google_googlehacking3.txt >> .vulnerabilidades/"$DOMINIO"_google_googlehacking.txt	
+echo "" >> .vulnerabilidades/"$DOMINIO"_google_googlehacking.txt	
+fi
+
+sleep 10;
+
+google.pl -t "site:$DOMINIO \"access denied for user\"" -o logs/vulnerabilidades/"$DOMINIO"_google_googlehacking4.txt -p 1 -l logs/vulnerabilidades/"$DOMINIO"_google_googlehacking4.html 
+egrep -qi "No se han encontrado resultados|did not match any" logs/vulnerabilidades/"$DOMINIO"_google_googlehacking4.html
+greprc=$?
+if [[ $greprc -eq 1 ]] ; then # hay resultados
+echo "site:$DOMINIO \"access denied for user\"" >> .vulnerabilidades/"$DOMINIO"_google_googlehacking.txt	
+sed -i '/^\s*$/d' logs/vulnerabilidades/"$DOMINIO"_google_googlehacking4.txt # delete empty lines	
+cat logs/vulnerabilidades/"$DOMINIO"_google_googlehacking4.txt >> .vulnerabilidades/"$DOMINIO"_google_googlehacking.txt	
+echo "" >> .vulnerabilidades/"$DOMINIO"_google_googlehacking.txt	
+fi
+
+sleep 10;
+
+google.pl -t "site:$DOMINIO intitle:\"curriculum vitae\"" -o logs/vulnerabilidades/"$DOMINIO"_google_googlehacking5.txt -p 1 -l logs/vulnerabilidades/"$DOMINIO"_google_googlehacking5.html 
+egrep -qi "No se han encontrado resultados|did not match any" logs/vulnerabilidades/"$DOMINIO"_google_googlehacking5.html
+greprc=$?
+if [[ $greprc -eq 1 ]] ; then # hay resultados
+echo "site:$DOMINIO intitle:\"curriculum vitae\"" >> .vulnerabilidades/"$DOMINIO"_google_googlehacking.txt	
+sed -i '/^\s*$/d' logs/vulnerabilidades/"$DOMINIO"_google_googlehacking5.txt # delete empty lines	
+cat logs/vulnerabilidades/"$DOMINIO"_google_googlehacking5.txt >> .vulnerabilidades/"$DOMINIO"_google_googlehacking.txt
+echo "" >> .vulnerabilidades/"$DOMINIO"_google_googlehacking.txt		
+fi
+
+sleep 10;
+
+google.pl -t "site:$DOMINIO passwords|contrasenas|login|contrasena filetype:txt" -o logs/vulnerabilidades/"$DOMINIO"_google_googlehacking6.txt -p 1 -l logs/vulnerabilidades/"$DOMINIO"_google_googlehacking6.html 
+egrep -qi "No se han encontrado resultados|did not match any" logs/vulnerabilidades/"$DOMINIO"_google_googlehacking6.html
+greprc=$?
+if [[ $greprc -eq 1 ]] ; then # hay resultados
+echo "site:$DOMINIO passwords|contrasenas|login|contrasena filetype:txt" >> .vulnerabilidades/"$DOMINIO"_google_googlehacking.txt	
+sed -i '/^\s*$/d' logs/vulnerabilidades/"$DOMINIO"_google_googlehacking6.txt # delete empty lines	
+cat logs/vulnerabilidades/"$DOMINIO"_google_googlehacking6.txt >> .vulnerabilidades/"$DOMINIO"_google_googlehacking.txt	
+echo "" >> .vulnerabilidades/"$DOMINIO"_google_googlehacking.txt	
+fi
+
+sleep 10;
+
+google.pl -t "site:$DOMINIO inurl:intranet" -o logs/enumeracion/"$DOMINIO"_google_googlehacking7.txt -p 1 -l logs/enumeracion/"$DOMINIO"_google_googlehacking7.html 
+egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/"$DOMINIO"_google_googlehacking7.html
+greprc=$?
+if [[ $greprc -eq 1 ]] ; then # hay resultados
+echo "site:$DOMINIO inurl:intranet" >> .enumeracion/"$DOMINIO"_google_googlehacking.txt	
+sed -i '/^\s*$/d' logs/enumeracion/"$DOMINIO"_google_googlehacking7.txt # delete empty lines	
+cat logs/enumeracion/"$DOMINIO"_google_googlehacking7.txt >> .enumeracion/"$DOMINIO"_google_googlehacking.txt	
+echo "" >> .enumeracion/"$DOMINIO"_google_googlehacking.txt	
+fi
+
+sleep 10;
+
+google.pl -t "site:$DOMINIO inurl:\":8080\" -intext:8080" -o logs/enumeracion/"$DOMINIO"_google_googlehacking8.txt -p 1 -l logs/enumeracion/"$DOMINIO"_google_googlehacking8.html 
+egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/"$DOMINIO"_google_googlehacking8.html
+greprc=$?
+if [[ $greprc -eq 1 ]] ; then # hay resultados
+echo "site:$DOMINIO inurl:\":8080\" -intext:8080" >> .enumeracion/"$DOMINIO"_google_googlehacking.txt	
+sed -i '/^\s*$/d' logs/enumeracion/"$DOMINIO"_google_googlehacking8.txt # delete empty lines	
+cat logs/enumeracion/"$DOMINIO"_google_googlehacking8.txt >> .enumeracion/"$DOMINIO"_google_googlehacking.txt	
+echo "" >> .enumeracion/"$DOMINIO"_google_googlehacking.txt	
+fi
+
+sleep 10;
+
+google.pl -t "site:$DOMINIO filetype:asmx OR filetype:svc OR inurl:wsdl" -o logs/enumeracion/"$DOMINIO"_google_googlehacking9.txt -p 1 -l logs/enumeracion/"$DOMINIO"_google_googlehacking9.html 
+egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/"$DOMINIO"_google_googlehacking9.html
+greprc=$?
+if [[ $greprc -eq 1 ]] ; then # hay resultados
+echo "site:github.com intext:$DOMINIO" >> .enumeracion/"$DOMINIO"_google_googlehacking.txt	
+sed -i '/^\s*$/d' logs/enumeracion/"$DOMINIO"_google_googlehacking9.txt # delete empty lines	
+cat logs/enumeracion/"$DOMINIO"_google_googlehacking9.txt >> .enumeracion/"$DOMINIO"_google_googlehacking.txt	
+echo "" >> .enumeracion/"$DOMINIO"_google_googlehacking.txt	
+fi
+
+sleep 10;
+
+google.pl -t "site:$DOMINIO inurl:(_vti_bin|api|webservice)" -o logs/enumeracion/"$DOMINIO"_google_googlehacking10.txt -p 1 -l logs/enumeracion/"$DOMINIO"_google_googlehacking10.html 
+egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/"$DOMINIO"_google_googlehacking10.html
+greprc=$?
+if [[ $greprc -eq 1 ]] ; then # hay resultados
+echo "site:$DOMINIO inurl:(_vti_bin|api|webservice)" >> .enumeracion/"$DOMINIO"_google_googlehacking.txt	
+sed -i '/^\s*$/d' logs/enumeracion/"$DOMINIO"_google_googlehacking10.txt # delete empty lines	
+cat logs/enumeracion/"$DOMINIO"_google_googlehacking10.txt >> .enumeracion/"$DOMINIO"_google_googlehacking.txt	
+echo "" >> .enumeracion/"$DOMINIO"_google_googlehacking.txt	
+fi
+
+sleep 10;
+
+google.pl -t "site:trello.com passwords|contrasenas|login|contrasena intext:\"$DOMINIO\"" -o logs/vulnerabilidades/"$DOMINIO"_google_googlehacking11.txt -p 1 -l logs/vulnerabilidades/"$DOMINIO"_google_googlehacking11.html 
+egrep -qi "No se han encontrado resultados|did not match any" logs/vulnerabilidades/"$DOMINIO"_google_googlehacking11.html
+greprc=$?
+if [[ $greprc -eq 1 ]] ; then # hay resultados
+echo "site:trello.com passwords|contrasenas|login|contrasena intext:\"$DOMINIO\"" >> .vulnerabilidades/"$DOMINIO"_google_googlehacking.txt	
+sed -i '/^\s*$/d' logs/vulnerabilidades/"$DOMINIO"_google_googlehacking11.txt # delete empty lines	
+cat logs/vulnerabilidades/"$DOMINIO"_google_googlehacking11.txt >> .vulnerabilidades/"$DOMINIO"_google_googlehacking.txt	
+echo "" >> .vulnerabilidades/"$DOMINIO"_google_googlehacking.txt	
+fi
+
+sleep 10;
+													   #logs/vulnerabilidades/abc.gob.bo_google_googlehacking12.txt														
+google.pl -t "site:pastebin.com intext:*@$DOMINIO" -o logs/enumeracion/"$DOMINIO"_google_googlehacking12.txt -p 1 -l logs/enumeracion/"$DOMINIO"_google_googlehacking12.html 
+egrep -qi "No se han encontrado resultados|did not match any" logs/enumeracion/"$DOMINIO"_google_googlehacking12.html
+greprc=$?
+if [[ $greprc -eq 1 ]] ; then # hay resultados
+echo "site:github.com intext:$DOMINIO" >> .enumeracion/"$DOMINIO"_google_googlehacking.txt	
+sed -i '/^\s*$/d' logs/enumeracion/"$DOMINIO"_google_googlehacking12.txt # delete empty lines	
+cat logs/enumeracion/"$DOMINIO"_google_googlehacking12.txt >> .enumeracion/"$DOMINIO"_google_googlehacking.txt	
+echo "" >> .enumeracion/"$DOMINIO"_google_googlehacking.txt	
+fi
+
+sleep 10;
+
+google.pl -t "site:$DOMINIO \"Undefined index\" " -o logs/vulnerabilidades/"$DOMINIO"_google_googlehacking13.txt -p 1 -l logs/vulnerabilidades/"$DOMINIO"_google_googlehacking13.html 
+egrep -qi "No se han encontrado resultados|did not match any" logs/vulnerabilidades/"$DOMINIO"_google_googlehacking13.html
+greprc=$?
+if [[ $greprc -eq 1 ]] ; then # hay resultados
+echo "site:$DOMINIO \"Undefined index\" " >> .vulnerabilidades/"$DOMINIO"_google_googlehacking.txt	
+sed -i '/^\s*$/d' logs/vulnerabilidades/"$DOMINIO"_google_googlehacking13.txt # delete empty lines	
+cat logs/vulnerabilidades/"$DOMINIO"_google_googlehacking13.txt >> .vulnerabilidades/"$DOMINIO"_google_googlehacking.txt	
+echo "" >> .vulnerabilidades/"$DOMINIO"_google_googlehacking.txt	
+fi
+
+sleep 10;
+
+google.pl -t "site:$DOMINIO inurl:storage" -o logs/vulnerabilidades/"$DOMINIO"_google_googlehacking14.txt -p 1 -l logs/vulnerabilidades/"$DOMINIO"_google_googlehacking14.html 
+egrep -qi "No se han encontrado resultados|did not match any" logs/vulnerabilidades/"$DOMINIO"_google_googlehacking14.html
+greprc=$?
+if [[ $greprc -eq 1 ]] ; then # hay resultados
+echo "site:$DOMINIO inurl:storage" >> .vulnerabilidades/"$DOMINIO"_google_googlehacking.txt	
+sed -i '/^\s*$/d' logs/vulnerabilidades/"$DOMINIO"_google_googlehacking14.txt # delete empty lines	
+cat logs/vulnerabilidades/"$DOMINIO"_google_googlehacking14.txt >> .vulnerabilidades/"$DOMINIO"_google_googlehacking.txt	
+echo "" >> .vulnerabilidades/"$DOMINIO"_google_googlehacking.txt	
+fi
+
+
+
+#echo "Ejecutando: sort logs/enumeracion/"$DOMINIO"_google_indexado2.txt | uniq | egrep -v"
+sort .enumeracion/*_indexado.txt | uniq | egrep -v "pdf|doc" > .enumeracion/"$DOMINIO"_google_indexado.txt
+egrep -ia "username|usuario|password|contrase|token|sesion|session" .enumeracion/*google_indexado.txt > .vulnerabilidades/"$DOMINIO"_google_credencialURL.txt
+insert_data
+
+
+# mover los listados de URL identificados por google (Dejas solo los .html en la carpeta log)
+mv logs/vulnerabilidades/*_google_googlehacking*.txt .vulnerabilidades2/ 2>/dev/null
+insert_data
+sleep 90
+
+
+echo -e "$OKBLUE+ -- --=############ Recopilando Metadatos ... #########$RESET" 
+pymeta.sh -d $DOMINIO -dir `pwd`"/archivos/" -csv -out `pwd`"/reportes/metada.csv" 2>/dev/null
+cat reportes/metada.csv | cut -d "," -f4 | sort | uniq > .enumeracion/"$DOMINIO"_metadata_pymeta.txt
+insert_data
+sleep 90
+
+####Extraer datos para informe
+##### motores de busqueda
+echo "Nombre;Apellido;Correo;Cargo" > reportes/correos_motoresBusqueda.csv
+for correo in `cat logs/enumeracion/theHarvester_* | grep --color=never "\@" | grep -v "*"`; do	
+echo "n/a;n/a;$correo;n/a" >> reportes/correos_motoresBusqueda.csv 
+done
+################
+
+grep --color=never -ira "10\." logs/enumeracion/dnsenum.txt | sort | uniq >> .vulnerabilidades/"$DOMINIO"_dns_IPinterna.txt
+grep --color=never -ira "192\.1" logs/enumeracion/dnsenum.txt | sort | uniq >> .vulnerabilidades/"$DOMINIO"_dns_IPinterna.txt
+grep --color=never -ira "172\.1" logs/enumeracion/dnsenum.txt | sort | uniq >> .vulnerabilidades/"$DOMINIO"_dns_IPinterna.txt
+insert_data
+cp .enumeracion2/"$DOMINIO"_subdominios.txt reportes/subdominios.csv
