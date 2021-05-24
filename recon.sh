@@ -157,21 +157,34 @@ dnsrecon -d $DOMINIO --lifetime 60  > logs/enumeracion/dnsrecon.txt &
 echo -e "\t[+] Iniciando Amass"
 amass enum -src -min-for-recursive 2 -d $DOMINIO -config /usr/share/lanscanner/amass-config.ini > logs/enumeracion/amass.txt &
 
-echo -e "\t[+] Iniciando fierce (Volcado de zona) .."
-fierce ---domain $DOMINIO -threads 3 > logs/enumeracion/fierce.txt 
+echo -e "\t[+] Intentando Volcado de zona .."
 
-egrep -iq "SOA" logs/enumeracion/fierce.txt 
-greprc=$?
-if [[ $greprc -eq 0 ]] ; then # Si se hizo volcado de zona	
-	echo -e "$OKRED \t  [!] Volcado de zona detectado !! $RESET"		
-else	
-	echo -e "\t[+] Iniciando dnsenum (bruteforce DNS ) .."
-	dnsenum $DOMINIO --nocolor -f /usr/share/wordlists/hosts.txt --noreverse --threads 3 > logs/enumeracion/dnsenum.txt 2>/dev/null &
-fi
+
+dig ns $DOMINIO +short > /tmp/ns
+
+while read line
+do
+        zone=$(dig  @${line} $DOMINIO. axfr)        
+        if echo "$zone" | grep -Ei '(Transfer failed|failed|network unreachable|error|connection reset)' &>/dev/null ; then
+			#echo -e "${red}zone Transfer ${none}${blue}[Failed]${none}${red} in ${line} Server${none}"
+			echo -e "\t[+] Iniciando dnsenum (bruteforce DNS ) .."
+			dnsenum $DOMINIO --nocolor -f /usr/share/wordlists/hosts.txt --noreverse --threads 3 > logs/enumeracion/dnsenum.txt 2>/dev/null &
+        else
+			echo -e "$OKRED \t  [!] Volcado de zona detectado !! $RESET"		
+			
+			echo -e "${green}zone Transfer ${none}${blue}[SUCCESS]${none}${green} in ${line} Server${none}"
+			echo "zonetransfer successful" >> logs/enumeracion/zonetransfer.txt			
+        fi
+        echo "$zone" >> logs/enumeracion/zonetransfer.txt
+done < /tmp/ns
+rm /tmp/ns
+
+
+
 
 
 echo -e "\t[+] Iniciando Sublist3r ( Baidu, Yahoo, Google, Bing, Ask, Netcraft, DNSdumpster, Virustotal, ThreatCrowd, SSL Certificates, PassiveDNS) .."
-Sublist3r.sh -d $DOMINIO -o `pwd`/logs/enumeracion/Sublist3r.txt
+Sublist3r.sh -d $DOMINIO --output `pwd`/logs/enumeracion/Sublist3r.txt
 
 
 echo -e "\t[+] Iniciando findomain ( Crtsh API, CertSpotter API, facebook) .."
@@ -256,22 +269,21 @@ cat logs/enumeracion/infoga.txt | grep --color=never "correo:" | cut -d " " -f3 
 lines=`wc -l .enumeracion/"$DOMINIO"_correos.txt | cut -d " " -f1`
 perl -E "say \"$DOMINIO\n\" x $lines" > DOMINIO.txt # file with the DOMINIO (n times)
 sed -i '$ d' DOMINIO.txt # delete last line
-paste -d ';' DOMINIO.txt .enumeracion/"$DOMINIO"_correos.txt > importarMaltego/correos1.csv 
+paste -d ',' DOMINIO.txt .enumeracion/"$DOMINIO"_correos.txt > importarMaltego/correos1.csv 
 cat importarMaltego/correos1.csv  | sort | uniq > importarMaltego/correos.csv 
 rm importarMaltego/correos1.csv DOMINIO.txt
 #####################################
 	  
 ######## extraer subdominios ###########
-# fierce
-egrep -qi "SOA" logs/enumeracion/fierce.txt 
+egrep -qi "zonetransfer successful" logs/enumeracion/zonetransfer.txt 
 greprc=$?
 if [[ $greprc -eq 0 ]] ; then 
 	# Si se hizo volcado de zona		
-	grep "IN     A" logs/enumeracion/fierce.txt | awk '{print $5,$1}' | tr ' ' ';' >> subdominios.txt
+	grep "IN     A" logs/enumeracion/zonetransfer.txt | awk '{print $5,$1}' | tr ' ' ',' >> subdominios.txt
 	# 200.105.172.195;soberaniaalimentaria.gob.bo.
-	grep "IN	A" logs/enumeracion/fierce.txt | awk '{print $5,$1}' | tr ' ' ';' >> subdominios.txt	
-	grep "CNAME" logs/enumeracion/fierce.txt | awk '{print $1}' | tr ' ' ';' >> subdominios.txt
-	cp logs/enumeracion/fierce.txt  .vulnerabilidades/"$DOMINIO"_dns_transferenciaDNS.txt
+	grep "IN	A" logs/enumeracion/zonetransfer.txt | awk '{print $5,$1}' | tr ' ' ',' >> subdominios.txt	
+	grep "CNAME" logs/enumeracion/zonetransfer.txt | awk '{print $1}' | tr ' ' ',' >> subdominios.txt
+	cp logs/enumeracion/zonetransfer.txt  .vulnerabilidades/"$DOMINIO"_dns_transferenciaDNS.txt
 else	
 	#dnsenum	
 	grep "IN    A" logs/enumeracion/dnsenum.txt | awk '{print $1}' >> subdominios.txt	
@@ -311,7 +323,7 @@ for line in `cat subdominios2.txt`;
 do 		
 	#Si ya tiene ip identificada
 	if [[ ${line} == *";"*  ]];then 
-			line=`echo $line | tr ',' ';'` # Convertir , --> ;
+			line=`echo $line | tr ';' ','` # Convertir ; --> ,
 			echo $line >> subdominios3.txt
 	else
 		#descubrir a que ip resuelve
@@ -323,16 +335,16 @@ do
 		then								
 			ip=`echo $hostline| grep address|  cut -d " " -f4`
 			#echo "ip $ip"
-			echo "$ip;$line" >> subdominios3.txt
+			echo "$ip,$line" >> subdominios3.txt
 			
 			ip2=`echo $hostline| grep address|  cut -d " " -f8`
 			#echo "ip2 $ip2"
-			echo "$ip2;$line" >> subdominios3.txt
+			echo "$ip2,$line" >> subdominios3.txt
 		else
 			#Si tiene una ip
 			ip=`echo $hostline| grep address| cut -d " " -f4`			
 			if [ -n "$ip" ]; then
-				echo "$ip;$line" >> subdominios3.txt
+				echo "$ip,$line" >> subdominios3.txt
 			fi
 			
 		fi 															
@@ -345,13 +357,14 @@ sort subdominios3.txt | uniq -i > subdominios4.txt
 echo -e "$OKBLUE+ -- --=############ Obteniendo GeoInformacion de las IPs #########$RESET"
 while read line           
 do           
-    ip=$(echo  $line | cut -d ";" -f1)
-    subdominio=$(echo  $line | cut -d ";" -f2)    
+    ip=$(echo  $line | cut -d "," -f1)
+    subdominio=$(echo  $line | cut -d "," -f2)    
     echo "Obteniendo datos del subdominio: $subdominio"
-    geodata=$(geoip.pl $ip)
-    echo "$DOMINIO;$line;$geodata" >> importarMaltego/subdominios.csv
-    echo "$line;$geodata" >> .enumeracion/"$DOMINIO"_subdominios.txt
+    geodata=$(geoip.pl $ip | tr ',' ' ' | tr ';' ',')
+    echo "$DOMINIO,$line,$geodata" >> importarMaltego/subdominios.csv
+    echo "$line,$geodata" >> .enumeracion/"$DOMINIO"_subdominios.txt
     perl -i -pe 's/[^[:ascii:]]//g' .enumeracion/"$DOMINIO"_subdominios.txt #remover caracteres especiales
+    perl -i -pe 's/[^[:ascii:]]//g' importarMaltego/subdominios.csv
     
 done <subdominios4.txt 
 
@@ -360,7 +373,18 @@ insert_data
 rm cookies.txt 2>/dev/null
 ######################################################
 
+# verificar que subdominios tienen los protocolos http(s) habilitados
+echo "verificar que subdominios tienen los protocolos http(s) habilitados "
+sort -u subdominios2.txt | httprobe --prefer-https -t 20000 | tee -a web.txt
 
+while read url
+do     							
+	echo "Crawling $url "
+	Links_Crawler.py $url >> Links_Crawled.txt
+				
+done <web.txt
+
+#sed 's/txt:/;/g' 
 
 
 echo -e "$OKBLUE+ -- --=############ Recopilando URL indexadas ... #########$RESET" 
@@ -372,21 +396,29 @@ do
 	if [ $subdomain != $DOMINIO ];
 	then
 		echo -e "[+] Recopilando webs indexados: $subdomain"
-		google.pl -t "site:$subdomain" -o .enumeracion/"$subdomain"_web_indexado.txt -l logs/enumeracion/"$subdomain"_google.html 
+		google.pl -t "site:$subdomain" -o .enumeracion/"$subdomain"_web_indexado.txt -l logs/enumeracion/"$subdomain"_web_google.html 
 
 		sleep 60
 
 		echo -e "$OKBLUE+ -- --=############ Comprobando si google indexo páginas hackeadas ... #########$RESET" 
-		egrep -iq " Buy| Pharmacy | medication| cheap| porn| viagra|hacked|drug" logs/enumeracion/"$subdomain"_google.html
+		egrep -iq " Buy| Pharmacy | medication| cheap| porn| viagra|hacked|drug" logs/enumeracion/"$subdomain"_web_google.html
 		greprc=$?
 		if [[ $greprc -eq 0 ]] ; then			
 			echo -e "\t$OKRED[!] Redirección  a sitios de terceros detectado \n $RESET"
 			echo "Vulnerable site:$subdomain" > .vulnerabilidades/"$subdomain"_google_redirect.txt 	
 		fi		
-	fi
-
-				
+	fi		
 done <importarMaltego/subdominios.csv
+
+# Si hay el sitio web esta en dominio.com y no en www.dominio.com
+count=`ls .enumeracion/*_indexado.txt 2>/dev/null| wc -l`
+if [ "$count" -lt 1 ];then
+	google.pl -t "site:$DOMINIO" -o .enumeracion/"$DOMINIO"_web_indexado.txt -l logs/enumeracion/"$DOMINIO"_web_google.html 
+fi
+
+
+
+
 insert_data
 
 cat .enumeracion2/*_indexado.txt | cut -d "/" -f 3 | cut -d ":" -f1 | grep --color=never $DOMINIO | sort | uniq >> subdominios.txt
@@ -394,12 +426,17 @@ cat .enumeracion2/*_indexado.txt | cut -d "/" -f 3 | cut -d ":" -f1 | grep --col
 
 echo -e "$OKBLUE+ -- --=############ Probando SQL inyection. #########$RESET" 
 
-grep --color=never "\?" .enumeracion2/*_indexado.txt | sed 's/txt:/;/g' | cut -d ";" -f2 | sort | uniq > urlParametros.txt
+IFS=$'\n'  
+
+grep --color=never "\?" .enumeracion2/*_indexado.txt | sed 's/txt:/;/g' | cut -d ";" -f2 | sort | uniq > parametrosGET2.txt
+grep --color=never "\?" Links_Crawled.txt | grep $DOMINIO | sort | uniq >> parametrosGET2.txt
+sort parametrosGET2.txt | uniq >> parametrosGET.txt
+
 
 
 #  Eliminar URL repetidas
 current_uri=""
-for url in `cat urlParametros.txt`; do
+for url in `cat parametrosGET.txt`; do
 
 	uri=`echo $url | cut -f1 -d"?"`
 	param=`echo $line | cut -f2 -d"?"`
@@ -407,7 +444,7 @@ for url in `cat urlParametros.txt`; do
 	
 	if [ "$current_uri" != "$uri" ];
 	then
-		echo  "$url" >> urlParametrosUniq.txt
+		echo  "$url" >> parametrosGETUniq.txt
 		current_uri=$uri
 	fi
 	
@@ -415,22 +452,44 @@ done
 
 
 i=1
-for url in `cat urlParametrosUniq.txt`; do
-	echo  "$url" > logs/vulnerabilidades/"$DOMINIO"_"web$i"_sqlmap.txt
-	sqlmap -u "$url" --batch | tee -a logs/vulnerabilidades/"$DOMINIO"_"web$i"_sqlmap.txt
-	
+for url in `cat parametrosGETUniq.txt`; do
+	echo  "$url" | tee -a logs/vulnerabilidades/"$DOMINIO"_"web$i"_sqlmap.txt
+	sqlmap -u "$url" --batch --tamper=space2comment --threads 5 | tee -a logs/vulnerabilidades/"$DOMINIO"_"web$i"_sqlmap.txt
+	sqlmap -u "$url" --batch  --technique=B --risk=3  --threads 5 | tee -a logs/vulnerabilidades/"$DOMINIO"_"web$i"_sqlmapBlind.txt
+	 
+	#  Buscar SQLi
 	egrep -iq "is vulnerable" logs/vulnerabilidades/"$DOMINIO"_"web$i"_sqlmap.txt
 	greprc=$?
 	if [[ $greprc -eq 0 ]] ; then			
 		echo -e "\t$OKRED[!] Inyeccion SQL detectada \n $RESET"
-		echo "$url" > .vulnerabilidades/"$DOMINIO"_"web$i"_sqlmap.txt
-	fi	
+		echo "sqlmap -u \"$url\" --batch " > .vulnerabilidades/"$DOMINIO"_"web$i"_sqlmap.txt
+	fi
+	
+	#  Buscar SQLi blind
+	egrep -iq "is vulnerable" logs/vulnerabilidades/"$DOMINIO"_"web$i"_sqlmapBlind.txt
+	greprc=$?
+	if [[ $greprc -eq 0 ]] ; then			
+		echo -e "\t$OKRED[!] Inyeccion SQL detectada \n $RESET"
+		echo "sqlmap -u \"$url\" --batch  --technique=B --risk=3" > .vulnerabilidades/"$DOMINIO"_"web$i"_sqlmapBlind.txt
+	fi		
+	
+	
+	#  Buscar XSS
+	dalfox -b hahwul.xss.ht url $url | tee -a logs/vulnerabilidades/"$DOMINIO"_"web$i"_xss.txt
+	
+	egrep -iq "Triggered XSS Payload" logs/vulnerabilidades/"$DOMINIO"_"web$i"_xss.txt
+	greprc=$?
+	if [[ $greprc -eq 0 ]] ; then			
+		echo -e "\t$OKRED[!] XSS detectada \n $RESET"
+		echo "url $url" >  .vulnerabilidades/"$DOMINIO"_"web$i"_xss.txt
+		egrep -ia "Triggered XSS Payload" logs/vulnerabilidades/"$DOMINIO"_"web$i"_xss.txt >> .vulnerabilidades/"$DOMINIO"_"web$i"_xss.txt
+	fi		
 		
 	i=$(( i + 1 ))	
 					
 done
 
-
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 
 
 

@@ -10,6 +10,7 @@ a5
 a6
 a7
 aa
+covid19
 aaa
 aaaa
 aaron
@@ -1648,7 +1649,7 @@ correopqj
 correouno
 correoweb
 corresponda
-correspondan
+correspondencia
 corresponde
 correspondiente
 corriente
@@ -7723,6 +7724,7 @@ styx
 su
 sub
 subastas
+subasta
 subetutono
 subito
 submit

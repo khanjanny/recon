@@ -119,6 +119,24 @@ echo -e "${RED}[+]${BLUE} Instalando spoofcheck ${RESET}"
 sudo cp -R spoofcheck /usr/share/
 sudo cp hosts.txt /usr/share/wordlists/hosts.txt
 
+
+
+echo -e "${RED}[+]${BLUE} Instalando Links_Crawler.py ${RESET}"
+pip3 install nyawc 
+cp Links_Crawler.py /usr/bin/Links_Crawler.py 
+cp httprobe /usr/bin/httprobe
+chmod a+x /usr/bin/httprobe
+chmod a+ /usr/bin/Links_Crawler.py
+                                                                                                                                            
+
+
+echo -e "${RED}[+]${BLUE} Instalando dalfox ${RESET}"
+cd dalfox
+sudo go install
+sudo go build
+sudo ln -s ~/go/bin/dalfox /usr/bin/dalfox
+cd ..
+
 cd spoofcheck
 sudo pip install -r requirements.txt
 cd ..
