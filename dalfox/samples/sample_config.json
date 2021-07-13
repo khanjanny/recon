@@ -1,0 +1,17 @@
+{
+	"Header":"",
+	"Cookie":"",
+	"UniqParam":"",
+	"BlindURL":"",
+	"CustomPayloadFile":"",
+	"Data":"",
+	"UserAgent":"",
+	"OutputFile":"",
+	"Format":"",
+	"FoundAction":"",
+	"Proxy":"",
+	"Timeout": 30,
+	"Concurrence": 100,
+	"Delay": 30,
+	"OnlyDiscovery": false
+}

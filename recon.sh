@@ -9,12 +9,6 @@ OKGREEN='\033[92m'
 OKORANGE='\033[93m'
 RESET='\e[0m'
 
-# Buscar cada subdominio en google menos www
-
-#https://github.com/daudmalik06/ReconCat
-#https://github.com/mobrine-mob/M0B-tool-v2
-#https://github.com/franccesco/getaltname
-#https://github.com/twelvesec/gasmask
 
 # Cloud
 #https://github.com/MindPointGroup/cloudfrunt
@@ -27,7 +21,6 @@ RESET='\e[0m'
 #https://github.com/steverobbins/magescan
 #https://github.com/fgeek/pyfiscan
 #https://github.com/vortexau/mooscan
-#https://github.com/retirejs/retire.js/
 #https://github.com/UltimateHackers/XSStrike
 #https://whatcms.org/Content-Management-Systems
 #https://github.com/m4ll0k/WPSeku
@@ -45,8 +38,6 @@ RESET='\e[0m'
 #other
 #https://github.com/m4ll0k/iCloudBrutter
 #https://github.com/Moham3dRiahi/XBruteForcer
-#https://github.com/hc0d3r/sudohulk
-#https://github.com/floriankunushevci/aragog
 #https://github.com/mthbernardes/ipChecker
 #https://www.kitploit.com/2018/02/roxysploit-penetration-testing-suite.html
 #https://www.kitploit.com/2018/02/grouper-powershell-script-for-helping.html
@@ -186,17 +177,16 @@ rm /tmp/ns
 echo -e "\t[+] Iniciando Sublist3r ( Baidu, Yahoo, Google, Bing, Ask, Netcraft, DNSdumpster, Virustotal, ThreatCrowd, SSL Certificates, PassiveDNS) .."
 Sublist3r.sh -d $DOMINIO --output `pwd`/logs/enumeracion/Sublist3r.txt
 
+echo -e "\t[+] Iniciando subfinder (  alienvault, anubis, archiveis, binaryedge, bufferover, censys, certspotter, commoncrawl, crtsh, dnsdumpster, dnsdb, github, hackertarget rapiddns, riddler, robtex, securitytrails, shodan, sitedossier, sonarsearch, spyse, threatcrowd, threatminer, virustotal, waybackarchive .."
+subfinder -all -d $DOMINIO | tee -a logs/enumeracion/subfinder.txt
+# falta passivetotal, recon.dev , threatbook , urlscan, zoomeye
 
 echo -e "\t[+] Iniciando findomain ( Crtsh API, CertSpotter API, facebook) .."
+findomain --all-apis --target $DOMINIO > logs/enumeracion/findomain.txt
 
-
-if [[ $kernel == *"Nethunter"* ]]; then #NetHunter
-	echo -e "\t[+] Nethunter Detectado"
-	findomain --target $DOMINIO > logs/enumeracion/findomain.txt
-else
-	findomain --all-apis --target $DOMINIO > logs/enumeracion/findomain.txt
-fi
-
+echo -e "\t[+] Iniciando gsan ."
+gsan crtsh $DOMINIO --output logs/enumeracion/gsan-crtsh.txt 
+gsan scan $DOMINIO --output logs/enumeracion/gsan-scan.txt 
 
 
 
@@ -300,19 +290,26 @@ cat logs/enumeracion/Sublist3r.txt | grep --color=never $DOMINIO | cut -d ":" -f
 #  --> correo.siahcomibol.gob.bo
 cat logs/enumeracion/findomain.txt | egrep --color=never "\-\-|>>" |  awk '{print $2}' >> subdominios.txt
 
+# subfinder
+cat logs/enumeracion/subfinder.txt  >> subdominios.txt
+
+# gsan
+cat logs/enumeracion/gsan-crtsh.txt  >> subdominios.txt 
+cat logs/enumeracion/gsan-scan.txt  >> subdominios.txt
+
 #amass
 cat logs/enumeracion/amass.txt  | cut -d "]" -f 2 | sed "s/ //g" >> subdominios.txt
 
 # theHarvester y google
-cat logs/enumeracion/theHarvester_google.txt | grep --color=never $DOMINIO | egrep -v "empty|@|harvesting" | cut -d ":" -f1 >> subdominios.txt
-cat logs/enumeracion/theHarvester_bing.txt| grep --color=never $DOMINIO |egrep -v "empty|@|harvesting" | cut -d ":" -f1  >> subdominios.txt
+cat logs/enumeracion/theHarvester_google.txt | grep --color=never $DOMINIO | egrep -iv "target|empty|@|harvesting" | cut -d ":" -f1 >> subdominios.txt
+cat logs/enumeracion/theHarvester_bing.txt| grep --color=never $DOMINIO |egrep -iv "target|empty|@|harvesting" | cut -d ":" -f1  >> subdominios.txt
 
 ############################################
 
 sed -i "s/$DOMINIO\./$DOMINIO/g" subdominios.txt #Eliminar punto extra al final
 
 #filtrar dominios
-grep --color=never $DOMINIO subdominios.txt | egrep -iv '\--|Testing|Trying|TARGET|subDOMINIOs|DNS|\:\:|\*' | sort | uniq -i > subdominios2.txt
+egrep -iv --color=never '\--|Testing|Trying|TARGET|subDOMINIOs|DNS|\:\:|\*' subdominios.txt | sort | uniq -i > subdominios2.txt
 
 echo -e "\t[+] Iniciando subjack .."
 subjack -w subdominios2.txt -t 100 -timeout 30 -ssl -c /usr/share/lanscanner/fingerprints-domain.json -v 3 > logs/vulnerabilidades/"$DOMINIO"_dns_subjack.txt 
@@ -380,7 +377,7 @@ sort -u subdominios2.txt | httprobe --prefer-https -t 20000 | tee -a web.txt
 while read url
 do     							
 	echo "Crawling $url "
-	Links_Crawler.py $url >> Links_Crawled.txt
+	Links_Crawler.py $url 2>/dev/null >> Links_Crawled.txt
 				
 done <web.txt
 
@@ -391,7 +388,7 @@ echo -e "$OKBLUE+ -- --=############ Recopilando URL indexadas ... #########$RES
 
 while read line
 do     						
-	subdomain=`echo $line | cut -f3 -d";"`		
+	subdomain=`echo $line | cut -f3 -d","`		
 	
 	if [ $subdomain != $DOMINIO ];
 	then

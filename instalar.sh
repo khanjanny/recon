@@ -38,12 +38,14 @@ sudo cp grep.sh /usr/bin/
 sudo cp infoga.sh /usr/bin/
 sudo cp Sublist3r.sh /usr/bin/
 sudo cp ctfr.sh /usr/bin/
+sudo cp subfinder /usr/bin/
 sudo cp pymeta.sh /usr/bin/
 mkdir /usr/share/wordlists
 sudo cp hosts.txt /usr/share/wordlists/hosts.txt
 echo "xyz" > /usr/share/fierce/hosts.txt # erase host list
 
 sudo chmod a+x /usr/bin/recon.sh
+sudo chmod a+x /usr/bin/subfinder #64bits
 sudo chmod a+x /usr/bin/grep.sh
 sudo chmod a+x /usr/bin/ctfr.sh
 sudo chmod a+x /usr/bin/spoofcheck.sh 
@@ -90,6 +92,12 @@ cd ../
 echo -e "${RED}[+]${BLUE} Instalando Infoga ${RESET}"
 sudo cp -R Infoga /usr/share/
 
+echo -e "${RED}[+]${BLUE} Instalando S3scanner ${RESET}"
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+sudo pip3 install s3scanner 
+
 
 echo -e "${RED}[+]${BLUE} Instalando google search ${RESET}"
 git clone https://github.com/DanielTorres1/googlesearch
@@ -120,6 +128,9 @@ sudo cp -R spoofcheck /usr/share/
 sudo cp hosts.txt /usr/share/wordlists/hosts.txt
 
 
+echo -e "${RED}[+]${BLUE} Instalando gsan ${RESET}"
+sudo pip3 install --user gsan 
+ln -s ~/.local/bin/gsan /usr/bin/gsan
 
 echo -e "${RED}[+]${BLUE} Instalando Links_Crawler.py ${RESET}"
 pip3 install nyawc 
