@@ -27,7 +27,9 @@ RESET="\033[00m"       # Normal
 
 echo -e "${RED}[+]${BLUE} Instando de repositorio .. ${RESET}"
 
-sudo apt-get install -y fierce dnsenum cargo golang subjack sqlmap
+sudo apt-get install -y fierce dnsenum cargo golang subjack sqlmap libxml2-dev libxslt1-dev python3.9-full libssl-dev libffi-dev zlib1g-dev python3-pip
+
+
 
 echo -e "${RED}[+]${BLUE} Copiando ejecutables ${RESET}"
 
@@ -42,7 +44,6 @@ sudo cp subfinder /usr/bin/
 sudo cp pymeta.sh /usr/bin/
 mkdir /usr/share/wordlists
 sudo cp hosts.txt /usr/share/wordlists/hosts.txt
-echo "xyz" > /usr/share/fierce/hosts.txt # erase host list
 
 sudo chmod a+x /usr/bin/recon.sh
 sudo chmod a+x /usr/bin/subfinder #64bits
@@ -54,23 +55,23 @@ sudo chmod a+x /usr/bin/Sublist3r.sh
 sudo chmod a+x /usr/bin/pymeta.sh 
 sudo chmod a+x /usr/bin/get-geodata.sh
 
-kernel=`uname -a`
-if [[ $kernel == *"aarch64"* ]]; then #rasberry	
-	sudo cp findomain-aarch64 /usr/bin/findomain
-	sudo cp amass-arm64 /usr/bin/amass 
-else
+#kernel=`uname -a`
+#if [[ $kernel == *"aarch64"* ]]; then #rasberry	
+	#sudo cp findomain-aarch64 /usr/bin/findomain
+	#sudo cp amass-arm64 /usr/bin/amass 
+#else
 	sudo cp findomain-amd64 /usr/bin/findomain		
 	sudo cp amass-amd64 /usr/bin/amass 
-fi
+#fi
 
-if [[ $kernel == *"Nethunter"* ]]; then #rasberry	
-	which findomain >/dev/null
-	if [ $? -eq 1 ]
-	then
-		cargo install findomain
-		mv ~/.cargo/bin/findomain /usr/bin/findomain
-	fi		
-fi
+#if [[ $kernel == *"Nethunter"* ]]; then #rasberry	
+	#which findomain >/dev/null
+	#if [ $? -eq 1 ]
+	#then
+		#cargo install findomain
+		#mv ~/.cargo/bin/findomain /usr/bin/findomain
+	#fi		
+#fi
 
 
 sudo chmod a+x /usr/bin/findomain
@@ -125,11 +126,10 @@ ln -s ~/go/bin/subjack /usr/bin/subjack
 
 echo -e "${RED}[+]${BLUE} Instalando spoofcheck ${RESET}"
 sudo cp -R spoofcheck /usr/share/
-sudo cp hosts.txt /usr/share/wordlists/hosts.txt
 
 
 echo -e "${RED}[+]${BLUE} Instalando gsan ${RESET}"
-sudo pip3 install --user gsan 
+sudo pip3 install gsan
 ln -s ~/.local/bin/gsan /usr/bin/gsan
 
 echo -e "${RED}[+]${BLUE} Instalando Links_Crawler.py ${RESET}"
@@ -137,7 +137,7 @@ pip3 install nyawc
 cp Links_Crawler.py /usr/bin/Links_Crawler.py 
 cp httprobe /usr/bin/httprobe
 chmod a+x /usr/bin/httprobe
-chmod a+ /usr/bin/Links_Crawler.py
+chmod a+x /usr/bin/Links_Crawler.py
                                                                                                                                             
 
 
@@ -148,6 +148,7 @@ sudo go build
 sudo ln -s ~/go/bin/dalfox /usr/bin/dalfox
 cd ..
 
+echo -e "${RED}[+]${BLUE} spoofcheck ${RESET}"
 cd spoofcheck
 sudo pip install -r requirements.txt
 cd ..
