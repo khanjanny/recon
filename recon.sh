@@ -185,8 +185,8 @@ echo -e "\t[+] Iniciando findomain ( Crtsh API, CertSpotter API, facebook) .."
 findomain --all-apis --target $DOMINIO > logs/enumeracion/findomain.txt
 
 echo -e "\t[+] Iniciando gsan ."
-gsan crtsh $DOMINIO --output logs/enumeracion/gsan-crtsh.txt 
-gsan scan $DOMINIO --output logs/enumeracion/gsan-scan.txt 
+docker run -it gsan crtsh $DOMINIO --output logs/enumeracion/gsan-crtsh.txt 
+docker run -it gsan scan $DOMINIO --output logs/enumeracion/gsan-scan.txt 
 
 
 
@@ -377,7 +377,7 @@ sort -u subdominios2.txt | httprobe --prefer-https -t 20000 | tee -a web.txt
 while read url
 do     							
 	echo "Crawling $url "
-	Links_Crawler.py $url 2>/dev/null >> Links_Crawled.txt
+	docker run -it link_crawler $url 2>/dev/null >> Links_Crawled.txt
 				
 done <web.txt
 
@@ -473,6 +473,8 @@ for url in `cat parametrosGETUniq.txt`; do
 	
 	#  Buscar XSS
 	dalfox -b hahwul.xss.ht url $url | tee -a logs/vulnerabilidades/"$DOMINIO"_"web$i"_xss.txt
+	#https://z0id.xss.ht/
+	 
 	
 	egrep -iq "Triggered XSS Payload" logs/vulnerabilidades/"$DOMINIO"_"web$i"_xss.txt
 	greprc=$?

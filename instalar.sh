@@ -26,9 +26,17 @@ BOLD="\033[01;01m"     # Highlight
 RESET="\033[00m"       # Normal
 
 echo -e "${RED}[+]${BLUE} Instando de repositorio .. ${RESET}"
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian buster stable"
+sudo apt-get update
 
-sudo apt-get install -y fierce dnsenum cargo golang subjack sqlmap libxml2-dev libxslt1-dev python3.9-full libssl-dev libffi-dev zlib1g-dev python3-pip
+sudo apt-get install docker-ce docker-ce-cli containerd.io
 
+sudo apt-get install -y fierce dnsenum cargo golang subjack sqlmap libxml2-dev libxslt1-dev libssl-dev libffi-dev zlib1g-dev python3-pip apt-transport-https ca-certificates curl gnupg2 software-properties-common
+
+python3 -m pip install --upgrade pip
+
+echo -e "${RED}[+]${BLUE} Instalar docker ${RESET}"
+curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add 
 
 
 echo -e "${RED}[+]${BLUE} Copiando ejecutables ${RESET}"
@@ -129,15 +137,18 @@ sudo cp -R spoofcheck /usr/share/
 
 
 echo -e "${RED}[+]${BLUE} Instalando gsan ${RESET}"
-sudo pip3 install gsan
-ln -s ~/.local/bin/gsan /usr/bin/gsan
+cd gsan
+docker build -t gsan .
+cd ..
 
 echo -e "${RED}[+]${BLUE} Instalando Links_Crawler.py ${RESET}"
-pip3 install nyawc 
-cp Links_Crawler.py /usr/bin/Links_Crawler.py 
+cd Links_Crawler
+docker build -t link_crawler .
+cd ..
+
 cp httprobe /usr/bin/httprobe
 chmod a+x /usr/bin/httprobe
-chmod a+x /usr/bin/Links_Crawler.py
+
                                                                                                                                             
 
 
