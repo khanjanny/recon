@@ -25,18 +25,22 @@ BLUE="\033[01;34m"     # Heading
 BOLD="\033[01;01m"     # Highlight
 RESET="\033[00m"       # Normal
 
-echo -e "${RED}[+]${BLUE} Instando de repositorio .. ${RESET}"
-sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian buster stable"
-sudo apt-get update
-
-sudo apt-get install docker-ce docker-ce-cli containerd.io
-
-sudo apt-get install -y fierce dnsenum cargo golang subjack sqlmap libxml2-dev libxslt1-dev libssl-dev libffi-dev zlib1g-dev python3-pip apt-transport-https ca-certificates curl gnupg2 software-properties-common
-
-python3 -m pip install --upgrade pip
 
 echo -e "${RED}[+]${BLUE} Instalar docker ${RESET}"
 curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add 
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian buster stable"
+
+echo -e "${RED}[+]${BLUE} Instando de repositorio .. ${RESET}"
+sudo apt-get update
+sudo apt-get install -y fierce dnsenum cargo golang subjack sqlmap libxml2-dev libxslt1-dev libssl-dev libffi-dev zlib1g-dev python3-pip apt-transport-https ca-certificates curl gnupg2 software-properties-common docker-ce docker-ce-cli containerd.io python3-dev libfuzzy-dev ssdeep
+python3 -m pip install --upgrade pip
+
+
+
+echo -e "${RED}[+]${BLUE} Instalar GitGot ${RESET}"
+cd GitGot/
+pip3 install -r requirements.txt
+cd ..
 
 
 echo -e "${RED}[+]${BLUE} Copiando ejecutables ${RESET}"

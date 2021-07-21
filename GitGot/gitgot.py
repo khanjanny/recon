@@ -1,17 +1,24 @@
 #!/usr/bin/env python3
 
 import argparse
+import bs4
 import github
 import json
 import re
+import requests
 import sys
 import ssdeep
 import sre_constants
+import os
 import os.path
-
+import urllib.parse
+import pprint
 
 SIMILARITY_THRESHOLD = 65
-ACCESS_TOKEN = "45087acd905c0a3cd7bce3395511a0d7dc2b3635"
+ACCESS_TOKEN = "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"
+GITHUB_WHITESPACE = "\\.|,|:|;|/|\\\\|`|'|\"|=|\\*|!|\\?" \
+                    "|\\#|\\$|\\&|\\+|\\^|\\||\\~|<|>|\\(" \
+                    "|\\)|\\{|\\}|\\[|\\]| "
 
 
 class bcolors:
@@ -40,6 +47,8 @@ class State:
                  totalCount=0,
                  query=None,
                  logfile="",
+                 is_gist=False,
+                 line_numbers=False,
                  ):
         self.bad_users = bad_users
         self.bad_repos = bad_repos
@@ -51,9 +60,11 @@ class State:
         self.totalCount = totalCount
         self.query = query
         self.logfile = logfile
+        self.is_gist = is_gist
+        self.line_numbers = line_numbers
 
 
-def save_state(name, repositories, state):
+def save_state(name, state):
     filename = state.logfile.replace("log", "state")
     if name == "ratelimited":
         filename += ".ratelimited"
@@ -62,43 +73,63 @@ def save_state(name, repositories, state):
     print("Saved as [{}]".format(filename))
 
 
-def regex_search(checks, repo):
+def regex_search(checks, repo, print_lines):
     output = ""
-    for line in repo.decoded_content.splitlines():
-        for check in checks:
-            try:
-                line = line.decode('utf-8')
-            except AttributeError:
-                pass
+    lines = repo.decoded_content.splitlines()
 
+    for i in range(len(lines)):
+        line = lines[i]
+        try:
+            line = line.decode('utf-8')
+        except AttributeError:
+            pass
+
+        for check in checks:
             try:
                 (line, inst) = re.subn(
                     check,
                     bcolors.BOLD + bcolors.OKBLUE + r'\1' + bcolors.ENDC,
                     line)
                 if inst > 0:
-                    output += "\t" + line + "\n"
-                    print("\t", line)
+                    # Line number printing support
+                    line_str = ""
+                    if print_lines:
+                        line_str = bcolors.WARNING + str(i+1) + \
+                                   ":" + bcolors.ENDC
+
+                    output += line_str + "\t" + line + "\n"
+                    print(line_str + "\t" + line)
+
                     break
             except Exception as e:
-                print(e)
+                print(
+                    bcolors.FAIL + "ERROR: ", e, bcolors.ENDC,
+                    bcolors.WARNING, "\nCHECK: ", check, bcolors.ENDC,
+                    "\nLINE: ", line)
     print(bcolors.HEADER + "End of Matches" + bcolors.ENDC)
     return output
 
 
-def should_parse(repo, state):
-    if repo.repository.owner.login in state.bad_users:
+def should_parse(repo, state, is_gist=False):
+    owner_login = repo.owner.login if is_gist else repo.repository.owner.login
+    if owner_login in state.bad_users:
         print(bcolors.FAIL + "Failed check: Ignore User" + bcolors.ENDC)
         return False
-    if repo.repository.name in state.bad_repos:
+    if not is_gist and repo.repository.name in state.bad_repos:
         print(bcolors.FAIL + "Failed check: Ignore Repo" + bcolors.ENDC)
         return False
-    if repo.name in state.bad_files:
+    if not is_gist and repo.name in state.bad_files:
         print(bcolors.FAIL + "Failed check: Ignore File" + bcolors.ENDC)
         return False
 
     # Fuzzy Hash Comparison
     try:
+        if not is_gist:
+            # Temporary fix for PyGithub until fixed upstream (PyGithub#1178)
+            repo._url.value = repo._url.value.replace(
+                repo._path.value,
+                urllib.parse.quote(repo._path.value))
+
         candidate_sig = ssdeep.hash(repo.decoded_content)
         for sig in state.bad_signatures:
             similarity = ssdeep.compare(candidate_sig, sig)
@@ -109,42 +140,39 @@ def should_parse(repo, state):
                     "({}% Similarity)".format(similarity) +
                     bcolors.ENDC)
                 return False
-    except github.UnknownObjectException:
-        print(
-            bcolors.FAIL +
-            "API Error: File no longer exists on github.com" +
-            bcolors.ENDC)
-        return False
+    except github.GithubException as e:
+        print(bcolors.FAIL + "API ERROR: " + e + bcolors.ENDC)
     return True
 
 
 def print_handler(contents):
-        try:
-            contents = contents.decode('utf-8')
-        except AttributeError:
-            pass
-        finally:
-            print(contents)
-
+    try:
+        contents = contents.decode('utf-8')
+    except AttributeError:
+        pass
+    finally:
         print(contents)
 
+    print(contents)
 
-def input_handler(state):
-    return input(
-        bcolors.HEADER +
+
+def input_handler(state, is_gist):
+    prompt = bcolors.HEADER + \
         "(Result {}/{})".format(
             state.index +
             1,
-            state.totalCount if state.totalCount < 1000 else "1000+") +
-        "=== " + bcolors.ENDC +
-        "Ignore similar [c]ontents/" +
-        bcolors.OKGREEN + "[u]ser/" +
-        bcolors.OKBLUE + "[r]epo/" +
-        bcolors.WARNING + "[f]ilename" +
-        bcolors.HEADER +
-        ", [p]rint contents, [s]ave state, [a]dd to log, "
-        "search [/(findme)], [b]ack, [q]uit, next [<Enter>]===: " +
-        bcolors.ENDC)
+            state.totalCount if state.totalCount < 1000 else "1000+") + \
+        "=== " + bcolors.ENDC + \
+        "Ignore similar [c]ontents" + \
+        bcolors.OKGREEN + "/[u]ser"
+    prompt += "" if is_gist else \
+        bcolors.OKBLUE + "/[r]epo" + \
+        bcolors.WARNING + "/[f]ilename"
+    prompt += bcolors.HEADER + \
+        ", [p]rint contents, [s]ave state, [a]dd to log, " + \
+        "search [/(findme)], [b]ack, [q]uit, next [<Enter>]===: " + \
+        bcolors.ENDC
+    return input(prompt)
 
 
 def pagination_hack(repositories, state):
@@ -165,32 +193,33 @@ def regex_handler(choice, repo):
         return ""
     else:
         print(bcolors.HEADER + "Searching: " + choice[1:] + bcolors.ENDC)
-        return regex_search([choice[1:]], repo)
+        return regex_search([choice[1:]], repo, False)
 
 
-def ui_loop(repo, repositories, log_buf, state):
-    choice = input_handler(state)
+def ui_loop(repo, log_buf, state, is_gist=False):
+    choice = input_handler(state, is_gist)
 
     if choice == "c":
         state.bad_signatures.append(ssdeep.hash(repo.decoded_content))
     elif choice == "u":
-        state.bad_users.append(repo.repository.owner.login)
-    elif choice == "r":
+        state.bad_users.append(repo.owner.login if is_gist
+                               else repo.repository.owner.login)
+    elif choice == "r" and not is_gist:
         state.bad_repos.append(repo.repository.name)
-    elif choice == "f":
+    elif choice == "f" and not is_gist:
         state.bad_files.append(repo.name)
     elif choice == "p":
         print_handler(repo.decoded_content)
-        ui_loop(repo, repositories, log_buf, state)
+        ui_loop(repo, log_buf, state, is_gist)
     elif choice == "s":
-        save_state(state.query, repositories, state)
-        ui_loop(repo, repositories, log_buf, state)
+        save_state(state.query, state)
+        ui_loop(repo, log_buf, state, is_gist)
     elif choice == "a":
         with open(state.logfile, "a") as fd:
             fd.write(log_buf)
     elif choice.startswith("/"):
         log_buf += regex_handler(choice, repo)
-        ui_loop(repo, repositories, log_buf, state)
+        ui_loop(repo, log_buf, state, is_gist)
     elif choice == "b":
         if state.index - 1 < state.lastInitIndex:
             print(
@@ -198,21 +227,107 @@ def ui_loop(repo, repositories, log_buf, state):
                 "Can't go backwards past restore point "
                 "because of rate-limiting/API limitations" +
                 bcolors.ENDC)
-            ui_loop(repo, repositories, log_buf, state)
+            ui_loop(repo, log_buf, state, is_gist)
         else:
             state.index -= 2
     elif choice == "q":
         sys.exit(0)
 
 
-def api_request_loop(state):
-    g = github.Github(ACCESS_TOKEN)
+def gist_fetch(query, page_idx, total_items=1000):
+    gist_url = "https://gist.github.com/search?utf8=%E2%9C%93&q={}&p={}"
+    query = urllib.parse.quote(query)
+    gists = []
 
+    try:
+        resp = requests.get(gist_url.format(query, page_idx))
+        soup = bs4.BeautifulSoup(resp.text, 'html.parser')
+        total_items = min(total_items, int(
+            [x.text.split()[0] for x in soup.find_all('h3')
+                if "gist results" in x.text][0].replace(',', '')))
+        gists = [x.get("href") for x in soup.findAll(
+                            "a", class_="link-overlay")]
+    except IndexError:
+        return {"data": None, "total_items": 0}
+
+    return {"data": gists, "total_items": total_items}
+
+
+def gist_search(g, state):
+    gists = []
+    if state.index > 0:
+        gists = [None] * (state.index//10) * 10
+    else:
+        gist_data = gist_fetch(state.query, 0)
+        gists = gist_data["data"]
+        state.totalCount = gist_data["total_items"]
+
+    if state.totalCount == 0:
+        print("No results found for query: {}".format(state.query))
+    else:
+        print(bcolors.CLEAR)
+
+    i = state.index
+    stepBack = False
+    while i < state.totalCount:
+        while True:
+            state.index = i
+
+            # Manual gist paginator
+            if i >= len(gists):
+                new_gists = gist_fetch(state.query, i // 10)["data"]
+                if not new_gists:
+                    try:
+                        print(
+                            bcolors.FAIL +
+                            "RateLimitException: "
+                            "Please wait about 30 seconds before you "
+                            "try again, or exit (CTRL-C).\n " +
+                            bcolors.ENDC)
+                        save_state("ratelimited", state)
+                        input("Press enter to try again...")
+                        continue
+                    except KeyboardInterrupt:
+                        sys.exit(1)
+                gists.extend(new_gists)
+
+            gist = g.get_gist(gists[i].split("/")[-1])
+            gist.decoded_content = "\n".join(
+                [gist_file.content for _, gist_file in gist.files.items()])
+
+            log_buf = "https://gist.github.com/" + \
+                bcolors.OKGREEN + gist.owner.login + "/" + \
+                bcolors.ENDC + \
+                gist.id
+            print(log_buf)
+            log_buf = "\n" + log_buf + "\n"
+
+            if should_parse(gist, state, is_gist=True) or stepBack:
+                stepBack = False
+                log_buf += regex_search(state.checks, gist, state.line_numbers)
+                ui_loop(gist, log_buf, state, is_gist=True)
+                if state.index < i:
+                    i = state.index
+                    stepBack = True
+                print(bcolors.CLEAR)
+            else:
+                print("Skipping...")
+            i += 1
+            break
+
+
+def github_search(g, state):
     print("Collecting Github Search API data...")
     try:
         repositories = g.search_code(state.query)
-
         state.totalCount = repositories.totalCount
+        print (state.totalCount)
+        print (type(repositories))
+        
+        #pprint.pprint(repositories) 
+        #for repo213 in repositories:
+            #pprint.pprint(repo213) 
+        
 
         # Hack to backfill PaginatedList with garbage to avoid ratelimiting on
         # restore, library fetches in 30 counts
@@ -231,10 +346,23 @@ def api_request_loop(state):
 
                     # Manually fill Paginator to avoid ratelimiting on restore
                     repositories = pagination_hack(repositories, state)
+                    #for repo12 in repositories:
+                     #   pprint.pprint(repo12)
 
                     repo = repositories[i]
+                    print (repositories)
+                    sys.exit(1)
 
-                    log_buf = "https://github.com/" + \
+
+                    # Setting domain/scheme name for log output
+                    scheme = g._Github__requester._Requester__scheme
+                    domain = g._Github__requester._Requester__hostname
+
+                    if(domain == "api.github.com"):
+                        domain = "github.com"
+
+                    log_buf = scheme + "://" + \
+                        domain + "/" + \
                         bcolors.OKGREEN + repo.repository.owner.login + "/" + \
                         bcolors.OKBLUE + repo.repository.name + "/blob" + \
                         bcolors.ENDC + \
@@ -245,8 +373,9 @@ def api_request_loop(state):
 
                     if should_parse(repo, state) or stepBack:
                         stepBack = False
-                        log_buf += regex_search(state.checks, repo)
-                        ui_loop(repo, repositories, log_buf, state)
+                        log_buf += regex_search(state.checks, repo,
+                                                state.line_numbers)
+                        ui_loop(repo, log_buf, state)
                         if state.index < i:
                             i = state.index
                             stepBack = True
@@ -263,7 +392,7 @@ def api_request_loop(state):
                             "Please wait about 30 seconds before you "
                             "try again, or exit (CTRL-C).\n " +
                             bcolors.ENDC)
-                        save_state("ratelimited", repositories, state)
+                        save_state("ratelimited", state)
                         input("Press enter to try again...")
                     except KeyboardInterrupt:
                         sys.exit(1)
@@ -273,7 +402,7 @@ def api_request_loop(state):
             "RateLimitException: "
             "Please wait about 30 seconds before you try again.\n" +
             bcolors.ENDC)
-        save_state("ratelimited", repositories, state)
+        save_state("ratelimited", state)
         sys.exit(-1)
 
 
@@ -293,12 +422,21 @@ def regex_validator(args, state):
                 sys.exit(-1)
             state.checks.append(line)
 
-    escaped_query = state.query.replace("(", "\\(").replace(")", "\\)")
-    state.checks.append("(?i)(" + escaped_query + ")")
+    split = []
+    if not (state.query[0] == "\"" and state.query[-1] == "\""):
+        split = re.split(GITHUB_WHITESPACE, state.query)
+
+    for part in [state.query] + split:
+        if part:
+            escaped_query = re.escape(part) if split else \
+                part.replace("\"", "")
+            state.checks.append("(?i)(" + escaped_query + ")")
     return state
 
 
 def main():
+    global ACCESS_TOKEN
+
     if sys.version_info < (3, 0):
         sys.stdout.write("Sorry, requires Python 3.x, not Python 2.x\n")
         sys.exit(1)
@@ -316,11 +454,20 @@ def main():
         type=str,
         required=True)
     parser.add_argument(
+        "--line-numbers",
+        help="Print line numbers",
+        action="store_true")
+    parser.add_argument(
+        "--gist",
+        help="Search GitHub Gists instead",
+        action="store_true",
+        required=False)
+    parser.add_argument(
         "-f",
         "--checks",
         help="List of RegEx checks (checks/default.list)",
         type=str,
-        default="checks/default.list")
+        default=os.path.dirname(os.path.realpath(__file__)) + "/checks/default.list")
     parser.add_argument(
         "-o",
         "--output",
@@ -331,12 +478,20 @@ def main():
         "--recover",
         help="Name of recovery file",
         type=str)
+    parser.add_argument(
+        "-u",
+        "--url",
+        help="URL of self-hosted GitHub instance (e.g., https://git.example.com)",
+        type=str)
     args = parser.parse_args()
 
     state = State()
     state.index = 0
 
     if ACCESS_TOKEN == "<NO-PERMISSION-GITHUB-TOKEN-HERE>":
+        ACCESS_TOKEN = os.environ.get("GITHUB_ACCESS_TOKEN", "")
+
+    if not ACCESS_TOKEN:
         print("Github Access token not set")
         sys.exit(1)
 
@@ -351,11 +506,16 @@ def main():
         state.query = args.query
         state.index = 0
 
+    state.is_gist = state.is_gist or (args.gist and not state.is_gist)
+    state.line_numbers = state.line_numbers or \
+        (args.line_numbers and not state.line_numbers)
+
     if args.output:
         state.logfile = args.output
     else:
         state.logfile = "logs/" + \
-            re.sub(r"[,.;@#?!&$/\\]+\ *", "_", args.query) + ".log"
+            re.sub(r"[,.;@#?!&$/\\'\"]+\ *", "_", args.query)
+        state.logfile += "_gist.log" if state.is_gist else ".log"
 
     # Create default directories if they don't exist
     try:
@@ -367,7 +527,17 @@ def main():
     # Load/Validate RegEx Checks
     state = regex_validator(args, state)
 
-    api_request_loop(state)
+    if args.url:
+        g = github.Github(base_url=args.url + "/api/v3",
+                          login_or_token=ACCESS_TOKEN)
+    else:
+        g = github.Github(ACCESS_TOKEN)
+
+
+    if state.is_gist:
+        gist_search(g, state)
+    else:
+        github_search(g, state)
 
 
 if __name__ == "__main__":
