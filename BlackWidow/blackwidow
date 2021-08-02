@@ -42,10 +42,10 @@ def readlinks (url):
   phones_saved = open(save_dir + domain + "_" + port + "-phones.txt","a")
   subdomains_saved = open(save_dir + domain + "_" + port + "-subdomains.txt","a")
 
-  print ("")
-  print (OKGREEN + "==================================================================================================" + RESET)
-  print (OKGREEN + url)
-  print (OKGREEN + "==================================================================================================" + RESET)
+  #print ("")
+  #print (OKGREEN + "==================================================================================================" + RESET)
+  #print (OKGREEN + url)
+  #print (OKGREEN + "==================================================================================================" + RESET)
   for form in soup.find_all('form'):
     #print (OKBLUE + "[+] Extracting form values...")
     #print ("__________________________________________________________________________________________________" + OKORANGE)
@@ -61,7 +61,7 @@ def readlinks (url):
       parsed_uri = urlparse(link.get('href'))
       linkdomain = '{uri.netloc}'.format(uri=parsed_uri)
       if (domain != linkdomain) and (linkdomain != "") and (domain in linkdomain):
-        print (COLOR1 + "[+] Sub-domain found! " + linkdomain + " " + RESET)
+        #print (COLOR1 + "[+] Sub-domain found! " + linkdomain + " " + RESET)
         subdomains_saved.write(linkdomain + "\n")
       # IF LINK STARTS WITH HTTP
       if link.get('href')[:4] == "http":
@@ -69,12 +69,12 @@ def readlinks (url):
         if domain in link.get('href'):
           # IF URL IS DYNAMIC
           if "?" in link.get('href'):
-            print (OKRED + "[+] Dynamic URL found! " + link.get('href') + " " + RESET)
+            #print (OKRED + "[+] Dynamic URL found! " + link.get('href') + " " + RESET)
             urls.write(link.get('href') + "\n")
             urls_saved.write(link.get('href') + "\n")
             dynamic_saved.write(link.get('href') + "\n")
           else:
-            print (link.get('href'))
+            #print (link.get('href'))
             urls.write(link.get('href') + "\n")
             urls_saved.write(link.get('href') + "\n")
         # EXTERNAL LINK FOUND
@@ -86,10 +86,10 @@ def readlinks (url):
         #print (COLOR2 + "[i] External link found! " + link.get('href') + " " + RESET)
       # IF URL IS DYNAMIC
       elif "?" in link.get('href'):
-        print (OKRED + "[+] Dynamic URL found! " + url + "/" + link.get('href') + " " + RESET)
-        urls.write(url + "/" + link.get('href') + "\n")
-        urls_saved.write(url + "/" + link.get('href') + "\n")
-        dynamic_saved.write(url + "/" + link.get('href') + "\n")
+#        print (OKRED + "[+] Dynamic URL found! " + url + " " + RESET)
+        urls.write(url + "\n")
+        urls_saved.write(url + "\n")
+        dynamic_saved.write(url + "\n")
       # DOM BASED LINK
       #elif link.get('href')[:1] == "#":
       #print (OKBLUE + "[i] DOM based link found! " + link.get('href') + " " + RESET)
@@ -97,20 +97,20 @@ def readlinks (url):
       elif link.get('href')[:4] == "tel:":
         s = link.get('href')
         phonenum = s.split(':')[1]
-        print (OKORANGE + "[i] Telephone # found! " + phonenum + " " + RESET)
+        #print (OKORANGE + "[i] Telephone # found! " + phonenum + " " + RESET)
         phones_saved.write(phonenum + "\n")
       # EMAIL
       elif link.get('href')[:7] == "mailto:":
         s = link.get('href')
         email = s.split(':')[1]
-        print (OKORANGE + "[i] Email found! " + email + " " + RESET)
+        #print (OKORANGE + "[i] Email found! " + email + " " + RESET)
         emails_saved.write(email + "\n")
       # ELSE NORMAL LINK FOUND
       else:
-        print (url + "/" + link.get('href'))
-        urls.write(url + "/" + link.get('href') + "\n")
-        urls_saved.write(url + "/" + link.get('href') + "\n")
-  print (OKGREEN + "__________________________________________________________________________________________________" + RESET)
+        #print (url + "/" + link.get('href'))
+        urls.write(url + "\n")
+        urls_saved.write(url + "\n")
+  #print (OKGREEN + "__________________________________________________________________________________________________" + RESET)
 
 def readfile():
   filename = "/tmp/" + domain + "_" + port + "-urls.txt"
@@ -153,37 +153,37 @@ def exit_handler():
   os.system('sort -u ' + save_dir + domain + "_" + port + '-emails.txt > ' + save_dir + domain + "_" + port + '-emails-sorted.txt 2>/dev/null')
   os.system('sort -u ' + save_dir + domain + "_" + port + '-phones.txt > ' + save_dir + domain + "_" + port + '-phones-sorted.txt 2>/dev/null')
 
-  logo()
-  print (OKGREEN + "[+] URL's Discovered: \n" + save_dir + domain + "_" + port + "-urls-sorted.txt" + RESET)
-  print (OKGREEN + "__________________________________________________________________________________________________" + RESET)
+  #logo()
+  #print (OKGREEN + "[+] URL's Discovered: \n" + save_dir + domain + "_" + port + "-urls-sorted.txt" + RESET)
+  #print (OKGREEN + "__________________________________________________________________________________________________" + RESET)
   os.system('cat ' + save_dir + domain + "_" + port + '-urls-sorted.txt')
-  print (RESET)
-  print (OKGREEN + "[+] Dynamic URL's Discovered: \n" + save_dir + domain + "_" + port + "-dynamic-sorted.txt" + RESET)
-  print (OKGREEN + "__________________________________________________________________________________________________" + RESET)
+  #print (RESET)
+  #print (OKGREEN + "[+] Dynamic URL's Discovered: \n" + save_dir + domain + "_" + port + "-dynamic-sorted.txt" + RESET)
+  #print (OKGREEN + "__________________________________________________________________________________________________" + RESET)
   os.system('cat ' + save_dir + domain + "_" + port + '-dynamic-sorted.txt')
-  print (RESET)
-  print (OKGREEN + "[+] Form URL's Discovered: \n" + save_dir + domain + "_" + port + "-forms-sorted.txt" + RESET)
-  print (OKGREEN + "__________________________________________________________________________________________________" + RESET)
+  #print (RESET)
+  #print (OKGREEN + "[+] Form URL's Discovered: \n" + save_dir + domain + "_" + port + "-forms-sorted.txt" + RESET)
+  #print (OKGREEN + "__________________________________________________________________________________________________" + RESET)
   os.system('cat ' + save_dir + domain + "_" + port + '-forms-sorted.txt')
-  print (RESET)
-  print (OKGREEN + "[+] Unique Dynamic Parameters Discovered: \n" + save_dir + domain + "_" + port + "-dynamic-unique.txt" + RESET)
-  print (OKGREEN + "__________________________________________________________________________________________________" + RESET)
-  os.system('cat ' + save_dir + domain + "_" + port + '-dynamic-unique.txt')
-  print (RESET)
-  print (OKGREEN + "[+] Sub-domains Discovered: \n" + save_dir + domain + "_" + port + "-subdomains-sorted.txt" + RESET)
-  print (OKGREEN + "__________________________________________________________________________________________________" + RESET)
-  os.system('cat ' + save_dir + domain + "_" + port + '-subdomains-sorted.txt')
-  print (RESET)
-  print (OKGREEN + "[+] Emails Discovered: \n" + save_dir + domain + "_" + port + "-emails-sorted.txt" + RESET)
-  print (OKGREEN + "__________________________________________________________________________________________________" + RESET)
-  os.system('cat ' + save_dir + domain + "_" + port + '-emails-sorted.txt')
-  print (RESET)
-  print (OKGREEN + "[+] Phones Discovered: \n" + save_dir + domain + "_" + port + "-phones-sorted.txt" + RESET)
-  print (OKGREEN + "__________________________________________________________________________________________________" + RESET)
-  os.system('cat ' + save_dir + domain + "_" + port + '-phones-sorted.txt')
-  print (RESET)
-  print (OKRED + "[+] Loot Saved To: \n" + save_dir + RESET)
-  print (OKRED + "__________________________________________________________________________________________________" + RESET)
+  #print (RESET)
+  #print (OKGREEN + "[+] Unique Dynamic Parameters Discovered: \n" + save_dir + domain + "_" + port + "-dynamic-unique.txt" + RESET)
+  #print (OKGREEN + "__________________________________________________________________________________________________" + RESET)
+  #os.system('cat ' + save_dir + domain + "_" + port + '-dynamic-unique.txt')
+  #print (RESET)
+  #print (OKGREEN + "[+] Sub-domains Discovered: \n" + save_dir + domain + "_" + port + "-subdomains-sorted.txt" + RESET)
+  #print (OKGREEN + "__________________________________________________________________________________________________" + RESET)
+  #os.system('cat ' + save_dir + domain + "_" + port + '-subdomains-sorted.txt')
+  #print (RESET)
+  #print (OKGREEN + "[+] Emails Discovered: \n" + save_dir + domain + "_" + port + "-emails-sorted.txt" + RESET)
+  #print (OKGREEN + "__________________________________________________________________________________________________" + RESET)
+  #os.system('cat ' + save_dir + domain + "_" + port + '-emails-sorted.txt')
+  #print (RESET)
+  #print (OKGREEN + "[+] Phones Discovered: \n" + save_dir + domain + "_" + port + "-phones-sorted.txt" + RESET)
+  #print (OKGREEN + "__________________________________________________________________________________________________" + RESET)
+  #os.system('cat ' + save_dir + domain + "_" + port + '-phones-sorted.txt')
+  #print (RESET)
+  #print (OKRED + "[+] Loot Saved To: \n" + save_dir + RESET)
+  #print (OKRED + "__________________________________________________________________________________________________" + RESET)
   print (RESET)
 
   os.system('rm -f ' + save_dir + domain + "_" + port + '-dynamic.txt')
@@ -199,7 +199,7 @@ def exit_handler():
   else:
     pass
 
-logo()
+#logo()
 globalURL = "globalBadness"
 if len(sys.argv) < 2:
   print ("You need to specify a URL to scan. Use --help for all options.")
@@ -232,7 +232,7 @@ else:
 
   parser.add_option('-v', '--verbose',
                     action="store", dest="verbose",
-                    help="Set verbose mode ON", default="y")
+                    help="Set verbose mode ON", default="n")
 
   options, args = parser.parse_args()
   target = str(options.url)

@@ -32,8 +32,68 @@ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debi
 
 echo -e "${RED}[+]${BLUE} Instando de repositorio .. ${RESET}"
 sudo apt-get update
-sudo apt-get install -y fierce dnsenum cargo golang subjack sqlmap libxml2-dev libxslt1-dev libssl-dev libffi-dev zlib1g-dev python3-pip apt-transport-https ca-certificates curl gnupg2 software-properties-common docker-ce docker-ce-cli containerd.io python3-dev libfuzzy-dev ssdeep
+sudo apt-get install -y fierce dnsenum cargo pipenv golang subjack sqlmap libxml2-dev libxslt1-dev libssl-dev libffi-dev zlib1g-dev python3-pip apt-transport-https ca-certificates curl gnupg2 software-properties-common docker-ce docker-ce-cli containerd.io python3-dev libfuzzy-dev ssdeep
 python3 -m pip install --upgrade pip
+sudo pip install shodan colored
+
+
+echo -e "${GREEN} [+] Copiando archivos de configuracion ${RESET}" 
+cp config.yaml ~/.config/subfinder/config.yaml
+cp amass-config.ini /usr/share/amass-config.ini
+cp llave-google.json /usr/share/llave-google.json
+
+
+echo -e "${GREEN} [+] Instalando assetfinder ${RESET}" 
+go get -u github.com/tomnomnom/assetfinder
+sudo cp ~/go/bin/assetfinder /usr/bin/assetfinder 
+chmod a+x /usr/bin/assetfinder
+echo "export FB_APP_ID=737293516835506" >> ~/.zshrc
+echo "export dcb89858c1420a79e9578b687f4b4a77" >> ~/.zshrc
+
+
+echo -e "${GREEN} [+] Instalando waybackurls ${RESET}" 
+go get github.com/tomnomnom/waybackurls
+sudo cp ~/go/bin/waybackurls /usr/bin/waybackurls 
+chmod a+x /usr/bin/waybackurls
+
+echo -e "${GREEN} [+] Instalando massdns ${RESET}" 
+cd massdns
+make
+cd ..
+
+echo -e "${GREEN} [+] Instalando github-subdomains ${RESET}" 
+go get -u github.com/gwen001/github-subdomains
+sudo cp ~/go/bin/github-subdomains /usr/bin/github-subdomains 
+chmod a+x /usr/bin/github-subdomains
+
+
+
+echo -e "${GREEN} [+] Instalando assets-from-spf ${RESET}" 
+pip2 install click ipwhois
+sudo cp -R assets-from-spf /usr/share/ 
+
+echo -e "${GREEN} [+] Instalando EyeWitness ${RESET}" 
+cd EyeWitness
+sudo bash setup.sh
+cd ../
+sudo cp -R EyeWitness /usr/share/ 
+
+
+echo -e "${GREEN} [+] Instalando HTTPX ${RESET}" 
+GO111MODULE=on go get -v github.com/projectdiscovery/httpx/cmd/httpx
+sudo cp ~/go/bin/httpx /usr/bin/httpx 
+chmod a+x /usr/bin/httpx
+
+
+echo -e "${RED}[+]${BLUE} Copiar ejecutables ${RESET}"
+cp -r recon /usr/bin
+chmod a+x /usr/bin/recon/*
+echo export PATH="$PATH:/usr/bin/recon" >> ~/.bashrc
+echo export PATH="$PATH:/usr/bin/recon" >> ~/.zshrc
+
+
+echo -e "${RED}[+]${BLUE} Copiar configuracion de  subfinder ${RESET}"
+mkdir -p ~/.config/subfinder/
 
 
 
@@ -46,52 +106,14 @@ cd ..
 echo -e "${RED}[+]${BLUE} Copiando ejecutables ${RESET}"
 
 sudo cp recon.sh /usr/bin/
-sudo cp get-geodata.sh /usr/bin/
-sudo cp spoofcheck.sh /usr/bin/
-sudo cp grep.sh /usr/bin/
-sudo cp infoga.sh /usr/bin/
-sudo cp Sublist3r.sh /usr/bin/
-sudo cp ctfr.sh /usr/bin/
-sudo cp subfinder /usr/bin/
-sudo cp pymeta.sh /usr/bin/
 mkdir /usr/share/wordlists
 sudo cp hosts.txt /usr/share/wordlists/hosts.txt
-
+sudo cp names.txt /usr/share/wordlists/names.txt
+sudo cp resolvers.txt /usr/share/wordlists/resolvers.txt
 sudo chmod a+x /usr/bin/recon.sh
-sudo chmod a+x /usr/bin/subfinder #64bits
-sudo chmod a+x /usr/bin/grep.sh
-sudo chmod a+x /usr/bin/ctfr.sh
-sudo chmod a+x /usr/bin/spoofcheck.sh 
-sudo chmod a+x /usr/bin/infoga.sh 
-sudo chmod a+x /usr/bin/Sublist3r.sh
-sudo chmod a+x /usr/bin/pymeta.sh 
-sudo chmod a+x /usr/bin/get-geodata.sh
-
-#kernel=`uname -a`
-#if [[ $kernel == *"aarch64"* ]]; then #rasberry	
-	#sudo cp findomain-aarch64 /usr/bin/findomain
-	#sudo cp amass-arm64 /usr/bin/amass 
-#else
-	sudo cp findomain-amd64 /usr/bin/findomain		
-	sudo cp amass-amd64 /usr/bin/amass 
-#fi
-
-#if [[ $kernel == *"Nethunter"* ]]; then #rasberry	
-	#which findomain >/dev/null
-	#if [ $? -eq 1 ]
-	#then
-		#cargo install findomain
-		#mv ~/.cargo/bin/findomain /usr/bin/findomain
-	#fi		
-#fi
-
-
-sudo chmod a+x /usr/bin/findomain
 
 echo -e "${RED}[+]${BLUE} Instalando librerias de python ${RESET}"
-sudo pip install xlrd
-sudo pip install emailprotectionslib
-sudo pip install tldextract
+sudo pip install xlrd emailprotectionslib tldextract
 echo ""
 
 
@@ -125,6 +147,9 @@ bash setup.sh
 cd  ..
 sudo cp -R pymeta /usr/share/
 
+echo -e "${RED}[+]${BLUE} Instalando bucket-namegen ${RESET}"
+sudo cp -R bucket-namegen /usr/share/
+
 echo -e "${RED}[+]${BLUE} Instalando Sublist3r ${RESET}"
 sudo cp -R Sublist3r /usr/share/
 cd Sublist3r
@@ -137,7 +162,14 @@ ln -s ~/go/bin/subjack /usr/bin/subjack
 
 
 echo -e "${RED}[+]${BLUE} Instalando spoofcheck ${RESET}"
-sudo cp -R spoofcheck /usr/share/
+cd  spoofcheck 
+docker build -t spoofcheck . 
+cd ..
+
+echo -e "${RED}[+]${BLUE} Instalando Infoga ${RESET}"
+cd  Infoga 
+docker build -t Infoga . 
+cd ..
 
 
 echo -e "${RED}[+]${BLUE} Instalando gsan ${RESET}"
@@ -145,15 +177,11 @@ cd gsan
 docker build -t gsan .
 cd ..
 
-echo -e "${RED}[+]${BLUE} Instalando Links_Crawler.py ${RESET}"
-cd Links_Crawler
-docker build -t link_crawler .
+echo -e "${RED}[+]${BLUE} Instalando BlackWidow ${RESET}"
+cd BlackWidow
+bash install.sh
 cd ..
-
-cp httprobe /usr/bin/httprobe
-chmod a+x /usr/bin/httprobe
-
-                                                                                                                                            
+                                                                                                                                     
 
 
 echo -e "${RED}[+]${BLUE} Instalando dalfox ${RESET}"

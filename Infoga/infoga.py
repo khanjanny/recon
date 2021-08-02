@@ -1,207 +1,111 @@
-#!/usr/bin/env python 
+#!/usr/bin/env python
 # -*- coding:utf-8 -*- 
-#############################################
-# Infoga - Email Information Gathering      #
-# Coded by Momo Outaadi (M4ll0k) (C) 2017   #
-#############################################
 #
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-#(at your option) any later version.
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# @name   : Infoga - Email OSINT
+# @url    : http://github.com/m4ll0k
+# @author : Momo Outaadi (m4ll0k)
 
-from lib import Net 
-from lib import Parser
-from lib import Colors 
-from lib import Info 
-from lib import Printer 
-from lxml.html import fromstring
-from recon import *
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
-import json
-import os 
 import sys
-import getopt 
-import socket
-import re
-import urllib3
-import urlparse
-import requests
+import json
+import getopt
+# infoga.lib
+from lib.check import *
+from lib.output import *
+from lib.banner import Banner
+# infoga.recon
+from recon.ask import *
+from recon.baidu import *
+from recon.bing import *
+from recon.pgp import *
+from recon.yahoo import *
+from recon.dogpile import *
+from recon.exalead import *
+from recon.google import *
+from recon.mailtester import *
+from lib.output import PPrint
 
+class infoga(object):
+	""" infoga """
+	def __init__(self):
+		self.verbose = 1
+		self.domain = None
+		self.breach = False
+		self.source = "all"
+		self.listEmail = []
+		self.report = None
 
-class Infoga(object):
-	### Infoga Main ###
-	def __init__(self,argv):
-		self.argv = argv
-		self.c = Colors.MyColors()
-		self.i =  Info.MyInfo()
-		self.AllEmails = []
+	def search(self,module):
+		emails = module.search()
+		if emails != ([] or None):
+			for email in emails:
+				if email not in self.listEmail:
+					self.listEmail.append(email)
+			if self.verbose in (1,2,3):
+				info('Found %s emails in %s'%(len(emails),
+					module.__class__.__name__))
 
-	def Banner(self):
-		print self.c.red(1)+"    __        ___                     "+self.c.end()
-		print self.c.red(1)+"   |__.-----.'  _.-----.-----.---.-.  "+self.c.end()
-		print self.c.red(1)+"   |  |     |   _|  _  |  _  |  _  |  "+self.c.end()
-		print self.c.red(1)+"   |__|__|__|__| |_____|___  |___._|  "+self.c.end()
-		print self.c.red(1)+"                       |_____|        "+self.c.end()
-		print self.c.white(0)+"--=[ %s - %s                        "%(self.i.Name(),self.i.Disc())+self.c.end()
-		print self.c.white(0)+"--=[ %s - \"%s\"                    "%(self.i.Vers(),self.i.CodeName())+self.c.end()
-		print self.c.white(0)+"--=[ %s                             "%(self.i.Author())+self.c.end()
-		print self.c.white(0)+"--=[ %s                             "%(self.i.Git())+self.c.end()
-		print ""
-
-	def Usage(self):
-		path = ((os.path.basename(sys.argv[0])))
-		self.Banner()
-		print "Usage: %s -t [target] -s [source]\n"%(path)
-		print "\t-t --target\tDomain to search"
-		print "\t-s --source\tData source: [all,google,bing,yahoo,pgp]"
-		print "\t-i --info\tGet email informations"
-		print "\t--update\tUpdate tool"
-		print "\t--version\tShow version"
-		print "\t--help\t\tShow this help and exit\n"
-		print "Examples:"
-		print "\t %s --target site.com --source all"%(path)
-		print "\t %s --target site.com --source [google,bing,...]"%(path)
-		print "\t %s --info emailtest@site.com"%(path)
-		print "";sys.exit()
-
-	def GetInfo(self):
-		for x in range(len(self.AllEmails)):
-			Printer.MyPrinter().mprint("Email: %s"%(self.AllEmails[x]))
-			
-
-	def Google(self):
-		Printer.MyPrinter().nprint("Searching \"%s\" in Google..."%(self.CheckUrl(self.Keyword)))
-		Search = GoogleSearch.Googlesearch(self.CheckUrl(self.Keyword))
-		Search.Process()
-		Emails = Search.GetEmail()
-		self.AllEmails.extend(Emails)
-
-	def Bing(self):
-		Printer.MyPrinter().nprint("Searching \"%s\" in Bing..."%(self.CheckUrl(self.Keyword)))
-		Search = BingSearch.Bingsearch(self.CheckUrl(self.Keyword))
-		Search.Process()
-		Emails = Search.GetEmail()
-		self.AllEmails.extend(Emails)
-
-	def Yahoo(self):
-		Printer.MyPrinter().nprint("Searching \"%s\" in Yahoo..."%(self.CheckUrl(self.Keyword)))
-		Search = YahooSearch.Yahoosearch(self.CheckUrl(self.Keyword))
-		Search.Process()
-		Emails = Search.GetEmail()
-		self.AllEmails.extend(Emails)
-
-	def Pgp(self):
-		Printer.MyPrinter().nprint("Searching \"%s\" in Pgp..."%(self.CheckUrl(self.Keyword)))
-		#Search = PgpSearch.Pgpsearch(self.CheckUrl(self.Keyword))
-		#Search.Process()
-		#Emails = Search.GetEmail()
-		#self.AllEmails.extend(Emails)
-
-	def All(self):
-		self.Google()
-		self.Bing()
-		self.Yahoo()
-		self.Pgp()
-
-	def CheckUrl(self,url):
-		o = urlparse.urlsplit(url)
-		scheme = o.scheme 
-		netloc = o.netloc
-		path = o.path
-		if scheme not in ["http","https",""]:
-			self.Banner()
-			sys.exit(Printer.MyPrinter().eprint("Scheme %s not supported!"%(scheme)))
-		if netloc == "":
-			if path.startswith("www."):
-				return path.split("www.")[1]
-			else:
-				return path
+	def engine(self,target,engine):
+		engine_list = [ Ask(target),Baidu(target),Bing(target),Dogpile(target),
+						Exalead(target),Google(target),PGP(target),Yahoo(target)
+						]
+		if engine == 'all':
+			for e in engine_list: self.search(e)
 		else:
-			if netloc.startswith("www."):
-				return netloc.split("www.")[1]
-			else:
-				return netloc
+			for e in engine_list:
+				if e.__class__.__name__.lower() in engine:self.search(e)
 
-	def Getinfo(self,email):
-		Printer.MyPrinter().mprint("Email: %s"%(email))
-		
-		sys.exit()
+	def tester(self,email):
+		return MailTester(email).search()
 
-	def CheckEmail(self,email):
-		if "@" not in email:
-			self.Banner()
-			sys.exit(Printer.MyPrinter().eprint("Invalid email!! Check your email"))
-		self.Banner()
-		self.Getinfo(email)
-
-	def CheckVersion(self):
-		sys.exit(self.i.Vers())
-
-	def CheckUpdate(self):
-		self.Banner()
-		if ".git" not in os.listdir(os.getcwd()):
-			sys.exit(Printer.MyPrinter().eprint("Git directory not found, please download Infoga from Github repository"))
-		elif ".git" in os.listdir(os.getcwd()):
-			Printer.MyPrinter().nprint("Updateting...")
-			os.chdir(os.getcwd()+"/.git")
-			os.system("git pull")
-			sys.exit()
-
-	def Start(self):
-		if len(sys.argv) < 2:
-			self.Usage()
+	def main(self):
+		if len(sys.argv) <= 2:Banner().usage(True)
 		try:
-			opts,args = getopt.getopt(self.argv,"t:s:i:",["target=","source=","info=","update","version","help"])
-		except getopt.GetoptError:
-			self.Usage()
-		for opt,arg in opts:
-			if opt in ("-t","--target"):
-				self.Keyword = arg
-				self.CheckUrl(self.Keyword)
-			elif opt in ("-s","--source"):
-				self.engine = arg 
-				if self.engine not in ("all","google","bing","yahoo","pgp"):
-					self.Banner()
-					sys.exit(Printer.MyPrinter().eprint("Invalid search engine!! Try with: all,google, bing, yahoo or pgp"))
-			elif opt in ("-i","--info"):
-				self.email = arg 
-				self.CheckEmail(self.email)
-			elif opt == "--help":
-				self.Usage()
-			elif opt == "--version":
-				self.CheckVersion()
-			elif opt == "--update":
-				self.CheckUpdate()
+			opts,args = getopt.getopt(sys.argv[1:],'d:s:i:v:r:hb',
+				['domain=','source=','info=','breach','verbose=','help','report='])
+		except Exception as e:
+			Banner().usage(True)
+		Banner().banner()
+		for o,a in opts:
+			if o in ('-d','--domain'):self.domain=checkTarget(a)
+			if o in ('-v','--verbose'):self.verbose=checkVerbose(a)
+			if o in ('-s','--source'):self.source=checkSource(a)
+			if o in ('-b','--breach'):self.breach=True
+			if o in ('-r','--report'):self.report= open(a,'w') if a != '' else None
+			if o in ('-i','--info'):
+				self.listEmail.append(checkEmail(a))
+				plus('Searching for: %s'%a)
+			if o in ('-h','--help'):Banner().usage(True)
+		### start ####
+		if self.domain != ('' or None):
+			if self.source == 'ask':self.engine(self.domain,'ask')
+			if self.source == 'all':self.engine(self.domain,'all')
+			if self.source == 'google':self.engine(self.domain,'google')
+			if self.source == 'baidu':self.engine(self.domain,'baidu')
+			if self.source == 'bing':self.engine(self.domain,'bing')
+			if self.source == 'dogpile':self.engine(self.domain,'dogpile')
+			if self.source == 'exalead':self.engine(self.domain,'exalead')
+			if self.source == 'pgp':self.engine(self.domain,'pgp')
+			if self.source == 'yahoo':self.engine(self.domain,'yahoo')
 
-		self.Banner()
-		Netcraft.netcraft(self.CheckUrl(self.Keyword)).Run()
-		if self.engine == "google":
-			self.Google()
-		if self.engine == "bing":
-			self.Bing()
-		if self.engine == "yahoo":
-			self.Yahoo()
-		if self.engine == "pgp":
-			self.Pgp()
-		if self.engine == "all":
-			self.All()
-		if self.AllEmails == []:
-			sys.exit(Printer.MyPrinter().eprint("Not found email!"))
-		else:
-			self.AllEmails = sorted(set(self.AllEmails))
-			Printer.MyPrinter().nprint("All email found: ")
-			self.GetInfo()
-
+		if self.listEmail == [] or self.listEmail == None:
+			sys.exit(warn('Not found emails... :(')) 
+		
+		for email in self.listEmail:
+			ip = self.tester(email)
+			if ip != ([] or None):
+				ips = []
+				for i in ip:
+					if i not in ips:ips.append(i)
+				if len(ips) >=2:
+					info("Found multiple ip for this email...")
+				PPrint(ips,email,self.verbose,self.breach,self.report).output()
+			else:more('Not found any informations for %s'%(email))
+		if self.report != None:
+			info('File saved in: '+self.report.name)
+			self.report.close()
+		# end
 if __name__ == "__main__":
 	try:
-		Infoga(sys.argv[1:]).Start()
-	except KeyboardInterrupt,err:
-		sys.exit(Printer.MyPrinter().eprint("Ctr+c...:("))
+		infoga().main()
+	except KeyboardInterrupt as e:
+		sys.exit(warn('Exiting...'))

@@ -8,7 +8,7 @@ import emailprotectionslib.dmarc as dmarclib
 import emailprotectionslib.spf as spflib
 import logging
 
-from libs.PrettyOutput import output_good, output_bad, \
+from PrettyOutput import output_good, output_bad, \
     output_info, output_error, output_indifferent
 
 

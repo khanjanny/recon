@@ -1,5 +1,0 @@
-######## passivetotal ######
-######## recon ######
-######## threatbook ######
-######## urlscan ######
-######## zoomeye ######

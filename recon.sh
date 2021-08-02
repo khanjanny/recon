@@ -10,22 +10,12 @@ OKORANGE='\033[93m'
 RESET='\e[0m'
 
 
-# Cloud
-#https://github.com/MindPointGroup/cloudfrunt
-#https://github.com/glen-mac/goGetBucket
-#https://github.com/yehgdotnet/S3Scanner
-
 #WEB
 #https://github.com/MrSqar-Ye/BadMod
 #https://www.kitploit.com/2018/04/jcs-joomla_vulnerability-component.html
 #https://github.com/steverobbins/magescan
 #https://github.com/fgeek/pyfiscan
 #https://github.com/vortexau/mooscan
-#https://github.com/UltimateHackers/XSStrike
-#https://whatcms.org/Content-Management-Systems
-#https://github.com/m4ll0k/WPSeku
-#https://github.com/Jamalc0m/wphunter
-#https://github.com/m4ll0k/WAScan
 
 
 # mobile app
@@ -105,8 +95,6 @@ cd $DOMINIO
 mkdir .arp
 mkdir .escaneos
 mkdir .datos
-mkdir .nmap
-mkdir .nmap_1000p
 mkdir .nmap_banners
 mkdir .banners
 mkdir .banners2
@@ -114,7 +102,6 @@ mkdir .enumeracion
 mkdir .enumeracion2 
 mkdir .vulnerabilidades
 mkdir .vulnerabilidades2 
-mkdir .masscan
 mkdir reportes
 mkdir servicios
 mkdir .tmp
@@ -146,20 +133,23 @@ echo -e "\t[+] Iniciando dnsrecon (DNS info) .."
 dnsrecon -d $DOMINIO --lifetime 60  > logs/enumeracion/dnsrecon.txt &
 
 echo -e "\t[+] Iniciando Amass"
-amass enum -src -min-for-recursive 2 -d $DOMINIO -config /usr/share/lanscanner/amass-config.ini > logs/enumeracion/amass.txt &
+amass enum -src -min-for-recursive 2 -d $DOMINIO -config /usr/share/amass-config.ini > logs/enumeracion/amass2.txt &
 
 echo -e "\t[+] Intentando Volcado de zona .."
+dig ns $DOMINIO +short | tee -a logs/enumeracion/dig.txt
 
-
-dig ns $DOMINIO +short > /tmp/ns
-
-while read line
+while read nameserver
 do
-        zone=$(dig  @${line} $DOMINIO. axfr)        
+        zone=$(dig  @${nameserver} $DOMINIO. axfr)        
         if echo "$zone" | grep -Ei '(Transfer failed|failed|network unreachable|error|connection reset)' &>/dev/null ; then
 			#echo -e "${red}zone Transfer ${none}${blue}[Failed]${none}${red} in ${line} Server${none}"
 			echo -e "\t[+] Iniciando dnsenum (bruteforce DNS ) .."
-			dnsenum $DOMINIO --nocolor -f /usr/share/wordlists/hosts.txt --noreverse --threads 3 > logs/enumeracion/dnsenum.txt 2>/dev/null &
+			#dnsenum $DOMINIO --nocolor -f /usr/share/wordlists/hosts.txt --noreverse --threads 3 | tee -a logs/enumeracion/gobuster.txt 2>/dev/null &			
+			#Generando subdominios mediante google
+			commonspeak2 --project subs-321713 --credentials llave-google.json subdomains -o /usr/share/wordlists/subdomains-commonspeak2.txt
+			cat /usr/share/wordlists/hosts.txt /usr/share/wordlists/subdomains-commonspeak2.txt | sort | uniq >/usr/share/wordlists/hosts-all.txt			
+			gobuster dns -d $DOMINIO -w /usr/share/wordlists/hosts-all.txt | tee -a logs/enumeracion/gobuster.txt 2>/dev/null &
+						
         else
 			echo -e "$OKRED \t  [!] Volcado de zona detectado !! $RESET"		
 			
@@ -167,15 +157,17 @@ do
 			echo "zonetransfer successful" >> logs/enumeracion/zonetransfer.txt			
         fi
         echo "$zone" >> logs/enumeracion/zonetransfer.txt
-done < /tmp/ns
-rm /tmp/ns
+done < logs/enumeracion/dig.txt
+#rm /tmp/ns
 
-
-
+echo -e "\t[+] generando subdominios con subbrute y dnsgen"
+subbrute.py /usr/share/wordlists/names.txt $DOMINIO | massdns -r /usr/share/wordlists/resolvers.txt -t A -o S -w logs/enumeracion/subbrute.txt 2> logs/enumeracion/subbrute2.txt
+echo $DOMINIO | dnsgen - | massdns -r /usr/share/wordlists/resolvers.txt -t A -o S > logs/enumeracion/dnsgen.txt 2> logs/enumeracion/dnsgen2.txt
 
 
 echo -e "\t[+] Iniciando Sublist3r ( Baidu, Yahoo, Google, Bing, Ask, Netcraft, DNSdumpster, Virustotal, ThreatCrowd, SSL Certificates, PassiveDNS) .."
-Sublist3r.sh -d $DOMINIO --output `pwd`/logs/enumeracion/Sublist3r.txt
+Sublist3r.sh -d $DOMINIO | grep --color=never $DOMINIO | tee -a `pwd`/logs/enumeracion/Sublist3r2.txt
+cat logs/enumeracion/Sublist3r2.txt | cut -d ":" -f1 | grep -vi "enumerating" | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g" > logs/enumeracion/Sublist3r.txt
 
 echo -e "\t[+] Iniciando subfinder (  alienvault, anubis, archiveis, binaryedge, bufferover, censys, certspotter, commoncrawl, crtsh, dnsdumpster, dnsdb, github, hackertarget rapiddns, riddler, robtex, securitytrails, shodan, sitedossier, sonarsearch, spyse, threatcrowd, threatminer, virustotal, waybackarchive .."
 subfinder -all -d $DOMINIO | tee -a logs/enumeracion/subfinder.txt
@@ -184,9 +176,14 @@ subfinder -all -d $DOMINIO | tee -a logs/enumeracion/subfinder.txt
 echo -e "\t[+] Iniciando findomain ( Crtsh API, CertSpotter API, facebook) .."
 findomain --all-apis --target $DOMINIO > logs/enumeracion/findomain.txt
 
+
+echo -e "\t[+] Iniciando assetfinder .."
+assetfinder $DOMINIO > logs/enumeracion/assetfinder.txt
+
 echo -e "\t[+] Iniciando gsan ."
-docker run -it gsan crtsh $DOMINIO --output logs/enumeracion/gsan-crtsh.txt 
-docker run -it gsan scan $DOMINIO --output logs/enumeracion/gsan-scan.txt 
+docker run -it gsan crtsh $DOMINIO | tee -a logs/enumeracion/gsan-crtsh2.txt
+cat logs/enumeracion/gsan-crtsh2.txt | grep '32m' | awk '{print $2}' | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g" > logs/enumeracion/gsan-crtsh.txt
+
 
 
 
@@ -204,10 +201,7 @@ theHarvester -d $DOMINIO -b bing > logs/enumeracion/theHarvester_bing.txt 2>/dev
 
 
 echo -e "\t[+] Iniciando infoga .."
-
-infoga.sh -t $DOMINIO -s all > logs/enumeracion/infoga2.txt 2>/dev/null
-sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g" logs/enumeracion/infoga2.txt > logs/enumeracion/infoga.txt
-rm logs/enumeracion/infoga2.txt 
+#docker run infoga --domain $DOMINIO -s all | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g" | tee -a logs/enumeracion/infoga.txt 2>/dev/null &
 
 #################
 
@@ -215,14 +209,13 @@ rm logs/enumeracion/infoga2.txt
 
 echo -e "$OKBLUE+ -- --=############ Probando si se puede spoofear el dominio... #########$RESET"
 
-spoofcheck.sh $DOMINIO > logs/vulnerabilidades/"$DOMINIO"_dns_spoof.txt
+docker run -it spoofcheck $DOMINIO | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g"  | tee -a logs/vulnerabilidades/"$DOMINIO"_dns_spoof.txt
 egrep -iq "Spoofing possible" logs/vulnerabilidades/"$DOMINIO"_dns_spoof.txt
 greprc=$?
 if [[ $greprc -eq 0 ]] ; then			
 	cp logs/vulnerabilidades/"$DOMINIO"_dns_spoof.txt .vulnerabilidades/"$DOMINIO"_dns_spoof.txt		
 fi
-echo -e "$OKBLUE+ -- --=############ Recopilando informacion ... #########$RESET"
-insert_data
+#insert_data
 ######## ###
 
 
@@ -239,7 +232,7 @@ insert_data
 
 ####### wait to finish ########
   while true; do
-	dnsenum_instances=$((`ps aux | egrep "dnsenum|amass" | wc -l` - 1)) 
+	dnsenum_instances=$((`ps aux | egrep "dnsenum|amass|infoga" | wc -l` - 1)) 
   if [ "$dnsenum_instances" -gt 0 ]
 	then
 		echo "Todavia hay escaneos de dnsenum o amass activos ($dnsenum_instances)"  
@@ -253,15 +246,17 @@ insert_data
 ######## extraer correos ###########
 cat logs/enumeracion/theHarvester_google.txt | grep --color=never @ | egrep -v "edge-security|Connection timed out" >> .enumeracion/"$DOMINIO"_correos.txt
 cat logs/enumeracion/theHarvester_bing.txt | grep --color=never @ | egrep -v "edge-security|Connection timed out" >> .enumeracion/"$DOMINIO"_correos.txt
-cat logs/enumeracion/infoga.txt | grep --color=never "correo:" | cut -d " " -f3 >> .enumeracion/"$DOMINIO"_correos.txt
+#cat logs/enumeracion/infoga.txt | grep -i --color=never "email:" | awk '{print $3}' >> .enumeracion/"$DOMINIO"_correos.txt
+
+
 
 # dar formato para importar a maltego
-lines=`wc -l .enumeracion/"$DOMINIO"_correos.txt | cut -d " " -f1`
-perl -E "say \"$DOMINIO\n\" x $lines" > DOMINIO.txt # file with the DOMINIO (n times)
-sed -i '$ d' DOMINIO.txt # delete last line
-paste -d ',' DOMINIO.txt .enumeracion/"$DOMINIO"_correos.txt > importarMaltego/correos1.csv 
-cat importarMaltego/correos1.csv  | sort | uniq > importarMaltego/correos.csv 
-rm importarMaltego/correos1.csv DOMINIO.txt
+#lines=`wc -l .enumeracion/"$DOMINIO"_correos.txt | cut -d " " -f1`
+#perl -E "say \"$DOMINIO\n\" x $lines" > DOMINIO.txt # file with the DOMINIO (n times)
+#sed -i '$ d' DOMINIO.txt # delete last line
+#paste -d ',' DOMINIO.txt .enumeracion/"$DOMINIO"_correos.txt > importarMaltego/correos1.csv 
+#cat importarMaltego/correos1.csv  | sort | uniq > importarMaltego/correos.csv 
+#rm importarMaltego/correos1.csv DOMINIO.txt
 #####################################
 	  
 ######## extraer subdominios ###########
@@ -275,16 +270,15 @@ if [[ $greprc -eq 0 ]] ; then
 	grep "CNAME" logs/enumeracion/zonetransfer.txt | awk '{print $1}' | tr ' ' ',' >> subdominios.txt
 	cp logs/enumeracion/zonetransfer.txt  .vulnerabilidades/"$DOMINIO"_dns_transferenciaDNS.txt
 else	
-	#dnsenum	
-	grep "IN    A" logs/enumeracion/dnsenum.txt | awk '{print $1}' >> subdominios.txt	
-	grep "CNAME" logs/enumeracion/dnsenum.txt | awk '{print $1}' >> subdominios.txt
+	#dnsenum		
+	grep "Found" logs/enumeracion/gobuster.txt | awk '{print $2}' >> subdominios.txt
 
 fi
 
 
 # Sublist3r
 #www.comibol.gob.bo
-cat logs/enumeracion/Sublist3r.txt | grep --color=never $DOMINIO | cut -d ":" -f1 >> subdominios.txt
+cat logs/enumeracion/Sublist3r.txt  >> subdominios.txt
 
 # findomain
 #  --> correo.siahcomibol.gob.bo
@@ -293,35 +287,62 @@ cat logs/enumeracion/findomain.txt | egrep --color=never "\-\-|>>" |  awk '{prin
 # subfinder
 cat logs/enumeracion/subfinder.txt  >> subdominios.txt
 
+# assetfinder
+cat logs/enumeracion/assetfinder.txt >> subdominios.txt
+
+# subbrute
+cat logs/enumeracion/subbrute.txt| awk '{print $1}' | xargs -n1 host | grep --color=never "has address" | awk '{print $1}' >> subdominios.txt
+
+# dnsgen
+cat logs/enumeracion/dnsgen.txt| awk '{print $1}' | xargs -n1 host | grep --color=never "has address" | awk '{print $1}' >> subdominios.txt
+
 # gsan
 cat logs/enumeracion/gsan-crtsh.txt  >> subdominios.txt 
-cat logs/enumeracion/gsan-scan.txt  >> subdominios.txt
+#cat logs/enumeracion/gsan-scan.txt  >> subdominios.txt
 
 #amass
-cat logs/enumeracion/amass.txt  | cut -d "]" -f 2 | sed "s/ //g" >> subdominios.txt
+cat logs/enumeracion/amass2.txt  | cut -d "]" -f 2 | sed "s/ //g" >>  logs/enumeracion/amass.txt
+cat logs/enumeracion/amass.txt >> subdominios.txt
 
 # theHarvester y google
 cat logs/enumeracion/theHarvester_google.txt | grep --color=never $DOMINIO | egrep -iv "target|empty|@|harvesting" | cut -d ":" -f1 >> subdominios.txt
 cat logs/enumeracion/theHarvester_bing.txt| grep --color=never $DOMINIO |egrep -iv "target|empty|@|harvesting" | cut -d ":" -f1  >> subdominios.txt
 
+
+echo -e "$OKBLUE+ -- --=############ Buscando mediante DNS reverse #########$RESET"
+grep --color=never "\/24" logs/enumeracion/gobuster.txt | sort | uniq > logs/enumeracion/"$DOMINIO"_dnsenum_net.txt
+cat logs/enumeracion/"$DOMINIO"_dnsenum_net.txt | xargs -n1 prips | hakrevdns > logs/enumeracion/"$DOMINIO"_dns_hakrevdns.txt
+grep --color=never $DOMINIO logs/enumeracion/"$DOMINIO"_dns_hakrevdns.txt |  awk '{print $2}' >> subdominios.txt
 ############################################
 
 sed -i "s/$DOMINIO\./$DOMINIO/g" subdominios.txt #Eliminar punto extra al final
 
 #filtrar dominios
-egrep -iv --color=never '\--|Testing|Trying|TARGET|subDOMINIOs|DNS|\:\:|\*' subdominios.txt | sort | uniq -i > subdominios2.txt
+egrep -iv --color=never '\--|Testing|Trying|TARGET|subDOMINIOs|DNS|\:\:|\*' subdominios.txt | sort | uniq -i > solo_subdominios.txt
 
-echo -e "\t[+] Iniciando subjack .."
-subjack -w subdominios2.txt -t 100 -timeout 30 -ssl -c /usr/share/lanscanner/fingerprints-domain.json -v 3 > logs/vulnerabilidades/"$DOMINIO"_dns_subjack.txt 
+
+echo -e "\t$OKBLUE[+] Iniciando subjack .. $RESET"
+subjack -w solo_subdominios.txt -t 100 -timeout 30 -ssl -c /usr/share/lanscanner/fingerprints-domain.json -v 3 > logs/vulnerabilidades/"$DOMINIO"_dns_subjack.txt 
+
+
+echo -e "\t$OKBLUE[+] Iniciando altdns .. $RESET"
+#limpiar subdominios que no resuelven
+cat solo_subdominios.txt | xargs -n1 host | grep --color=never "has address" | awk '{print $1}' > solo_subdominios_validos.txt
+docker run  -v $(pwd):/home:rw -it altdns -i /home/solo_subdominios_validos.txt -o /home/alter-domains.txt -w /words.txt -r -s /home/altdns.txt
+cat /home/altdns.txt .enumeracion/"$DOMINIO"_dns_altdns.txt
+
+
+#Verificar subdominios vulnerables
 grep -v "Not Vulnerable" logs/vulnerabilidades/"$DOMINIO"_dns_subjack.txt  > .vulnerabilidades/"$DOMINIO"_dns_subjack.txt 
 
 
-for line in `cat subdominios2.txt`;
+echo -e "\t$OKBLUE[+] Resolviendo dominios $RESET"
+for line in `cat solo_subdominios.txt`;
 do 		
 	#Si ya tiene ip identificada
 	if [[ ${line} == *";"*  ]];then 
 			line=`echo $line | tr ';' ','` # Convertir ; --> ,
-			echo $line >> subdominios3.txt
+			echo $line >> ip_subdominio.txt
 	else
 		#descubrir a que ip resuelve
 		hostline=`host $line | egrep -v "alias|IPv6"`
@@ -332,79 +353,158 @@ do
 		then								
 			ip=`echo $hostline| grep address|  cut -d " " -f4`
 			#echo "ip $ip"
-			echo "$ip,$line" >> subdominios3.txt
+			echo "$ip,$line" >> ip_subdominio.txt
 			
 			ip2=`echo $hostline| grep address|  cut -d " " -f8`
 			#echo "ip2 $ip2"
-			echo "$ip2,$line" >> subdominios3.txt
+			echo "$ip2,$line" >> ip_subdominio.txt
 		else
 			#Si tiene una ip
 			ip=`echo $hostline| grep address| cut -d " " -f4`			
 			if [ -n "$ip" ]; then
-				echo "$ip,$line" >> subdominios3.txt
+				echo "$ip,$line" >> ip_subdominio.txt
 			fi
 			
 		fi 															
 	fi		
 done
 
-sort subdominios3.txt | uniq -i > subdominios4.txt 
-#rm subdominios.txt subdominios2.txt subdominios3.txt
+sort ip_subdominio.txt | uniq -i > ip_subdominios_uniq.txt
+#rm subdominios.txt solo_subdominios.txt ip_subdominio.txt
+
+echo -e "$OKBLUE+ -- --=############ Obteniendo Informacion shodan #########$RESET"
+shodan_eye.py -k $DOMINIO | tee -a logs/enumeracion/shodan.txt
+grep --color=never "IP " logs/enumeracion/shodan.txt |  awk '{print $2}' > .enumeracion/"$DOMINIO"_shodan_ip.txt
+
+echo -e "$OKBLUE+ -- --=############ Obteniendo Informacion de SPF #########$RESET"
+assets-from-spf.sh $DOMINIO | tee -a logs/enumeracion/assets-from-spf.txt
+cat logs/enumeracion/assets-from-spf.txt .enumeracion/"$DOMINIO"_spf_ip.txt
+
+
 
 echo -e "$OKBLUE+ -- --=############ Obteniendo GeoInformacion de las IPs #########$RESET"
+
+# de los subdominios identificados
 while read line           
 do           
     ip=$(echo  $line | cut -d "," -f1)
     subdominio=$(echo  $line | cut -d "," -f2)    
     echo "Obteniendo datos del subdominio: $subdominio"
-    geodata=$(geoip.pl $ip | tr ',' ' ' | tr ';' ',')
-    echo "$DOMINIO,$line,$geodata" >> importarMaltego/subdominios.csv
-    echo "$line,$geodata" >> .enumeracion/"$DOMINIO"_subdominios.txt
-    perl -i -pe 's/[^[:ascii:]]//g' .enumeracion/"$DOMINIO"_subdominios.txt #remover caracteres especiales
+    geodata=$(geoip.pl $ip s| tr ';' ',')
+    echo "$DOMINIO,$subdominio,$ip,$geodata" >> importarMaltego/subdominios.csv
+    #echo "$ip,$subdominio,$geodata" >> .enumeracion/"$DOMINIO"_subdominios.txt
+    #perl -i -pe 's/[^[:ascii:]]//g' .enumeracion/"$DOMINIO"_subdominios.txt #remover caracteres especiales
     perl -i -pe 's/[^[:ascii:]]//g' importarMaltego/subdominios.csv
     
-done <subdominios4.txt 
+done <ip_subdominios_uniq.txt
 
-#rm subdominios4.txt 
-insert_data
+
+cat .enumeracion/"$DOMINIO"_spf_ip.txt .enumeracion/"$DOMINIO"_shodan_ip.txt | sort | uniq > extra_ip.txt
+
+# de las IPs descubiertas por shodan y SPF
+while read ip           
+do                   
+
+   grep -qi "$ip"  importarMaltego/subdominios.csv
+   greprc=$?
+   if [[ $greprc -eq 0 ]];then 			    
+	 echo "La ip $ip ya fue identificada"
+   else
+      echo "Obteniendo datos de la ip: $ip"
+      geodata=$(geoip.pl $ip | tr ',' ' ' | tr ';' ',')
+      echo "$DOMINIO,,$ip,$geodata" >> importarMaltego/subdominios.csv       
+      perl -i -pe 's/[^[:ascii:]]//g' importarMaltego/subdominios.csv    
+   fi
+							   
+done <extra_ip.txt
+
+
+#rm ip_subdominios_uniq.txt
+#insert_data
 rm cookies.txt 2>/dev/null
 ######################################################
 
+
+
+
+echo -e "$OKBLUE+ -- --=############ Obteniendo Informacion la deep web #########$RESET"
+/etc/init.d/tor start
+onionsearch "$DOMINIO" --proxy 127.0.0.1:9050 --output logs/enumeracion/"$DOMINIO"_deep_web.txt
+cp logs/enumeracion/"$DOMINIO"_deep_web.txt .enumeracion/"$DOMINIO"_deep_web.txt
+
+
+
+echo -e "$OKBLUE+ -- --=############ Verificando su hay fuga de datos en github #########$RESET"
+github-subdomains -d $DOMINIO -t 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 | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g"  | tee -a  logs/enumeracion/"$DOMINIO"_github_leak.txt
+grep "github.com" logs/enumeracion/"$DOMINIO"_github_leak.txt | sed -r "s/\x1B\[(([0-9]+)(;[0-9]+)*)?[m,K,H,f,J]//g" > .vulnerabilidades/"$DOMINIO"_github_leak.txt
+
+
 # verificar que subdominios tienen los protocolos http(s) habilitados
 echo "verificar que subdominios tienen los protocolos http(s) habilitados "
-sort -u subdominios2.txt | httprobe --prefer-https -t 20000 | tee -a web.txt
+sort -u solo_subdominios.txt | httprobe --prefer-https -t 20000 -c 50 -p 8080,8081,8089 | tee -a aplicaciones_web.txt
 
 while read url
 do     							
 	echo "Crawling $url "
-	docker run -it link_crawler $url 2>/dev/null >> Links_Crawled.txt
+	subdominio=$url
+	subdominio=`echo "${subdominio/https:\/\//}"`
+	subdominio=`echo "${subdominio/http:\/\//}"`	
+	
+	docker run gsan scan "$subdominio":443 | grep '32m' | awk '{print $2}' | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g" | tee -a logs/enumeracion/"$subdominio"_dns_gsan.txt
+								#borrar los colores
+	blackwidow -u $url | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g" | sort | uniq | tee -a .enumeracion/"$subdominio"_web_crawled.txt
 				
-done <web.txt
+done <aplicaciones_web.txt
+
+
+echo -e "$OKBLUE+ -- --=############ Obteniendo capturas de pantalla de servicios web #########$RESET"
+EyeWitness.sh --web -f `pwd`/aplicaciones_web.txt -d `pwd`/EyeWitness
+
+
+echo -e "$OKBLUE+ -- --=############ Revisando Amazon S3 #########$RESET"
+# generar nombres de buckets en base al dominio
+bucket-namegen.sh `echo $DOMINIO | cut -d '.' -f1` > logs/enumeracion/"$DOMINIO"_buckets_names.txt
+#verificar si existen
+s3scanner  scan --buckets-file logs/enumeracion/"$DOMINIO"_buckets_names.txt | tee -a logs/enumeracion/"$DOMINIO"_amazon_s3scanner.txt
+grep bucket_exists logs/enumeracion/"$DOMINIO"_amazon_s3scanner.txt > .enumeracion/"$DOMINIO"_amazon_s3scanner.txt
+grep --color=never Read .enumeracion/"$DOMINIO"_amazon_s3scanner.txt > .vulnerabilidades/"$DOMINIO"_amazon_s3scanner.txt
+
+# verificar si hay dominios adicionales de la entidad
+cat logs/enumeracion/*_dns_gsan.txt | grep -v "$DOMINIO" | sort | uniq > .enumeracion/"$DOMINIO"_domain_extra.txt 
 
 #sed 's/txt:/;/g' 
+
+echo -e "$OKBLUE+ -- --=############ Obteniendo URL cacheados en wayback #########$RESET"
+waybackurls $DOMINIO | sort | uniq | httpx -title -tech-detect -status-code -follow-redirects | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g"  > logs/enumeracion/"$DOMINIO"_web_wayback.txt
+cat logs/enumeracion/"$DOMINIO"_web_wayback.txt | egrep -v "\[404\]|,404" > .enumeracion/"$DOMINIO"_web_wayback.txt
+
 
 
 echo -e "$OKBLUE+ -- --=############ Recopilando URL indexadas ... #########$RESET" 
 
 while read line
 do     						
-	subdomain=`echo $line | cut -f3 -d","`		
+	subdomain=`echo $line | cut -f2 -d","`
 	
-	if [ $subdomain != $DOMINIO ];
+	if [ -z "$subdomain" ]
 	then
-		echo -e "[+] Recopilando webs indexados: $subdomain"
+      echo "Upps no hay subdominio disponible"
+	else
+      echo -e "[+] Recopilando webs indexados: $subdomain"      
+	  if [ "$subdomain" != "$DOMINIO" ];
+	  then		
 		google.pl -t "site:$subdomain" -o .enumeracion/"$subdomain"_web_indexado.txt -l logs/enumeracion/"$subdomain"_web_google.html 
-
 		sleep 60
-
 		echo -e "$OKBLUE+ -- --=############ Comprobando si google indexo páginas hackeadas ... #########$RESET" 
 		egrep -iq " Buy| Pharmacy | medication| cheap| porn| viagra|hacked|drug" logs/enumeracion/"$subdomain"_web_google.html
 		greprc=$?
 		if [[ $greprc -eq 0 ]] ; then			
 			echo -e "\t$OKRED[!] Redirección  a sitios de terceros detectado \n $RESET"
 			echo "Vulnerable site:$subdomain" > .vulnerabilidades/"$subdomain"_google_redirect.txt 	
-		fi		
-	fi		
+		fi	# redireccion	
+  	   fi  # no es dominio principal   
+	 fi # si la variable dominio esta seteada
+				
 done <importarMaltego/subdominios.csv
 
 # Si hay el sitio web esta en dominio.com y no en www.dominio.com
@@ -416,24 +516,26 @@ fi
 
 
 
-insert_data
+##insert_data
 
-cat .enumeracion2/*_indexado.txt | cut -d "/" -f 3 | cut -d ":" -f1 | grep --color=never $DOMINIO | sort | uniq >> subdominios.txt
+cat .enumeracion/*_indexado.txt | cut -d "/" -f 3 | cut -d ":" -f1 | grep --color=never $DOMINIO | sort | uniq >> subdominios.txt
 
 
-echo -e "$OKBLUE+ -- --=############ Probando SQL inyection. #########$RESET" 
+
+
+
+
+echo -e "$OKBLUE+ -- --=############ Obteniendo URL con parametros #########$RESET" 
 
 IFS=$'\n'  
 
-grep --color=never "\?" .enumeracion2/*_indexado.txt | sed 's/txt:/;/g' | cut -d ";" -f2 | sort | uniq > parametrosGET2.txt
-grep --color=never "\?" Links_Crawled.txt | grep $DOMINIO | sort | uniq >> parametrosGET2.txt
-sort parametrosGET2.txt | uniq >> parametrosGET.txt
+grep --color=never "\?" .enumeracion/*_indexado.txt | sed 's/txt:/;/g' | cut -d ";" -f2 | sort | uniq > logs/enumeracion/parametrosGET2.txt
+grep --color=never "\?" .enumeracion/*_web_crawled.txt | cut -d ":" -f2-3 | sort | uniq >> logs/enumeracion/parametrosGET2.txt
+sort logs/enumeracion/parametrosGET2.txt | uniq >> logs/enumeracion/parametrosGET_uniq.txt
 
-
-
-#  Eliminar URL repetidas
+#  Eliminar URL repetidas que solo varian en los parametros
 current_uri=""
-for url in `cat parametrosGET.txt`; do
+for url in `cat logs/enumeracion/parametrosGET_uniq.txt`; do
 
 	uri=`echo $url | cut -f1 -d"?"`
 	param=`echo $line | cut -f2 -d"?"`
@@ -441,15 +543,17 @@ for url in `cat parametrosGET.txt`; do
 	
 	if [ "$current_uri" != "$uri" ];
 	then
-		echo  "$url" >> parametrosGETUniq.txt
+		echo  "$url" >> logs/enumeracion/parametrosGET_uniq_final.txt
 		current_uri=$uri
 	fi
 	
 done
 
 
+echo -e "$OKBLUE+ -- --=############ Probando SQL inyection. #########$RESET" 
+
 i=1
-for url in `cat parametrosGETUniq.txt`; do
+for url in `cat logs/enumeracion/parametrosGET_uniq_final.txt`; do
 	echo  "$url" | tee -a logs/vulnerabilidades/"$DOMINIO"_"web$i"_sqlmap.txt
 	sqlmap -u "$url" --batch --tamper=space2comment --threads 5 | tee -a logs/vulnerabilidades/"$DOMINIO"_"web$i"_sqlmap.txt
 	sqlmap -u "$url" --batch  --technique=B --risk=3  --threads 5 | tee -a logs/vulnerabilidades/"$DOMINIO"_"web$i"_sqlmapBlind.txt
@@ -489,9 +593,6 @@ for url in `cat parametrosGETUniq.txt`; do
 done
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
-
-
-
  	
 echo -e "$OKBLUE+ -- --=############ Google hacking ... #########$RESET"
 
@@ -690,33 +791,34 @@ fi
 
 
 #echo "Ejecutando: sort logs/enumeracion/"$DOMINIO"_google_indexado2.txt | uniq | egrep -v"
-sort .enumeracion2/*_indexado.txt | uniq | egrep -v "pdf|doc" > .enumeracion/"$DOMINIO"_google_indexado.txt
+sort .enumeracion/*_indexado.txt | uniq | egrep -v "pdf|doc" > .enumeracion/"$DOMINIO"_google_indexado.txt
 egrep -ia "username|usuario|password|contrase|token|sesion|session" .enumeracion/*google_indexado.txt > .vulnerabilidades/"$DOMINIO"_google_credencialURL.txt
-insert_data
+#insert_data
 
 
 # mover los listados de URL identificados por google (Dejas solo los .html en la carpeta log)
 mv logs/vulnerabilidades/*_google_googlehacking*.txt .vulnerabilidades2/ 2>/dev/null
-insert_data
+#insert_data
 sleep 90
 
 
 echo -e "$OKBLUE+ -- --=############ Recopilando Metadatos ... #########$RESET" 
 pymeta.sh -d $DOMINIO -dir `pwd`"/archivos/" -csv -out `pwd`"/reportes/metada.csv" 2>/dev/null
 cat reportes/metada.csv | cut -d "," -f4 | sort | uniq > .enumeracion/"$DOMINIO"_metadata_pymeta.txt
-insert_data
+##insert_data
 sleep 90
 
 ####Extraer datos para informe
 ##### motores de busqueda
-echo "Nombre;Apellido;Correo;Cargo" > reportes/correos_motoresBusqueda.csv
-for correo in `cat logs/enumeracion/theHarvester_* | grep --color=never "\@" | grep -v "*"`; do	
-echo "n/a;n/a;$correo;n/a" >> reportes/correos_motoresBusqueda.csv 
-done
+#echo "Nombre;Apellido;Correo;Cargo" > reportes/correos_motoresBusqueda.csv
+#for correo in `cat logs/enumeracion/theHarvester_* | grep --color=never "\@" | grep -v "*"`; do	
+#echo "n/a;n/a;$correo;n/a" >> reportes/correos_motoresBusqueda.csv 
+#done
 ################
 
-grep --color=never -ira "10\." logs/enumeracion/dnsenum.txt | sort | uniq >> .vulnerabilidades/"$DOMINIO"_dns_IPinterna.txt
-grep --color=never -ira "192\.1" logs/enumeracion/dnsenum.txt | sort | uniq >> .vulnerabilidades/"$DOMINIO"_dns_IPinterna.txt
-grep --color=never -ira "172\.1" logs/enumeracion/dnsenum.txt | sort | uniq >> .vulnerabilidades/"$DOMINIO"_dns_IPinterna.txt
+grep --color=never -ira "10\." logs/enumeracion/gobuster.txt | sort | uniq >> .vulnerabilidades/"$DOMINIO"_dns_IPinterna.txt
+grep --color=never -ira "192\.1" logs/enumeracion/gobuster.txt | sort | uniq >> .vulnerabilidades/"$DOMINIO"_dns_IPinterna.txt
+grep --color=never -ira "172\.1" logs/enumeracion/gobuster.txt | sort | uniq >> .vulnerabilidades/"$DOMINIO"_dns_IPinterna.txt
+
 insert_data
-cp .enumeracion2/"$DOMINIO"_subdominios.txt reportes/subdominios.csv
+
