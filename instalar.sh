@@ -38,9 +38,18 @@ sudo pip install shodan colored
 
 
 echo -e "${GREEN} [+] Copiando archivos de configuracion ${RESET}" 
-cp config.yaml ~/.config/subfinder/config.yaml
-cp amass-config.ini /usr/share/amass-config.ini
-cp llave-google.json /usr/share/llave-google.json
+mkdir /usr/share/recon-config
+mkdir /usr/share/wordlists
+
+cp config/subfinder-config.yaml ~/.config/subfinder/config.yaml
+cp config/amass-config.ini /usr/share/recon-config/amass-config.ini
+cp config/commonspeak-llave-google.json /usr/share/recon-config/commonspeak-llave-google.json
+cp config/hosts.txt /usr/share/recon-config/hosts.txt
+cp config/names.txt /usr/share/recon-config/names.txt
+cp config/resolvers.txt /usr/share/recon-config/resolvers.txt
+cp config/truffle-exclude.txt /usr/share/recon-config/truffle-exclude.txt
+cp config/truffle-rules.json /usr/share/recon-config/truffle-rules.json
+
 
 
 echo -e "${GREEN} [+] Instalando assetfinder ${RESET}" 
@@ -56,6 +65,12 @@ go get github.com/tomnomnom/waybackurls
 sudo cp ~/go/bin/waybackurls /usr/bin/waybackurls 
 chmod a+x /usr/bin/waybackurls
 
+
+echo -e "${GREEN} [+] Instalando githound ${RESET}" 
+mkdir ~/.githound/
+echo "github_username: 'hackworld1'" >> ~/.githound/config.yml
+echo "github_password: 'y@pj7BDu9p0D'" >> ~/.githound/config.yml
+
 echo -e "${GREEN} [+] Instalando massdns ${RESET}" 
 cd massdns
 make
@@ -66,6 +81,14 @@ go get -u github.com/gwen001/github-subdomains
 sudo cp ~/go/bin/github-subdomains /usr/bin/github-subdomains 
 chmod a+x /usr/bin/github-subdomains
 
+
+echo -e "${GREEN} [+] Instalando trufflehog ${RESET}" 
+docker pull dxa4481/trufflehog
+
+
+echo -e "${GREEN} [+] Instalando DumpsterDiver ${RESET}" 
+cd DumpsterDiver
+docker build -t dumpster-diver .
 
 
 echo -e "${GREEN} [+] Instalando assets-from-spf ${RESET}" 
@@ -106,10 +129,6 @@ cd ..
 echo -e "${RED}[+]${BLUE} Copiando ejecutables ${RESET}"
 
 sudo cp recon.sh /usr/bin/
-mkdir /usr/share/wordlists
-sudo cp hosts.txt /usr/share/wordlists/hosts.txt
-sudo cp names.txt /usr/share/wordlists/names.txt
-sudo cp resolvers.txt /usr/share/wordlists/resolvers.txt
 sudo chmod a+x /usr/bin/recon.sh
 
 echo -e "${RED}[+]${BLUE} Instalando librerias de python ${RESET}"
@@ -181,7 +200,18 @@ echo -e "${RED}[+]${BLUE} Instalando BlackWidow ${RESET}"
 cd BlackWidow
 bash install.sh
 cd ..
-                                                                                                                                     
+         
+         
+echo -e "${RED}[+]${BLUE} Instalando LinkFinder ${RESET}"
+cd LinkFinder
+pip install jsbeautifier
+cd ..                                                                                                                            
+
+
+echo -e "${RED}[+]${BLUE} Instalando DumpsterDiver ${RESET}"
+cd DumpsterDiver
+docker build -t dumpster-diver .  
+cd ..   
 
 
 echo -e "${RED}[+]${BLUE} Instalando dalfox ${RESET}"
