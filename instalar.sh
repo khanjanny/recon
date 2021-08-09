@@ -89,7 +89,7 @@ docker pull dxa4481/trufflehog
 echo -e "${GREEN} [+] Instalando DumpsterDiver ${RESET}" 
 cd DumpsterDiver
 docker build -t dumpster-diver .
-
+cd ..
 
 echo -e "${GREEN} [+] Instalando assets-from-spf ${RESET}" 
 pip2 install click ipwhois
