@@ -35,8 +35,7 @@ echo -e "${RED}[+]${BLUE} Instando de repositorio .. ${RESET}"
 sudo apt-get update
 sudo apt-get install -y fierce dnsenum cargo pipenv golang subjack sqlmap libxml2-dev libxslt1-dev libssl-dev libffi-dev zlib1g-dev python3-pip apt-transport-https ca-certificates curl gnupg2 software-properties-common docker-ce docker-ce-cli containerd.io python3-dev libfuzzy-dev ssdeep
 python3 -m pip install --upgrade pip
-sudo pip install shodan colored
-
+sudo pip install shodan colored beautifulsoup4 PyGithub ssdeep
 
 echo -e "${GREEN} [+] Copiando archivos de configuracion ${RESET}" 
 mkdir /usr/share/recon-config
@@ -116,13 +115,6 @@ echo -e "${RED}[+]${BLUE} Copiar configuracion de  subfinder ${RESET}"
 mkdir -p ~/.config/subfinder/
 
 
-
-echo -e "${RED}[+]${BLUE} Instalar GitGot ${RESET}"
-cd GitGot/
-pip3 install -r requirements.txt
-cd ..
-
-
 echo -e "${RED}[+]${BLUE} Copiando ejecutables ${RESET}"
 
 sudo cp recon.sh /usr/bin/
@@ -143,18 +135,7 @@ cd ../
 echo -e "${RED}[+]${BLUE} Instalando Infoga ${RESET}"
 sudo cp -R Infoga /usr/share/
 
-echo -e "${RED}[+]${BLUE} Instalando S3scanner ${RESET}"
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-unzip awscliv2.zip
-sudo ./aws/install
-sudo pip3 install s3scanner 
 
-
-echo -e "${RED}[+]${BLUE} Instalando google search ${RESET}"
-git clone https://github.com/DanielTorres1/googlesearch
-cd googlesearch 
-bash instalar.sh
-cd ..
 
 pwd
 echo -e "${RED}[+]${BLUE} Instalando pymeta ${RESET}"
@@ -221,5 +202,17 @@ cd ..
 echo -e "${RED}[+]${BLUE} spoofcheck ${RESET}"
 cd spoofcheck
 sudo pip install -r requirements.txt
+cd ..
+
+echo -e "${RED}[+]${BLUE} Instalando S3scanner ${RESET}"
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+sudo pip3 install s3scanner 
+
+echo -e "${RED}[+]${BLUE} Instalando google search ${RESET}"
+git clone https://github.com/DanielTorres1/googlesearch
+cd googlesearch 
+bash instalar.sh
 cd ..
 
