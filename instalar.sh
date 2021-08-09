@@ -27,8 +27,9 @@ RESET="\033[00m"       # Normal
 
 
 echo -e "${RED}[+]${BLUE} Instalar docker ${RESET}"
+echo "deb [arch=amd64] https://download.docker.com/linux/debian buster stable" | tee -a /etc/apt/sources.list.d/docker.list > /dev/null
 curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add 
-sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian buster stable"
+  
 
 echo -e "${RED}[+]${BLUE} Instando de repositorio .. ${RESET}"
 sudo apt-get update
@@ -71,10 +72,6 @@ mkdir ~/.githound/
 echo "github_username: 'hackworld1'" >> ~/.githound/config.yml
 echo "github_password: 'y@pj7BDu9p0D'" >> ~/.githound/config.yml
 
-echo -e "${GREEN} [+] Instalando massdns ${RESET}" 
-cd massdns
-make
-cd ..
 
 echo -e "${GREEN} [+] Instalando github-subdomains ${RESET}" 
 go get -u github.com/gwen001/github-subdomains
