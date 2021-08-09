@@ -159,7 +159,7 @@ cd googlesearch
 bash instalar.sh
 cd ..
 
-
+pwd
 echo -e "${RED}[+]${BLUE} Instalando pymeta ${RESET}"
 cd pymeta 
 bash setup.sh
