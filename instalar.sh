@@ -35,7 +35,7 @@ echo -e "${RED}[+]${BLUE} Instando de repositorio .. ${RESET}"
 sudo apt-get update
 sudo apt-get install -y fierce dnsenum cargo pipenv golang subjack sqlmap libxml2-dev libxslt1-dev libssl-dev libffi-dev zlib1g-dev python3-pip apt-transport-https ca-certificates curl gnupg2 software-properties-common docker-ce docker-ce-cli containerd.io python3-dev libfuzzy-dev ssdeep
 python3 -m pip install --upgrade pip
-sudo pip install shodan colored beautifulsoup4 PyGithub ssdeep
+sudo pip install shodan colored beautifulsoup4 PyGithub ssdeep jsbeautifier
 
 echo -e "${GREEN} [+] Copiando archivos de configuracion ${RESET}" 
 mkdir /usr/share/recon-config
@@ -178,12 +178,7 @@ echo -e "${RED}[+]${BLUE} Instalando BlackWidow ${RESET}"
 cd BlackWidow
 bash install.sh
 cd ..
-         
-         
-echo -e "${RED}[+]${BLUE} Instalando LinkFinder ${RESET}"
-cd LinkFinder
-pip install jsbeautifier
-cd ..                                                                                                                            
+                                                                                                                                
 
 
 echo -e "${RED}[+]${BLUE} Instalando DumpsterDiver ${RESET}"
