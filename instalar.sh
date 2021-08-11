@@ -88,7 +88,7 @@ docker build -t dumpster-diver .
 cd ..
 
 echo -e "${GREEN} [+] Instalando assets-from-spf ${RESET}" 
-pip2 install click ipwhois
+pip install click ipwhois
 sudo cp -R assets-from-spf /usr/share/ 
 
 echo -e "${GREEN} [+] Instalando EyeWitness ${RESET}" 
