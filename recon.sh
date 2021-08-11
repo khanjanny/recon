@@ -317,7 +317,11 @@ cat logs/enumeracion/"$DOMINIO"_dnsenum_net.txt | xargs -n1 prips | hakrevdns > 
 grep --color=never $DOMINIO logs/enumeracion/"$DOMINIO"_dns_hakrevdns.txt |  awk '{print $2}' >> subdominios.txt
 ############################################
 
-sed -i "s/$DOMINIO\./$DOMINIO/g" subdominios.txt #Eliminar punto extra al final
+#Eliminar caractares extranios
+dos2unix subdominios.txt
+
+#Eliminar punto extra al final
+sed -i "s/$DOMINIO\./$DOMINIO/g" subdominios.txt 
 
 #filtrar dominios
 egrep -iv --color=never '\--|Testing|Trying|TARGET|subDOMINIOs|DNS|\:\:|\*' subdominios.txt | sort | uniq -i > solo_subdominios.txt
@@ -329,7 +333,7 @@ subjack -w solo_subdominios.txt -t 100 -timeout 30 -ssl -c /usr/share/lanscanner
 
 echo -e "\t$OKBLUE[+] Iniciando altdns .. $RESET"
 #limpiar subdominios que no resuelven
-cat solo_subdominios.txt | xargs -n1 host | grep --color=never "has address" | awk '{print $1}' > solo_subdominios_validos.txt
+cat solo_subdominios.txt | xargs -n1 host | grep --color=never "has address" | awk '{print $1}' | sort | uniq > solo_subdominios_validos.txt
 docker run  -v $(pwd):/home:rw -it altdns -i /home/solo_subdominios_validos.txt -o /home/alter-domains.txt -w /words.txt -r -s /home/altdns.txt
 cat /home/altdns.txt .enumeracion/"$DOMINIO"_dns_altdns.txt
 
