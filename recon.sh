@@ -468,7 +468,7 @@ do
 	
 	docker run gsan scan "$subdominio":443 | grep '32m' | awk '{print $2}' | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g" | tee -a logs/enumeracion/"$subdominio"_dns_gsan.txt
 								#borrar los colores
-	blackwidow -u $url | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g" | sort | uniq | tee -a .enumeracion/"$subdominio"_web_crawled.txt
+	blackwidow -u $url  2>/dev/null | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g" | sort | uniq | tee -a .enumeracion/"$subdominio"_web_crawled.txt
 				
 done <aplicaciones_web.txt
 
