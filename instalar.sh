@@ -57,7 +57,7 @@ go get -u github.com/tomnomnom/assetfinder
 sudo cp ~/go/bin/assetfinder /usr/bin/assetfinder 
 chmod a+x /usr/bin/assetfinder
 echo "export FB_APP_ID=737293516835506" >> ~/.zshrc
-echo "export dcb89858c1420a79e9578b687f4b4a77" >> ~/.zshrc
+echo "export FB_APP_SECRET=dcb89858c1420a79e9578b687f4b4a77" >> ~/.zshrc
 
 
 echo -e "${GREEN} [+] Instalando waybackurls ${RESET}" 
