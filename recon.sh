@@ -380,7 +380,7 @@ grep --color=never "IP " logs/enumeracion/shodan.txt |  awk '{print $2}' > .enum
 
 echo -e "$OKBLUE+ -- --=############ Obteniendo Informacion de SPF #########$RESET"
 assets-from-spf.sh $DOMINIO | tee -a logs/enumeracion/assets-from-spf.txt
-cat logs/enumeracion/assets-from-spf.txt .enumeracion/"$DOMINIO"_spf_ip.txt
+egrep --color=never "^1" logs/enumeracion/assets-from-spf.txt > .enumeracion/"$DOMINIO"_spf_ip.txt
 
 
 
