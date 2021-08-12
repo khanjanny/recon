@@ -2,7 +2,7 @@
 
 from sys import argv
 
-SEPARATORS="-_. +"
+SEPARATORS="-."
 SUFFIXES_FILE="suffixes.txt"
 
 def main():
@@ -17,6 +17,7 @@ def main():
             for separator in SEPARATORS:
                 name = '%s%s%s' %(prefix, separator, suffix)
                 print(name, end='')
+    print(prefix)
     
 
 if __name__ == "__main__":

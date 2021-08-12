@@ -78,6 +78,7 @@ done
 DOMINIO=${DOMINIO:=NULL}
 KEYWORD=${KEYWORD:=NULL}
 
+
 #echo "NOMBRE ENTIDAD $NOMBRE"
 
 ##################
@@ -97,7 +98,8 @@ cd $DOMINIO
 mkdir .arp
 mkdir .escaneos
 mkdir .datos
-mkdir .nmap_banners
+mkdir .escaneo_puertos	
+mkdir .escaneo_puertos_banners
 mkdir .banners
 mkdir .banners2
 mkdir .enumeracion
@@ -121,8 +123,18 @@ grep nameserver /etc/resolv.conf
 echo -e "$OKORANGE+ -- --=############ ############## #########$RESET"
 echo ""
 
-# bancoecofuturo.com.bo --> ecofuturo
-#keyword=`echo $DOMINIO | cut -d "." -f1 | sed 's/banco//g'`
+echo -e "$OKORANGE Escaneado $DOMINIO con $KEYWORD $RESET"
+echo -e "$OKBLUE+ -- --=############ Revisando Amazon S3 #########$RESET"
+# generar nombres de buckets en base al dominio
+bucket-namegen.sh $KEYWORD >> logs/enumeracion/"$DOMINIO"_buckets_names.txt
+bucket-namegen.sh `echo $DOMINIO | cut -d '.' -f1` >> logs/enumeracion/"$DOMINIO"_buckets_names.txt
+
+#verificar si existen
+s3scanner  scan --buckets-file logs/enumeracion/"$DOMINIO"_buckets_names.txt 2>/dev/null| tee -a logs/enumeracion/"$DOMINIO"_amazon_s3scanner.txt
+grep bucket_exists logs/enumeracion/"$DOMINIO"_amazon_s3scanner.txt > .enumeracion/"$DOMINIO"_amazon_s3scanner.txt
+grep --color=never Read .enumeracion/"$DOMINIO"_amazon_s3scanner.txt > .vulnerabilidades/"$DOMINIO"_amazon_s3scanner.txt
+########################
+
 
 
 ####################  DNS test ########################
@@ -487,15 +499,7 @@ echo -e "$OKBLUE+ -- --=############ Obteniendo capturas de pantalla de servicio
 EyeWitness.sh --web -f `pwd`/aplicaciones_web.txt -d `pwd`/EyeWitness
 
 
-echo -e "$OKBLUE+ -- --=############ Revisando Amazon S3 #########$RESET"
-# generar nombres de buckets en base al dominio
-bucket-namegen.sh `echo $DOMINIO | cut -d '.' -f1` > logs/enumeracion/"$DOMINIO"_buckets_names.txt
-bucket-namegen.sh $keyword >> logs/enumeracion/"$DOMINIO"_buckets_names.txt
 
-#verificar si existen
-s3scanner  scan --buckets-file logs/enumeracion/"$DOMINIO"_buckets_names.txt | tee -a logs/enumeracion/"$DOMINIO"_amazon_s3scanner.txt
-grep bucket_exists logs/enumeracion/"$DOMINIO"_amazon_s3scanner.txt > .enumeracion/"$DOMINIO"_amazon_s3scanner.txt
-grep --color=never Read .enumeracion/"$DOMINIO"_amazon_s3scanner.txt > .vulnerabilidades/"$DOMINIO"_amazon_s3scanner.txt
 
 # verificar si hay dominios adicionales de la entidad
 cat logs/enumeracion/*_dns_gsan.txt | grep -v "$DOMINIO" | sort | uniq > .enumeracion/"$DOMINIO"_domain_extra.txt 
