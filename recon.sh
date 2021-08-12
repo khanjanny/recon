@@ -65,18 +65,18 @@ function insert_data () {
 	
 
 
-while getopts ":d:n:" OPTIONS
+while getopts ":d:k:" OPTIONS
 do
             case $OPTIONS in
             d)     DOMINIO=$OPTARG;;
-            n)     NOMBRE=$OPTARG;;            
+            k)     KEYWORD=$OPTARG;;            
             ?)     printf "Opcion Invalida: -$OPTARG\n" $0
                           exit 2;;
            esac
 done
 
 DOMINIO=${DOMINIO:=NULL}
-NOMBRE=${NOMBRE:=NULL}
+KEYWORD=${KEYWORD:=NULL}
 
 #echo "NOMBRE ENTIDAD $NOMBRE"
 
@@ -122,7 +122,7 @@ echo -e "$OKORANGE+ -- --=############ ############## #########$RESET"
 echo ""
 
 # bancoecofuturo.com.bo --> ecofuturo
-keyword=`echo $DOMINIO | cut -d "." -f1 | sed 's/banco//g'`
+#keyword=`echo $DOMINIO | cut -d "." -f1 | sed 's/banco//g'`
 
 
 ####################  DNS test ########################
