@@ -71,6 +71,11 @@ mkdir ~/.githound/
 echo "github_username: 'hackworld1'" >> ~/.githound/config.yml
 echo "github_password: 'y@pj7BDu9p0D'" >> ~/.githound/config.yml
 
+echo -e "${GREEN} [+] Instalando cd onionsearch ${RESET}" 
+cd OnionSearch/
+python3 setup.py install
+cd ..
+
 
 echo -e "${GREEN} [+] Instalando github-subdomains ${RESET}" 
 go get -u github.com/gwen001/github-subdomains

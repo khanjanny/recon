@@ -121,10 +121,8 @@ grep nameserver /etc/resolv.conf
 echo -e "$OKORANGE+ -- --=############ ############## #########$RESET"
 echo ""
 
-kernel=`uname -a`
-if [[ $kernel == *"Nethunter"* ]]; then #NetHunter
-	export PATH=/root/bin:/root/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/system/xbin:/usr/bin/pentest
-fi
+# bancoecofuturo.com.bo --> ecofuturo
+keyword=`echo $DOMINIO | cut -d "." -f1 | sed 's/banco//g'`
 
 
 ####################  DNS test ########################
@@ -433,9 +431,6 @@ rm cookies.txt 2>/dev/null
 ######################################################
 
 
-# bancoecofuturo.com.bo --> ecofuturo
-keyword=`echo $DOMINIO | cut -d "." -f1 | sed 's/banco//g'`
-
 echo -e "$OKBLUE+ -- --=############ Obteniendo Informacion la deep web (keyword = $keyword) #########$RESET"
 /etc/init.d/tor start
 onionsearch "$DOMINIO" --proxy 127.0.0.1:9050 --output logs/enumeracion/"$DOMINIO"_deep_web.txt
@@ -495,6 +490,8 @@ EyeWitness.sh --web -f `pwd`/aplicaciones_web.txt -d `pwd`/EyeWitness
 echo -e "$OKBLUE+ -- --=############ Revisando Amazon S3 #########$RESET"
 # generar nombres de buckets en base al dominio
 bucket-namegen.sh `echo $DOMINIO | cut -d '.' -f1` > logs/enumeracion/"$DOMINIO"_buckets_names.txt
+bucket-namegen.sh $keyword >> logs/enumeracion/"$DOMINIO"_buckets_names.txt
+
 #verificar si existen
 s3scanner  scan --buckets-file logs/enumeracion/"$DOMINIO"_buckets_names.txt | tee -a logs/enumeracion/"$DOMINIO"_amazon_s3scanner.txt
 grep bucket_exists logs/enumeracion/"$DOMINIO"_amazon_s3scanner.txt > .enumeracion/"$DOMINIO"_amazon_s3scanner.txt
@@ -511,42 +508,42 @@ cat logs/enumeracion/"$DOMINIO"_web_wayback.txt | egrep -v "\[404\]|,404" > .enu
 
 
 #COMENTADO
-# echo -e "$OKBLUE+ -- --=############ Recopilando URL indexadas ... #########$RESET" 
+echo -e "$OKBLUE+ -- --=############ Recopilando URL indexadas ... #########$RESET" 
 
-# while read line
-# do     						
-# 	subdomain=`echo $line | cut -f2 -d","`
+while read line
+do     						
+	subdomain=`echo $line | cut -f2 -d","`
 	
-# 	if [ -z "$subdomain" ]
-# 	then
-#       echo "Upps no hay subdominio disponible"
-# 	else
-#       echo -e "[+] Recopilando webs indexados: $subdomain"      
-# 	  if [ "$subdomain" != "$DOMINIO" ];
-# 	  then		
-# 		google.pl -t "site:$subdomain" -o .enumeracion/"$subdomain"_web_indexado.txt -l logs/enumeracion/"$subdomain"_web_google.html 
-# 		sleep 60
-# 		echo -e "$OKBLUE+ -- --=############ Comprobando si google indexo páginas hackeadas ... #########$RESET" 
-# 		egrep -iq " Buy| Pharmacy | medication| cheap| porn| viagra|hacked|drug" logs/enumeracion/"$subdomain"_web_google.html
-# 		greprc=$?
-# 		if [[ $greprc -eq 0 ]] ; then			
-# 			echo -e "\t$OKRED[!] Redirección  a sitios de terceros detectado \n $RESET"
-# 			echo "Vulnerable site:$subdomain" > .vulnerabilidades/"$subdomain"_google_redirect.txt 	
-# 		fi	# redireccion	
-#   	   fi  # no es dominio principal   
-# 	 fi # si la variable dominio esta seteada
+	if [ -z "$subdomain" ]
+	then
+      echo "Upps no hay subdominio disponible"
+	else
+      echo -e "[+] Recopilando webs indexados: $subdomain"      
+	  if [ "$subdomain" != "$DOMINIO" ];
+	  then		
+		google.pl -t "site:$subdomain" -o .enumeracion/"$subdomain"_web_indexado.txt -l logs/enumeracion/"$subdomain"_web_google.html 
+		sleep 60
+		echo -e "$OKBLUE+ -- --=############ Comprobando si google indexo páginas hackeadas ... #########$RESET" 
+		egrep -iq " Buy| Pharmacy | medication| cheap| porn| viagra|hacked|drug" logs/enumeracion/"$subdomain"_web_google.html
+		greprc=$?
+		if [[ $greprc -eq 0 ]] ; then			
+			echo -e "\t$OKRED[!] Redirección  a sitios de terceros detectado \n $RESET"
+			echo "Vulnerable site:$subdomain" > .vulnerabilidades/"$subdomain"_google_redirect.txt 	
+		fi	# redireccion	
+  	   fi  # no es dominio principal   
+	 fi # si la variable dominio esta seteada
 				
-# done <importarMaltego/subdominios.csv
+done <importarMaltego/subdominios.csv
 
-# Si hay el sitio web esta en dominio.com y no en www.dominio.com
-# count=`ls .enumeracion/*_indexado.txt 2>/dev/null| wc -l`
-# if [ "$count" -lt 1 ];then
-# 	google.pl -t "site:$DOMINIO" -o .enumeracion/"$DOMINIO"_web_indexado.txt -l logs/enumeracion/"$DOMINIO"_web_google.html 
-# fi
+Si hay el sitio web esta en dominio.com y no en www.dominio.com
+count=`ls .enumeracion/*_indexado.txt 2>/dev/null| wc -l`
+if [ "$count" -lt 1 ];then
+	google.pl -t "site:$DOMINIO" -o .enumeracion/"$DOMINIO"_web_indexado.txt -l logs/enumeracion/"$DOMINIO"_web_google.html 
+fi
 
 
 
-#cat .enumeracion/*_indexado.txt | cut -d "/" -f 3 | cut -d ":" -f1 | grep --color=never $DOMINIO | sort | uniq >> subdominios.txt
+cat .enumeracion/*_indexado.txt | cut -d "/" -f 3 | cut -d ":" -f1 | grep --color=never $DOMINIO | sort | uniq >> subdominios.txt
 
 
 
@@ -555,7 +552,7 @@ echo -e "$OKBLUE+ -- --=############ Obteniendo URL con parametros #########$RES
 
 IFS=$'\n'  
 
-#grep --color=never "\?" .enumeracion/*_indexado.txt | sed 's/txt:/;/g' | cut -d ";" -f2 | sort | uniq > logs/enumeracion/parametrosGET2.txt
+grep --color=never "\?" .enumeracion/*_indexado.txt | sed 's/txt:/;/g' | cut -d ";" -f2 | sort | uniq > logs/enumeracion/parametrosGET2.txt
 grep --color=never "\?" .enumeracion/*_web_crawled.txt | cut -d ":" -f2-3 | sort | uniq >> logs/enumeracion/parametrosGET2.txt
 grep --color=never "\?" .enumeracion/"$DOMINIO"_common_crawler.txt | sort | uniq >> logs/enumeracion/parametrosGET2.txt
 
